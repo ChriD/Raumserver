@@ -26,7 +26,7 @@ class RaumserverService : public CServiceBase
 {
 public:
 
-    RaumserverService(PWSTR pszServiceName,
+    RaumserverService(std::string pszServiceName,
         BOOL fCanStop = TRUE, 
         BOOL fCanShutdown = TRUE, 
         BOOL fCanPauseContinue = FALSE);

@@ -42,18 +42,19 @@
 //   NOTE: If the function fails to install the service, it prints the error 
 //   in the standard output stream for users to diagnose the problem.
 //
-void InstallService(LPCSTR pszServiceName,
-                    LPCSTR pszDisplayName,
+void InstallService(std::string  pszServiceName,
+                    std::string  pszDisplayName,
                     DWORD dwStartType,
-                    LPCSTR pszDependencies,
-                    LPCSTR pszAccount,
-                    LPCSTR pszPassword)
+                    std::string  pszDependencies,
+                    std::string  pszAccount,
+                    std::string  pszPassword)
 {
-    wchar_t szPath[MAX_PATH];
+    //wchar_t *szPath[MAX_PATH];
+    char *szPath = new char[MAX_PATH];
     SC_HANDLE schSCManager = NULL;
-    SC_HANDLE schService = NULL;
+    SC_HANDLE schService = NULL;       
 
-    if (GetModuleFileName(NULL, (LPSTR)szPath, ARRAYSIZE(szPath)) == 0)
+    if (GetModuleFileName(NULL, szPath, MAX_PATH) == 0) // TODO: @@@@
     {
         wprintf(L"GetModuleFileName failed w/err 0x%08lx\n", GetLastError());
         goto Cleanup;
@@ -71,18 +72,18 @@ void InstallService(LPCSTR pszServiceName,
     // Install the service into SCM by calling CreateService
     schService = CreateService(
         schSCManager,                   // SCManager database
-        pszServiceName,                 // Name of service
-        pszDisplayName,                 // Name to display
+        pszServiceName.c_str(),                 // Name of service
+        pszDisplayName.c_str(),                 // Name to display
         SERVICE_QUERY_STATUS,           // Desired access
         SERVICE_WIN32_OWN_PROCESS,      // Service type
         dwStartType,                    // Service start type
         SERVICE_ERROR_NORMAL,           // Error control type
-        (LPCTSTR)szPath,                         // Service's binary
+        szPath,                // Service's binary
         NULL,                           // No load ordering group
         NULL,                           // No tag identifier
-        pszDependencies,                // Dependencies
-        pszAccount,                     // Service running account
-        pszPassword                     // Password of the account
+        pszDependencies.c_str(),                // Dependencies
+        pszAccount.c_str(),                     // Service running account
+        pszPassword.c_str()                     // Password of the account
         );
     if (schService == NULL)
     {
@@ -90,7 +91,7 @@ void InstallService(LPCSTR pszServiceName,
         goto Cleanup;
     }
 
-    wprintf(L"%s is installed.\n", pszServiceName);
+    wprintf(L"%s is installed.\n", pszServiceName.c_str());
 
 Cleanup:
     // Centralized cleanup for all allocated resources.
@@ -119,7 +120,7 @@ Cleanup:
 //   NOTE: If the function fails to uninstall the service, it prints the 
 //   error in the standard output stream for users to diagnose the problem.
 //
-void UninstallService(LPCSTR pszServiceName)
+void UninstallService(std::string pszServiceName)
 {
     SC_HANDLE schSCManager = NULL;
     SC_HANDLE schService = NULL;
@@ -134,7 +135,7 @@ void UninstallService(LPCSTR pszServiceName)
     }
 
     // Open the service with delete, stop, and query status permissions
-    schService = OpenService(schSCManager, pszServiceName, SERVICE_STOP | 
+    schService = OpenService(schSCManager, pszServiceName.c_str(), SERVICE_STOP | 
         SERVICE_QUERY_STATUS | DELETE);
     if (schService == NULL)
     {
@@ -160,11 +161,11 @@ void UninstallService(LPCSTR pszServiceName)
 
         if (ssSvcStatus.dwCurrentState == SERVICE_STOPPED)
         {
-            wprintf(L"\n%s is stopped.\n", pszServiceName);
+            wprintf(L"\n%s is stopped.\n", pszServiceName.c_str());
         }
         else
         {
-            wprintf(L"\n%s failed to stop.\n", pszServiceName);
+            wprintf(L"\n%s failed to stop.\n", pszServiceName.c_str());
         }
     }
 
@@ -175,7 +176,7 @@ void UninstallService(LPCSTR pszServiceName)
         goto Cleanup;
     }
 
-    wprintf(L"%s is removed.\n", pszServiceName);
+    wprintf(L"%s is removed.\n", pszServiceName.c_str());
 
 Cleanup:
     // Centralized cleanup for all allocated resources.

@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <string>
 
 //
 //   FUNCTION: InstallService
@@ -38,12 +39,12 @@
 //   NOTE: If the function fails to install the service, it prints the error 
 //   in the standard output stream for users to diagnose the problem.
 //
-void InstallService(LPCSTR pszServiceName, 
-                    LPCSTR pszDisplayName,
+void InstallService(std::string  pszServiceName,
+                    std::string  pszDisplayName,
                     DWORD dwStartType,
-                    LPCSTR pszDependencies,
-                    LPCSTR pszAccount,
-                    LPCSTR pszPassword);
+                    std::string  pszDependencies,
+                    std::string  pszAccount,
+                    std::string  pszPassword);
 
 
 //
@@ -58,4 +59,4 @@ void InstallService(LPCSTR pszServiceName,
 //   NOTE: If the function fails to uninstall the service, it prints the 
 //   error in the standard output stream for users to diagnose the problem.
 //
-void UninstallService(LPCSTR pszServiceName);
+void UninstallService(std::string pszServiceName);

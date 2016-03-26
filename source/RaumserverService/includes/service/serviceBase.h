@@ -19,6 +19,7 @@
 #pragma once
 
 #include <windows.h>
+#include <string>
 
 
 class CServiceBase
@@ -35,7 +36,7 @@ public:
     // fCanShutdown and fCanPauseContinue) allow you to specify whether the 
     // service can be stopped, paused and continued, or be notified when 
     // system shutdown occurs.
-    CServiceBase(PWSTR pszServiceName,
+    CServiceBase(std::string pszServiceName,
         BOOL fCanStop = TRUE,
         BOOL fCanShutdown = TRUE,
         BOOL fCanPauseContinue = FALSE);
@@ -80,10 +81,10 @@ protected:
         DWORD dwWaitHint = 0);
 
     // Log a message to the Application event log.
-    void WriteEventLogEntry(PWSTR pszMessage, WORD wType);
+    void WriteEventLogEntry(std::string pszMessage, WORD wType);
 
     // Log an error message to the Application event log.
-    void WriteErrorLogEntry(PWSTR pszFunction,
+    void WriteErrorLogEntry(std::string pszFunction,
         DWORD dwError = GetLastError());
 
 private:
@@ -112,7 +113,7 @@ private:
     static CServiceBase *s_service;
 
     // The name of the service
-    PWSTR m_name;
+    std::string m_name;
 
     // The status of the service
     SERVICE_STATUS m_status;

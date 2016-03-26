@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application>  
+  <Raumkernel>
+    <!-- Log settings. You might change some settings here if you want to change the output log level or add/remove a log adapter
+         To get the available options for 'LogLevel' and 'LogAdapter' please take a look at the documentation -->
+    <Log>
+      <Level>DEBUG</Level>
+      <Adapters>FILE;CONSOLE</Adapters>         
+    </Log>
+    
+    <!-- the kernel uses the first available networkadapter found in the system. This may not be the one you like to use! -->
+    <!-- so you can type in the network adapter name the application should use!-->
+    <NetworkAdapterName>Killer Wireless-N 1202 (2.4GHz and 5GHz)</NetworkAdapterName>
+              
+    <!-- Some basic kernel setting for recognizing the RaumfeldUPNP devices and for requesting the host when using RAUMFELD system -->
+    <Raumfeld>
+      <HostConfigDeviceName>Raumfeld ConfigDevice</HostConfigDeviceName>
+      <MediaServerName>Raumfeld MediaServer</MediaServerName>
+      <HostRequestPort>47365</HostRequestPort>
+      <MediaRendererIdentification>MediaRenderer</MediaRendererIdentification>
+      <MediaServerIdentification>MediaServer</MediaServerIdentification>
+      <RaumfeldDescriptionVirtualMediaPlayer>Virtual Media Player</RaumfeldDescriptionVirtualMediaPlayer>
+      <RaumfeldManufacturer>Raumfeld GmbH</RaumfeldManufacturer>
+    </Raumfeld>
+    
+  </Raumkernel>
+  
+  <Raumserver>
+	<!-- port wheer the server listens to requests -->
+	<Port>8080</Port>
+	
+  </Raumserver>
+  
+</Application>

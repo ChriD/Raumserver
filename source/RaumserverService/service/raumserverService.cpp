@@ -23,7 +23,7 @@
 #pragma endregion
 
 
-RaumserverService::RaumserverService(PWSTR pszServiceName,
+RaumserverService::RaumserverService(std::string pszServiceName,
                                BOOL fCanStop, 
                                BOOL fCanShutdown, 
                                BOOL fCanPauseContinue)
@@ -79,9 +79,7 @@ RaumserverService::~RaumserverService(void)
 void RaumserverService::onStart(DWORD dwArgc, LPWSTR *lpszArgv)
 {
     // Log a service start message to the Application log.
-    WriteEventLogEntry(L"CppWindowsService in OnStart", 
-        EVENTLOG_INFORMATION_TYPE);
-
+    WriteEventLogEntry("Raumserver service in OnStart", EVENTLOG_INFORMATION_TYPE);
     // Queue the main service function for execution in a worker thread.
     CThreadPool::QueueUserWorkItem(&RaumserverService::serviceWorkerThread, this);
 }
@@ -127,8 +125,7 @@ void RaumserverService::serviceWorkerThread(void)
 void RaumserverService::onStop()
 {
     // Log a service stop message to the Application log.
-    WriteEventLogEntry(L"CppWindowsService in OnStop", 
-        EVENTLOG_INFORMATION_TYPE);
+    WriteEventLogEntry("Raumserver service in OnStop", EVENTLOG_INFORMATION_TYPE);
 
     // Indicate that the service is stopping and wait for the finish of the 
     // main service function (ServiceWorkerThread).

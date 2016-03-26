@@ -9,17 +9,17 @@
 
 
 // Internal name of the service 
-#define SERVICE_NAME             L"Raumserver" 
+#define SERVICE_NAME             "Raumserver" 
 // Displayed name of the service 
-#define SERVICE_DISPLAY_NAME     L"Raumserver" 
+#define SERVICE_DISPLAY_NAME     "Raumserver" 
 // Service start options. 
 #define SERVICE_START_TYPE       SERVICE_DEMAND_START 
 // List of service dependencies - "dep1\0dep2\0\0" 
-#define SERVICE_DEPENDENCIES     L"" 
+#define SERVICE_DEPENDENCIES     "" 
 // The name of the account under which the service should run 
-#define SERVICE_ACCOUNT          L"NT AUTHORITY\\LocalService" 
+#define SERVICE_ACCOUNT          "NT AUTHORITY\\LocalService" 
 // The password to the service account name 
-#define SERVICE_PASSWORD         NULL 
+#define SERVICE_PASSWORD         "" 
 
 
 int wmain(int argc, wchar_t *argv[])
@@ -31,12 +31,12 @@ int wmain(int argc, wchar_t *argv[])
             // Install the service when the command is  
             // "-install" or "/install". 
             InstallService(
-                (LPCTSTR)SERVICE_NAME,               // Name of service 
-                (LPCTSTR)SERVICE_DISPLAY_NAME,       // Name to display 
+                SERVICE_NAME,               // Name of service 
+                SERVICE_DISPLAY_NAME,       // Name to display 
                 SERVICE_START_TYPE,         // Service start type 
-                (LPCTSTR)SERVICE_DEPENDENCIES,       // Dependencies 
-                (LPCTSTR)SERVICE_ACCOUNT,            // Service running account 
-                (LPCTSTR)SERVICE_PASSWORD            // Password of the account 
+                SERVICE_DEPENDENCIES,       // Dependencies 
+                SERVICE_ACCOUNT,            // Service running account 
+                SERVICE_PASSWORD            // Password of the account 
                 );
         }
         else if (_wcsicmp(L"remove", argv[1] + 1) == 0)

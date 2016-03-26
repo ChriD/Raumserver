@@ -51,7 +51,7 @@ BOOL CServiceBase::Run(CServiceBase &service)
 
     SERVICE_TABLE_ENTRY serviceTable[] =
     {
-        { (LPSTR)service.m_name, (LPSERVICE_MAIN_FUNCTIONA)ServiceMain },
+        { const_cast<char *>(service.m_name.c_str()), (LPSERVICE_MAIN_FUNCTIONA)ServiceMain },
         { NULL, NULL }
     };
 
@@ -79,7 +79,7 @@ void WINAPI CServiceBase::ServiceMain(DWORD dwArgc, PWSTR *pszArgv)
 
     // Register the handler function for the service
     s_service->m_statusHandle = RegisterServiceCtrlHandler(
-        (LPCTSTR)s_service->m_name, ServiceCtrlHandler);
+        s_service->m_name.c_str(), ServiceCtrlHandler);
     if (s_service->m_statusHandle == NULL)
     {
         throw GetLastError();
@@ -146,13 +146,13 @@ void WINAPI CServiceBase::ServiceCtrlHandler(DWORD dwCtrl)
 //   * fCanShutdown - the service is notified when system shutdown occurs
 //   * fCanPauseContinue - the service can be paused and continued
 //
-CServiceBase::CServiceBase(PWSTR pszServiceName,
+CServiceBase::CServiceBase(std::string pszServiceName,
     BOOL fCanStop,
     BOOL fCanShutdown,
     BOOL fCanPauseContinue)
 {
     // Service name must be a valid string and cannot be NULL.
-    m_name = (pszServiceName == NULL) ? L"" : pszServiceName;
+    m_name = (pszServiceName.empty()) ? "" : pszServiceName;
 
     m_statusHandle = NULL;
 
@@ -221,7 +221,7 @@ void CServiceBase::Start(DWORD dwArgc, PWSTR *pszArgv)
     catch (DWORD dwError)
     {
         // Log the error.
-        WriteErrorLogEntry(L"Service Start", dwError);
+        WriteErrorLogEntry("Service Start", dwError);
 
         // Set the service status to be stopped.
         SetServiceStatus(SERVICE_STOPPED, dwError);
@@ -229,7 +229,7 @@ void CServiceBase::Start(DWORD dwArgc, PWSTR *pszArgv)
     catch (...)
     {
         // Log the error.
-        WriteEventLogEntry(L"Service failed to start.", EVENTLOG_ERROR_TYPE);
+        WriteEventLogEntry("Service failed to start.", EVENTLOG_ERROR_TYPE);
 
         // Set the service status to be stopped.
         SetServiceStatus(SERVICE_STOPPED);
@@ -282,7 +282,7 @@ void CServiceBase::Stop()
     catch (DWORD dwError)
     {
         // Log the error.
-        WriteErrorLogEntry(L"Service Stop", dwError);
+        WriteErrorLogEntry("Service Stop", dwError);
 
         // Set the orginal service status.
         SetServiceStatus(dwOriginalState);
@@ -290,7 +290,7 @@ void CServiceBase::Stop()
     catch (...)
     {
         // Log the error.
-        WriteEventLogEntry(L"Service failed to stop.", EVENTLOG_ERROR_TYPE);
+        WriteEventLogEntry("Service failed to stop.", EVENTLOG_ERROR_TYPE);
 
         // Set the orginal service status.
         SetServiceStatus(dwOriginalState);
@@ -337,7 +337,7 @@ void CServiceBase::Pause()
     catch (DWORD dwError)
     {
         // Log the error.
-        WriteErrorLogEntry(L"Service Pause", dwError);
+        WriteErrorLogEntry("Service Pause", dwError);
 
         // Tell SCM that the service is still running.
         SetServiceStatus(SERVICE_RUNNING);
@@ -345,7 +345,7 @@ void CServiceBase::Pause()
     catch (...)
     {
         // Log the error.
-        WriteEventLogEntry(L"Service failed to pause.", EVENTLOG_ERROR_TYPE);
+        WriteEventLogEntry("Service failed to pause.", EVENTLOG_ERROR_TYPE);
 
         // Tell SCM that the service is still running.
         SetServiceStatus(SERVICE_RUNNING);
@@ -390,7 +390,7 @@ void CServiceBase::Continue()
     catch (DWORD dwError)
     {
         // Log the error.
-        WriteErrorLogEntry(L"Service Continue", dwError);
+        WriteErrorLogEntry("Service Continue", dwError);
 
         // Tell SCM that the service is still paused.
         SetServiceStatus(SERVICE_PAUSED);
@@ -398,7 +398,7 @@ void CServiceBase::Continue()
     catch (...)
     {
         // Log the error.
-        WriteEventLogEntry(L"Service failed to resume.", EVENTLOG_ERROR_TYPE);
+        WriteEventLogEntry("Service failed to resume.", EVENTLOG_ERROR_TYPE);
 
         // Tell SCM that the service is still paused.
         SetServiceStatus(SERVICE_PAUSED);
@@ -439,12 +439,12 @@ void CServiceBase::Shutdown()
     catch (DWORD dwError)
     {
         // Log the error.
-        WriteErrorLogEntry(L"Service Shutdown", dwError);
+        WriteErrorLogEntry("Service Shutdown", dwError);
     }
     catch (...)
     {
         // Log the error.
-        WriteEventLogEntry(L"Service failed to shut down.", EVENTLOG_ERROR_TYPE);
+        WriteEventLogEntry("Service failed to shut down.", EVENTLOG_ERROR_TYPE);
     }
 }
 
@@ -515,16 +515,16 @@ void CServiceBase::SetServiceStatus(DWORD dwCurrentState,
 //     EVENTLOG_INFORMATION_TYPE
 //     EVENTLOG_WARNING_TYPE
 //
-void CServiceBase::WriteEventLogEntry(PWSTR pszMessage, WORD wType)
+void CServiceBase::WriteEventLogEntry(std::string pszMessage, WORD wType)
 {
     HANDLE hEventSource = NULL;
-    LPCWSTR lpszStrings[2] = { NULL, NULL };
+    LPCSTR lpszStrings[2] = { NULL, NULL };
 
-    hEventSource = RegisterEventSource(NULL, (LPCSTR)m_name);
+    hEventSource = RegisterEventSource(NULL, m_name.c_str());
     if (hEventSource)
     {
-        lpszStrings[0] = m_name;
-        lpszStrings[1] = pszMessage;
+        lpszStrings[0] = m_name.c_str();
+        lpszStrings[1] = pszMessage.c_str();
 
         ReportEvent(hEventSource,  // Event log handle
             wType,                 // Event type
@@ -533,7 +533,7 @@ void CServiceBase::WriteEventLogEntry(PWSTR pszMessage, WORD wType)
             NULL,                  // No security identifier
             2,                     // Size of lpszStrings array
             0,                     // No binary data
-            (LPCSTR*)lpszStrings,           // Array of strings
+            lpszStrings,           // Array of strings
             NULL                   // No binary data
             );
 
@@ -551,11 +551,13 @@ void CServiceBase::WriteEventLogEntry(PWSTR pszMessage, WORD wType)
 //   * pszFunction - the function that gives the error
 //   * dwError - the error code
 //
-void CServiceBase::WriteErrorLogEntry(PWSTR pszFunction, DWORD dwError)
+void CServiceBase::WriteErrorLogEntry(std::string pszFunction, DWORD dwError)
 {
-    wchar_t szMessage[260];
-    StringCchPrintf((STRSAFE_LPSTR)szMessage, ARRAYSIZE(szMessage),
-        (STRSAFE_LPSTR)L"%s failed w/err 0x%08lx", pszFunction, dwError);
+    //wchar_t szMessage[260];
+    //StringCchPrintf((STRSAFE_LPSTR)szMessage, ARRAYSIZE(szMessage),
+    //    (STRSAFE_LPSTR)L"%s failed w/err 0x%08lx", pszFunction, dwError);
+    std::string szMessage;  
+    szMessage = pszFunction + " failed w/err " + std::to_string(dwError);
     WriteEventLogEntry(szMessage, EVENTLOG_ERROR_TYPE);
 }
 

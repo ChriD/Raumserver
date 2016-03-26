@@ -8,9 +8,31 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Configuration.Install;
 
 namespace RaumserverServiceNET
 {
+    [RunInstaller(true)]
+    public class ServiceWinInstaller : Installer
+    {
+        private ServiceInstaller m_ThisService;
+        private ServiceProcessInstaller m_ThisServiceProcess;
+
+        public ServiceWinInstaller()
+        {
+            m_ThisService = new ServiceInstaller();
+            m_ThisServiceProcess = new ServiceProcessInstaller();
+
+            m_ThisServiceProcess.Account = ServiceAccount.LocalService;
+            m_ThisService.ServiceName = "Raumserver Service";
+            m_ThisService.StartType = ServiceStartMode.Automatic;
+
+            Installers.Add(m_ThisService);
+            Installers.Add(m_ThisServiceProcess);
+        }
+    }
+
+
     public enum ServiceState
     {
         SERVICE_STOPPED = 0x00000001,
@@ -34,14 +56,19 @@ namespace RaumserverServiceNET
         public long dwWaitHint;
     };
 
-  
-    [DllImport("advapi32.dll")]
-    private static extern bool SetServiceStatus(IntPtr hServiceStatus, ref SERVICE_STATUS lpServiceStatus);
-
-    [DllImport("advapi32.dll", SetLastError=true)] private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
-
+   
     public partial class RaumserverService : ServiceBase
     {
+
+        [DllImport("advapi32.dll")] private static extern bool SetServiceStatus(IntPtr hServiceStatus, ref ServiceStatus lpServiceStatus);
+
+        [DllImport("raumserver.dll")] public static extern IntPtr createRaumserverObject();
+        [DllImport("raumserver.dll")] public static extern void deleteRaumserverObject(IntPtr value);
+        [DllImport("raumserver.dll")] public static extern void initRaumserverObject(IntPtr value);
+
+
+        IntPtr raumserver;
+
         public RaumserverService()
         {
             InitializeComponent();
@@ -56,6 +83,8 @@ namespace RaumserverServiceNET
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
 
+            raumserver = createRaumserverObject();
+            initRaumserverObject(raumserver);
             // TODO: init Raumkernel
 
             // Update the service state to Running.
@@ -65,7 +94,7 @@ namespace RaumserverServiceNET
 
         protected override void OnStop()
         {
-
+            deleteRaumserverObject(raumserver);
             // delete rumkernel
         }
     }
