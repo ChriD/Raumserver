@@ -38,7 +38,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\..\..\RaumkernelLib\source\includes;..\..\..\RaumserverLib\source\includes;includes;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>..\..\..\RaumkernelLib\source\includes;..\..\..\RaumserverLib\source\includes;includes;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -64,6 +71,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="raumserverWindowsService.cpp" />
+    <ClCompile Include="service\raumserverService.cpp" />
+    <ClCompile Include="service\serviceBase.cpp" />
+    <ClCompile Include="tools\serviceInstaller.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\service\raumserverService.h" />
+    <ClInclude Include="includes\service\serviceBase.h" />
+    <ClInclude Include="includes\tools\serviceInstaller.h" />
+    <ClInclude Include="includes\tools\threadPool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

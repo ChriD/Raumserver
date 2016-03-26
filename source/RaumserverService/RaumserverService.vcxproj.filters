@@ -1,2 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="service\serviceBase.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="raumserverWindowsService.cpp" />
+    <ClCompile Include="service\raumserverService.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\serviceInstaller.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="includes">
+      <UniqueIdentifier>{c994e1be-2bc5-4572-8cec-1343eebe1280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\service">
+      <UniqueIdentifier>{e98810f6-00b2-43d1-8903-b6d40338d5b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="service">
+      <UniqueIdentifier>{54d9ebce-a329-45aa-b96d-f3c620f783a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\tools">
+      <UniqueIdentifier>{5663cf7e-15f0-4786-a454-5fb0b03663c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{9f2bb00e-6148-425d-86bc-df396218bca8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\service\serviceBase.h">
+      <Filter>includes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\service\raumserverService.h">
+      <Filter>includes\service</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\threadPool.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\serviceInstaller.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
