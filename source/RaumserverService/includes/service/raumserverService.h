@@ -19,7 +19,10 @@
 
 #pragma once
 
+#include <Windows.h>
 #include "service/serviceBase.h"
+#include "raumserver/raumserver.h"
+#include "tools/threadPool.h"
 
 
 class RaumserverService : public CServiceBase
@@ -34,8 +37,11 @@ public:
 
 protected:
 
-    virtual void onStart(DWORD dwArgc, PWSTR *pszArgv);
-    virtual void onStop();
+    std::unique_ptr<Raumserver::Raumserver> raumserverObject;
+
+    virtual void onStart(DWORD dwArgc, PWSTR *pszArgv) override;
+    virtual void onStop() override;
+    virtual void onLog(Raumkernel::Log::LogData _logData);
 
     void serviceWorkerThread(void);
 
@@ -43,4 +49,6 @@ private:
 
     BOOL m_fStopping;
     HANDLE m_hStoppedEvent;
+
+    sigs::connections connections;
 };

@@ -53,9 +53,10 @@ int wmain(int argc, wchar_t *argv[])
         wprintf(L" -remove   to remove the service.\n");
 
 
-        RaumserverService service(SERVICE_NAME);
+        RaumserverService service(SERVICE_NAME);          
         if (!RaumserverService::Run(service))
         {
+            service.WriteEventLogEntry("Service failed to run w/err", EVENTLOG_ERROR_TYPE);
             wprintf(L"Service failed to run w/err 0x%08lx\n", GetLastError());
         }
     }

@@ -49,17 +49,29 @@ BOOL CServiceBase::Run(CServiceBase &service)
 {
     s_service = &service;
 
+    //s_service->WriteEventLogEntry("Try to write service table entry for service: " + s_service->m_name, EVENTLOG_INFORMATION_TYPE);
+
     SERVICE_TABLE_ENTRY serviceTable[] =
     {
         { const_cast<char *>(service.m_name.c_str()), (LPSERVICE_MAIN_FUNCTIONA)ServiceMain },
         { NULL, NULL }
     };
 
+    //s_service->WriteEventLogEntry("Start ServiceControl dispatcher", EVENTLOG_INFORMATION_TYPE);
+
     // Connects the main thread of a service process to the service control 
     // manager, which causes the thread to be the service control dispatcher 
     // thread for the calling process. This call returns when the service has 
     // stopped. The process should simply terminate when the call returns.
     return StartServiceCtrlDispatcher(serviceTable);
+}
+
+std::string CServiceBase::getExecutionPath()
+{
+    char buffer[MAX_PATH];
+    GetModuleFileName(NULL, buffer, MAX_PATH);
+    std::string::size_type pos = std::string(buffer).find_last_of("\\/");
+    return std::string(buffer).substr(0, pos);    
 }
 
 
@@ -77,15 +89,19 @@ void WINAPI CServiceBase::ServiceMain(DWORD dwArgc, PWSTR *pszArgv)
 {
     assert(s_service != NULL);
 
+    //s_service->WriteEventLogEntry("Service main entry point called", EVENTLOG_INFORMATION_TYPE);
+
     // Register the handler function for the service
     s_service->m_statusHandle = RegisterServiceCtrlHandler(
         s_service->m_name.c_str(), ServiceCtrlHandler);
     if (s_service->m_statusHandle == NULL)
     {
+        s_service->WriteEventLogEntry("Register service control handler failed!", EVENTLOG_ERROR_TYPE);
         throw GetLastError();
     }
 
     // Start the service.
+    //s_service->WriteEventLogEntry("Start service app", EVENTLOG_INFORMATION_TYPE);
     s_service->Start(dwArgc, pszArgv);
 }
 
@@ -213,7 +229,7 @@ void CServiceBase::Start(DWORD dwArgc, PWSTR *pszArgv)
         SetServiceStatus(SERVICE_START_PENDING);
 
         // Perform service-specific initialization.
-        OnStart(dwArgc, pszArgv);
+        onStart(dwArgc, pszArgv);
 
         // Tell SCM that the service is started.
         SetServiceStatus(SERVICE_RUNNING);
@@ -252,7 +268,7 @@ void CServiceBase::Start(DWORD dwArgc, PWSTR *pszArgv)
 //   * dwArgc   - number of command line arguments
 //   * lpszArgv - array of command line arguments
 //
-void CServiceBase::OnStart(DWORD dwArgc, PWSTR *pszArgv)
+void CServiceBase::onStart(DWORD dwArgc, PWSTR *pszArgv)
 {
 }
 
@@ -274,7 +290,7 @@ void CServiceBase::Stop()
         SetServiceStatus(SERVICE_STOP_PENDING);
 
         // Perform service-specific stop operations.
-        OnStop();
+        onStop();
 
         // Tell SCM that the service is stopped.
         SetServiceStatus(SERVICE_STOPPED);
@@ -307,7 +323,7 @@ void CServiceBase::Stop()
 //   CServiceBase::SetServiceStatus() with SERVICE_STOP_PENDING if the 
 //   procedure is going to take long time. 
 //
-void CServiceBase::OnStop()
+void CServiceBase::onStop()
 {
 }
 
@@ -329,7 +345,7 @@ void CServiceBase::Pause()
         SetServiceStatus(SERVICE_PAUSE_PENDING);
 
         // Perform service-specific pause operations.
-        OnPause();
+        onPause();
 
         // Tell SCM that the service is paused.
         SetServiceStatus(SERVICE_PAUSED);
@@ -360,7 +376,7 @@ void CServiceBase::Pause()
 //   command is sent to the service by the SCM. Specifies actions to take 
 //   when a service pauses.
 //
-void CServiceBase::OnPause()
+void CServiceBase::onPause()
 {
 }
 
@@ -382,7 +398,7 @@ void CServiceBase::Continue()
         SetServiceStatus(SERVICE_CONTINUE_PENDING);
 
         // Perform service-specific continue operations.
-        OnContinue();
+        onContinue();
 
         // Tell SCM that the service is running.
         SetServiceStatus(SERVICE_RUNNING);
@@ -413,7 +429,7 @@ void CServiceBase::Continue()
 //   Continue command is sent to the service by the SCM. Specifies actions to 
 //   take when a service resumes normal functioning after being paused.
 //
-void CServiceBase::OnContinue()
+void CServiceBase::onContinue()
 {
 }
 
@@ -431,7 +447,7 @@ void CServiceBase::Shutdown()
     try
     {
         // Perform service-specific shutdown operations.
-        OnShutdown();
+        onShutdown();
 
         // Tell SCM that the service is stopped.
         SetServiceStatus(SERVICE_STOPPED);
@@ -456,7 +472,7 @@ void CServiceBase::Shutdown()
 //   is shutting down. Specifies what should occur immediately prior to the 
 //   system shutting down.
 //
-void CServiceBase::OnShutdown()
+void CServiceBase::onShutdown()
 {
 }
 

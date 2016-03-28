@@ -17,10 +17,8 @@
 * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 \***************************************************************************/
 
-#pragma region Includes
+
 #include "service/raumserverService.h"
-#include "tools/threadPool.h"
-#pragma endregion
 
 
 RaumserverService::RaumserverService(std::string pszServiceName,
@@ -36,6 +34,7 @@ RaumserverService::RaumserverService(std::string pszServiceName,
     m_hStoppedEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
     if (m_hStoppedEvent == NULL)
     {
+        WriteEventLogEntry("Raumserver Service creation error!", EVENTLOG_ERROR_TYPE);
         throw GetLastError();
     }
 }
@@ -92,17 +91,31 @@ void RaumserverService::onStart(DWORD dwArgc, LPWSTR *lpszArgv)
 //   on a thread pool worker thread.
 //
 void RaumserverService::serviceWorkerThread(void)
-{
+{    
+    WriteEventLogEntry("Raumserver worker thread started", EVENTLOG_INFORMATION_TYPE);
+   
+    std::string executionPath = getExecutionPath();
+    WriteEventLogEntry("Raumserver working directory is: " + executionPath, EVENTLOG_INFORMATION_TYPE);
+    auto settingsFile = executionPath + "\\raumserver.xml";
+    auto logFileDirectory = executionPath + "\\logs\\";
+
+    WriteEventLogEntry("Raumserver settings file is: " + settingsFile, EVENTLOG_INFORMATION_TYPE);
+    WriteEventLogEntry("Raumserver log file directory is: " + logFileDirectory, EVENTLOG_INFORMATION_TYPE);
 
     // create raumserver object adn do init init
+    raumserverObject = std::unique_ptr<Raumserver::Raumserver>(new Raumserver::Raumserver());        
+    raumserverObject->setSettingsFile(settingsFile);
+    raumserverObject->setLogFilePath(logFileDirectory);
+    
+    connections.connect(raumserverObject->getLogObject()->sigLog, this, &RaumserverService::onLog);
+
+    raumserverObject->init();
+   
 
     // Periodically check if the service is stopping.
     while (!m_fStopping)
     {
-        // Perform main service function here...
-
-        // STD:: thread wait!!!
-        ::Sleep(2000);  // Simulate some lengthy operations.
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));      
     }
 
     // Signal the stopped event.
@@ -134,4 +147,18 @@ void RaumserverService::onStop()
     {
         throw GetLastError();
     }
+}
+
+
+void RaumserverService::onLog(Raumkernel::Log::LogData _logData)
+{
+    WORD logTypeWord = EVENTLOG_INFORMATION_TYPE;
+
+    if (_logData.type == Raumkernel::Log::LogType::LOGTYPE_CRITICALERROR ||
+        _logData.type == Raumkernel::Log::LogType::LOGTYPE_ERROR)
+        logTypeWord = EVENTLOG_ERROR_TYPE;
+    if (_logData.type == Raumkernel::Log::LogType::LOGTYPE_WARNING)
+        logTypeWord = EVENTLOG_WARNING_TYPE;
+
+    WriteEventLogEntry(_logData.log, logTypeWord);
 }
