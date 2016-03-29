@@ -54,9 +54,9 @@ int wmain(int argc, wchar_t *argv[])
 
 
         RaumserverService service(SERVICE_NAME);          
-        if (!RaumserverService::Run(service))
+        if (!RaumserverService::run(service))
         {
-            service.WriteEventLogEntry("Service failed to run w/err", EVENTLOG_ERROR_TYPE);
+            service.writeEventLogEntry("Service failed to run w/err", EVENTLOG_ERROR_TYPE);
             wprintf(L"Service failed to run w/err 0x%08lx\n", GetLastError());
         }
     }
