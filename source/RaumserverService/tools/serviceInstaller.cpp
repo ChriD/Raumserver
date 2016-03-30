@@ -31,7 +31,8 @@ void InstallService(std::string  _serviceName, std::string  _displayName, std::s
 {    
     char *path = new char[MAX_PATH];
     SC_HANDLE schSCManager = NULL;
-    SC_HANDLE schService = NULL;       
+    SC_HANDLE schService = NULL;    
+    SERVICE_STATUS ssSvcStatus = {};
 
     if (GetModuleFileName(NULL, path, MAX_PATH) == 0)
     {
@@ -71,7 +72,7 @@ void InstallService(std::string  _serviceName, std::string  _displayName, std::s
                 if(!ChangeServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, &description))
                     std::cout << "Change service description for " + _serviceName + " failed w/err " + std::to_string(GetLastError()) + "\n";
 
-                std::cout << _serviceName + " is installed.\n";
+                std::cout << _serviceName + " is installed.\n";               
             }
         }       
     }
@@ -118,7 +119,7 @@ void UninstallService(std::string _serviceName)
             {
                 if (ssSvcStatus.dwCurrentState == SERVICE_STOP_PENDING)
                 {
-                    wprintf(L".");
+                    std::cout <<  ".";
                     Sleep(1000);
                 }
                 else break;
