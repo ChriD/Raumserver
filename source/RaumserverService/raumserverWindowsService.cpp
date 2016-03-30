@@ -1,19 +1,19 @@
 
-#pragma region Includes
 #include <stdio.h>
 #include <windows.h>
+#include <iostream>
 #include "tools/serviceInstaller.h"
 #include "service/serviceBase.h"
 #include "service/raumserverService.h"
-#pragma endregion
-
 
 // Internal name of the service 
 #define SERVICE_NAME             "Raumserver" 
 // Displayed name of the service 
 #define SERVICE_DISPLAY_NAME     "Raumserver" 
+// Displayed name of the service 
+#define SERVICE_DESCRIPTION      "Raumfeld Multiroom Controller - Request Server" 
 // Service start options. 
-#define SERVICE_START_TYPE       SERVICE_DEMAND_START 
+#define SERVICE_START_TYPE       SERVICE_AUTO_START 
 // List of service dependencies - "dep1\0dep2\0\0" 
 #define SERVICE_DEPENDENCIES     "" 
 // The name of the account under which the service should run 
@@ -28,11 +28,11 @@ int wmain(int argc, wchar_t *argv[])
     {
         if (_wcsicmp(L"install", argv[1] + 1) == 0)
         {
-            // Install the service when the command is  
-            // "-install" or "/install". 
+            // Install the service when the command is "-install" or "/install". 
             InstallService(
                 SERVICE_NAME,               // Name of service 
                 SERVICE_DISPLAY_NAME,       // Name to display 
+                SERVICE_DESCRIPTION,        // Description of Service
                 SERVICE_START_TYPE,         // Service start type 
                 SERVICE_DEPENDENCIES,       // Dependencies 
                 SERVICE_ACCOUNT,            // Service running account 
@@ -41,24 +41,22 @@ int wmain(int argc, wchar_t *argv[])
         }
         else if (_wcsicmp(L"remove", argv[1] + 1) == 0)
         {
-            // Uninstall the service when the command is  
-            // "-remove" or "/remove". 
+            // Uninstall the service when the command is "-remove" or "/remove". 
             UninstallService((LPCTSTR)SERVICE_NAME);
         }
     }
     else
     {
-        wprintf(L"Parameters:\n");
-        wprintf(L" -install  to install the service.\n");
-        wprintf(L" -remove   to remove the service.\n");
-
-
+        std::cout << "Parameters:\n";
+        std::cout << " -install  to install the service.\n";
+        std::cout << " -remove   to remove the service.\n";
+        
         RaumserverService service(SERVICE_NAME);          
         if (!RaumserverService::run(service))
         {
-            service.writeEventLogEntry("Service failed to run w/err", EVENTLOG_ERROR_TYPE);
-            wprintf(L"Service failed to run w/err 0x%08lx\n", GetLastError());
+            std::cout << "Service failed to run w/err " + std::to_string(GetLastError()) + "\n";                     
         }
+        
     }
 
 

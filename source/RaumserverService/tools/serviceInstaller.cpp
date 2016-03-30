@@ -21,80 +21,61 @@
 #pragma endregion
 
 
-//
-//   FUNCTION: InstallService
-//
-//   PURPOSE: Install the current application as a service to the local 
-//   service control manager database.
-//
-//   PARAMETERS:
-//   * pszServiceName - the name of the service to be installed
-//   * pszDisplayName - the display name of the service
-//   * dwStartType - the service start option. This parameter can be one of 
-//     the following values: SERVICE_AUTO_START, SERVICE_BOOT_START, 
-//     SERVICE_DEMAND_START, SERVICE_DISABLED, SERVICE_SYSTEM_START.
-//   * pszDependencies - a pointer to a double null-terminated array of null-
-//     separated names of services or load ordering groups that the system 
-//     must start before this service.
-//   * pszAccount - the name of the account under which the service runs.
-//   * pszPassword - the password to the account name.
-//
-//   NOTE: If the function fails to install the service, it prints the error 
-//   in the standard output stream for users to diagnose the problem.
-//
-void InstallService(std::string  pszServiceName,
-                    std::string  pszDisplayName,
-                    DWORD dwStartType,
-                    std::string  pszDependencies,
-                    std::string  pszAccount,
-                    std::string  pszPassword)
-{
-    //wchar_t *szPath[MAX_PATH];
-    char *szPath = new char[MAX_PATH];
+/**
+* Install the current application as a service to the local service control manager database.
+* 
+* NOTE: If the function fails to install the service, it prints the error 
+* in the standard output stream for users to diagnose the problem
+*/
+void InstallService(std::string  _serviceName, std::string  _displayName, std::string _description, DWORD _startType, std::string  _dependencies, std::string  _account, std::string  _password)
+{    
+    char *path = new char[MAX_PATH];
     SC_HANDLE schSCManager = NULL;
     SC_HANDLE schService = NULL;       
 
-    if (GetModuleFileName(NULL, szPath, MAX_PATH) == 0) // TODO: @@@@
+    if (GetModuleFileName(NULL, path, MAX_PATH) == 0)
     {
-        wprintf(L"GetModuleFileName failed w/err 0x%08lx\n", GetLastError());
-        goto Cleanup;
+        std::cout << "GetModuleFileName failed w/err " + std::to_string(GetLastError());
+    }
+    else
+    {
+        // Open the local default service control manager database
+        schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT | SC_MANAGER_CREATE_SERVICE);
+        if (schSCManager == NULL)        
+            std::cout << "OpenSCManager failed w/err " + std::to_string(GetLastError()) + "\n";                   
+        else
+        {
+            // Install the service into SCM by calling CreateService
+            schService = CreateService(
+                schSCManager,                   // SCManager database
+                _serviceName.c_str(),           // Name of service
+                _displayName.c_str(),           // Name to display
+                SERVICE_CHANGE_CONFIG | SERVICE_QUERY_STATUS | SERVICE_START | SERVICE_STOP,          // Desired access
+                SERVICE_WIN32_OWN_PROCESS,      // Service type
+                _startType,                     // Service start type
+                SERVICE_ERROR_NORMAL,           // Error control type
+                path,                           // Service's binary
+                NULL,                           // No load ordering group
+                NULL,                           // No tag identifier
+                _dependencies.c_str(),          // Dependencies
+                _account.c_str(),               // Service running account
+                _password.c_str()               // Password of the account
+                );
+
+            if (schService == NULL)
+                std::cout << "CreateService " + _serviceName + " failed w/err " + std::to_string(GetLastError()) + "\n";   
+            else
+            {                
+                SERVICE_DESCRIPTION description;
+                description.lpDescription = const_cast<char *>(_description.c_str());            
+                if(!ChangeServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, &description))
+                    std::cout << "Change service description for " + _serviceName + " failed w/err " + std::to_string(GetLastError()) + "\n";
+
+                std::cout << _serviceName + " is installed.\n";
+            }
+        }       
     }
 
-    // Open the local default service control manager database
-    schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT | 
-        SC_MANAGER_CREATE_SERVICE);
-    if (schSCManager == NULL)
-    {
-        wprintf(L"OpenSCManager failed w/err 0x%08lx\n", GetLastError());
-        goto Cleanup;
-    }
-
-    // Install the service into SCM by calling CreateService
-    schService = CreateService(
-        schSCManager,                   // SCManager database
-        pszServiceName.c_str(),                 // Name of service
-        pszDisplayName.c_str(),                 // Name to display
-        SERVICE_QUERY_STATUS,           // Desired access
-        SERVICE_WIN32_OWN_PROCESS,      // Service type
-        dwStartType,                    // Service start type
-        SERVICE_ERROR_NORMAL,           // Error control type
-        szPath,                // Service's binary
-        NULL,                           // No load ordering group
-        NULL,                           // No tag identifier
-        pszDependencies.c_str(),                // Dependencies
-        pszAccount.c_str(),                     // Service running account
-        pszPassword.c_str()                     // Password of the account
-        );
-    if (schService == NULL)
-    {
-        wprintf(L"CreateService failed w/err 0x%08lx\n", GetLastError());
-        goto Cleanup;
-    }
-
-    wprintf(L"%s is installed.\n", pszServiceName.c_str());
-
-Cleanup:
-    // Centralized cleanup for all allocated resources.
     if (schSCManager)
     {
         CloseServiceHandle(schSCManager);
@@ -105,22 +86,11 @@ Cleanup:
         CloseServiceHandle(schService);
         schService = NULL;
     }
+
 }
 
 
-//
-//   FUNCTION: UninstallService
-//
-//   PURPOSE: Stop and remove the service from the local service control 
-//   manager database.
-//
-//   PARAMETERS: 
-//   * pszServiceName - the name of the service to be removed.
-//
-//   NOTE: If the function fails to uninstall the service, it prints the 
-//   error in the standard output stream for users to diagnose the problem.
-//
-void UninstallService(std::string pszServiceName)
+void UninstallService(std::string _serviceName)
 {
     SC_HANDLE schSCManager = NULL;
     SC_HANDLE schService = NULL;
@@ -130,56 +100,43 @@ void UninstallService(std::string pszServiceName)
     schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT);
     if (schSCManager == NULL)
     {
-        wprintf(L"OpenSCManager failed w/err 0x%08lx\n", GetLastError());
-        goto Cleanup;
+        std::cout << "OpenSCManager failed w/err " + std::to_string(GetLastError()) + "\n";                
     }
-
-    // Open the service with delete, stop, and query status permissions
-    schService = OpenService(schSCManager, pszServiceName.c_str(), SERVICE_STOP | 
-        SERVICE_QUERY_STATUS | DELETE);
-    if (schService == NULL)
+    else
     {
-        wprintf(L"OpenService failed w/err 0x%08lx\n", GetLastError());
-        goto Cleanup;
-    }
-
-    // Try to stop the service
-    if (ControlService(schService, SERVICE_CONTROL_STOP, &ssSvcStatus))
-    {
-        wprintf(L"Stopping %s.", pszServiceName);
-        Sleep(1000);
-
-        while (QueryServiceStatus(schService, &ssSvcStatus))
+        // Open the service with delete, stop, and query status permissions
+        schService = OpenService(schSCManager, _serviceName.c_str(), SERVICE_STOP | SERVICE_QUERY_STATUS | DELETE);
+        if (schService == NULL)       
+            std::cout << "OpenService failed w/err " + std::to_string(GetLastError()) + "\n";                    
+        // try to stop service
+        else if (ControlService(schService, SERVICE_CONTROL_STOP, &ssSvcStatus))
         {
-            if (ssSvcStatus.dwCurrentState == SERVICE_STOP_PENDING)
+            std::cout << "Stopping " + _serviceName;
+            Sleep(1000);
+
+            while (QueryServiceStatus(schService, &ssSvcStatus))
             {
-                wprintf(L".");
-                Sleep(1000);
+                if (ssSvcStatus.dwCurrentState == SERVICE_STOP_PENDING)
+                {
+                    wprintf(L".");
+                    Sleep(1000);
+                }
+                else break;
             }
-            else break;
+
+            if (ssSvcStatus.dwCurrentState == SERVICE_STOPPED)
+                std::cout << "\n" + _serviceName + " is stopped.\n";
+            else
+                std::cout << "\n" + _serviceName + " failed to stop.\n";
         }
 
-        if (ssSvcStatus.dwCurrentState == SERVICE_STOPPED)
-        {
-            wprintf(L"\n%s is stopped.\n", pszServiceName.c_str());
-        }
+        // Now remove the service by calling DeleteService.
+        if (!DeleteService(schService))
+            std::cout << "Delete service failed w/err " + std::to_string(GetLastError()) + "\n";
         else
-        {
-            wprintf(L"\n%s failed to stop.\n", pszServiceName.c_str());
-        }
+            std::cout << _serviceName + " is removed.\n";
     }
-
-    // Now remove the service by calling DeleteService.
-    if (!DeleteService(schService))
-    {
-        wprintf(L"DeleteService failed w/err 0x%08lx\n", GetLastError());
-        goto Cleanup;
-    }
-
-    wprintf(L"%s is removed.\n", pszServiceName.c_str());
-
-Cleanup:
-    // Centralized cleanup for all allocated resources.
+    
     if (schSCManager)
     {
         CloseServiceHandle(schSCManager);
