@@ -52,13 +52,25 @@ void RaumserverService::serviceWorkerThread(void)
     // create raumserver object adn do init init
     raumserverObject = std::unique_ptr<Raumserver::Raumserver>(new Raumserver::Raumserver());        
     raumserverObject->setSettingsFile(settingsFile);
-    raumserverObject->setLogFilePath(logFileDirectory);
+    raumserverObject->initLogObject(Raumkernel::Log::LogType::LOGTYPE_ERROR, logFileDirectory);
     
     connections.connect(raumserverObject->getLogObject()->sigLog, this, &RaumserverService::onLog);
 
     raumserverObject->init();
-   
 
+    // try to open a log file in the directory. If It fails we can gice some error in the event viewer
+    std::ofstream logFile;
+    std::string dummyFileTester = logFileDirectory + "dummy.log";
+    logFile.open(dummyFileTester, std::fstream::out | std::fstream::app);
+    if (logFile.is_open())
+    {
+        logFile.close();      
+        std::remove(dummyFileTester.c_str());
+    }
+    else             
+        writeEventLogEntry(strerror(errno), EVENTLOG_ERROR_TYPE);        
+
+   
     // Periodically check if the service is stopping.
     while (!isStopping)
     {
@@ -88,6 +100,11 @@ void RaumserverService::onStop()
 void RaumserverService::onLog(Raumkernel::Log::LogData _logData)
 {
     WORD logTypeWord = EVENTLOG_INFORMATION_TYPE;
+
+    // Never log debug information in event logger. We do not like to flood the event viewer
+    // for debug we do have the log file.
+    if (_logData.type == Raumkernel::Log::LogType::LOGTYPE_DEBUG)
+        return;
 
     if (_logData.type == Raumkernel::Log::LogType::LOGTYPE_CRITICALERROR ||
         _logData.type == Raumkernel::Log::LogType::LOGTYPE_ERROR)

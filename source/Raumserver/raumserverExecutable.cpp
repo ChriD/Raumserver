@@ -7,6 +7,9 @@ int main()
 {
     Raumserver::Raumserver raumServerObject;
 
+    // init the log object
+    raumServerObject.initLogObject();
+
     // init the raumserver
     // this will do all the stuff we only would have to create some gui to view the status
     raumServerObject.init();

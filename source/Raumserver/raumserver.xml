@@ -4,7 +4,7 @@
     <!-- Log settings. You might change some settings here if you want to change the output log level or add/remove a log adapter
          To get the available options for 'LogLevel' and 'LogAdapter' please take a look at the documentation -->
     <Log>
-      <Level>DEBUG</Level>
+      <Level>INFO</Level>
       <Adapters>FILE;CONSOLE</Adapters>         
     </Log>
     
