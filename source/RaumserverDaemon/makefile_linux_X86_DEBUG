@@ -5,11 +5,13 @@ INCPATH = -I includes/ -I ../../../RaumkernelLib/source/includes/ -I ../../../Ra
 CC = g++-4.9
 CXX = g++-4.9
 CFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wextra -O2 -g -c -pthread $(INCPATH)
+CFLAGS = 
 CXXFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wextra -O2 -g -c -pthread $(INCPATH)
-LDFLAGS = -Wl,--no-as-needed -shared -pthread -static-libgcc -static-libstdc++ -ldl
+CXXFLAGS =
+LDFLAGS = -Wl,--no-as-needed -pthread -static-libgcc -static-libstdc++ -ldl
 
-#LIBSDEF =  libs/linux_x86/raumkernel.so libs/linux_x86/raumserver.so
-LIBSDEF =  ../../../RaumkernelLib/source/libs/linux_x86/raumkernel.so ../../../RaumserverLib/source/libs/linux_x86/raumserver.so
+LIBSDEF =  libs/linux_x86/raumkernel.so libs/linux_x86/raumserver.so
+#LIBSDEF =  ../../../RaumkernelLib/source/libs/linux_x86/raumkernel.so ../../../RaumserverLib/source/libs/linux_x86/raumserver.so
 
 RM = rm -f 
 TARGET_EXEC = raumserverDaemon
