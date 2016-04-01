@@ -12,7 +12,7 @@ LDFLAGS = -Wl,--no-as-needed -shared -pthread -static-libgcc -static-libstdc++ -
 LIBSDEF =  ../../../RaumkernelLib/source/libs/linux_x86/raumkernel.so ../../../RaumserverLib/source/libs/linux_x86/raumserver.so
 
 RM = rm -f 
-TARGET_EXEC = raumserverDeamon
+TARGET_EXEC = raumserverDaemon
 
 SRCS = $(wildcard *.cpp)
 
