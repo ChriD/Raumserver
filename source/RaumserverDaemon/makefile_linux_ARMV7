@@ -21,13 +21,13 @@ OBJS = $(SRCS:.cpp=.o)
 
 #.PHONY: test
 #test: $(SRCS)
-#	$(CC) -o $(TARGET_LIB) $(SRCS) -shared -fPIC -Wall -Wextra -O2
+#	$(CC) -o $(TARGET_EXEC) $(SRCS) -shared -fPIC -Wall -Wextra -O2
 
 
 .PHONY: all
-all: ${TARGET_LIB}
+all: ${TARGET_EXEC}
 
-$(TARGET_LIB): $(OBJS)
+$(TARGET_EXEC): $(OBJS)
 	$(CC) ${LDFLAGS} -o $@ $^ $(LIBSDEF)
 
 $(SRCS:.cpp=.d):%.d:%.cpp
@@ -38,4 +38,4 @@ include $(SRCS:.cpp=.d)
 
 .PHONY: clean
 clean:
-	-${RM} ${OBJS} $(SRCS:.cpp=.d) 
+	-${RM} ${TARGET_EXEC} ${OBJS} $(SRCS:.cpp=.d) 
