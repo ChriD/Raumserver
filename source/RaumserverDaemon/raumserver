@@ -5,45 +5,40 @@
 # chkconfig: - 58 74
 # description: Raumserver Daemon start/stop/restart script
 
-# Source function library.
-#. /etc/init.d/functions
 
-# Source networking configuration.
-#. /etc/sysconfig/myconfig
-
-prog=raumsrvDaemon
-lockfile=/var/lock/subsys/$prog
+NAME="raumsrvDaemon"
+DAEMON="/usr/development/raumfeld/git/Raumserver/source/RaumserverDaemon/$NAME"
 
 start() { 
-    #Make some checks for requirements before continuing
+  
     # TODO: wait until network is ready
     #[ "$NETWORKING" = "no" ] && exit 1
+
+    # Check if executable binary is there
     [ -x /usr/development/raumfeld/git/Raumserver/source/RaumserverDaemon/$prog ] || exit 5
+ 
+    # Check if the daemon is already running. If so write an info to the console and do nothing
+    if [ "$(pidof $NAME)" ] 
+    then
+        printf $"Raumserver Daemon is already running!\n"
+	RETVAL=-1
+    else     
+        # Start the raumserver daemon
+        printf $"Starting $prog: \n"
+        $DAEMON
+        RETVAL=$?
+        printf $"\n"
+    fi     
 
-
-    # Start our daemon
-    echo -n $"Starting $prog: "
-
-    # TODO: check if deamon is already running
-
-    daemon --pidfile /var/run/${proc}.pid $prog
-    RETVAL=$?
-    echo
-
-    #If all is well touch the lock file
-    [ $RETVAL -eq 0 ] && touch $lockfile
     return $RETVAL
 }
 
 stop() {
-    echo -n $"Shutting down $prog: "
-    #killproc $prog
-    pkill $prog
+    printf $"Shutting down $NAME: "
+    pkill $NAME
     RETVAL=$?
-    echo
+    printf "$RETVAL \n"
 
-    #If all is well remove the lockfile
-    [ $RETVAL -eq 0 ] && rm -f $lockfile
     return $RETVAL
 }
 
@@ -63,6 +58,6 @@ case "$1" in
         start
         ;;
    *)
-        echo $"Usage: $0 {start|stop|status|restart}"
+        printf $"Usage: $0 {start|stop|status|restart}\n"
         exit 2
 esac

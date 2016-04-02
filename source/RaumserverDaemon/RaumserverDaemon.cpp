@@ -12,54 +12,9 @@
 
 #define DAEMON_NAME "raumsrvDaemon"
 
-void process()
+
+std::string getWorkingDirectory()
 {
-
-    syslog (LOG_NOTICE, "Writing to my Syslog");
-}
-
-int main(int argc, char *argv[])
-{
-
-    Raumserver::Raumserver  raumserverObject;
-
-    //Set our Logging Mask and open the Log
-    setlogmask(LOG_UPTO(LOG_NOTICE));
-    openlog(DAEMON_NAME, LOG_CONS | LOG_NDELAY | LOG_PERROR | LOG_PID, LOG_USER);
-
-
-    syslog (LOG_NOTICE, "TEST");
-    syslog(LOG_INFO, "Entering Daemon");
-
-    pid_t pid, sid;
-
-   //Fork the Parent Process
-    pid = fork();
-
-    if (pid < 0) {  syslog (LOG_NOTICE, "No PID"); exit(EXIT_FAILURE); }
-
-    //We got a good pid, Close the Parent Process
-    if (pid > 0) {  syslog (LOG_NOTICE, "PID OK"); exit(EXIT_SUCCESS); }
-
-    //Change File Mask
-    umask(0);
-
-    //Create a new Signature Id for our child
-    sid = setsid();
-    if (sid < 0) {  syslog (LOG_NOTICE, "NO SID"); exit(EXIT_FAILURE); }
-     syslog (LOG_NOTICE, "GOT SID");
-
-/*
-     char szTmp[32];
-    sprintf(szTmp, "/proc/%d/exe", getpid());
-    int bytes = MIN(readlink(szTmp, pBuf, len), len - 1);
-    if(bytes >= 0)
-        pBuf[bytes] = '\0';
-        */
-
-    std::string fullFileName = "";
-
-    // Code taken from: http://www.gamedev.net/community/forums/topic.asp?topic_id=459511
     std::string path = "";
     pid_t pid2 = getpid();
     char buf[20] = {0};
@@ -76,47 +31,59 @@ int main(int argc, char *argv[])
         std::string::size_type t = path.find_last_of("/");
         path = path.substr(0,t);
     }
-    fullFileName = path + std::string("/");
+    return path + std::string("/");
+}
 
 
-    syslog (LOG_NOTICE, fullFileName.c_str());
+int main(int argc, char *argv[])
+{
+    Raumserver::Raumserver  raumserverObject;
+
+    //Set our Logging Mask and open the Log
+    setlogmask(LOG_UPTO(LOG_NOTICE));
+    openlog(DAEMON_NAME, LOG_CONS | LOG_NDELAY | LOG_PERROR | LOG_PID, LOG_USER);
+
+    syslog(LOG_NOTICE, "Trying to start daemon");
+
+    pid_t pid, sid;
+
+   //Fork the Parent Process
+    pid = fork();
+
+    if (pid < 0) {  syslog (LOG_NOTICE, "Error forking the parent process"); exit(EXIT_FAILURE); }
+    //We got a good pid, Close the Parent Process
+    if (pid > 0) {  syslog (LOG_NOTICE, "Got pid, closing parent process"); exit(EXIT_SUCCESS); }
+
+    //Change File Mask
+    umask(0);
+
+    //Create a new Signature Id for our child
+    sid = setsid();
+    if (sid < 0) {  syslog (LOG_NOTICE, "Signature ID for child process could not be created!"); exit(EXIT_FAILURE); }
+    syslog (LOG_NOTICE, "Daemon ready, initialize raumserver object");
+
+    // get the working directory of the executable
+    std::string workingDirectory = getWorkingDirectory();
+
+    syslog (LOG_NOTICE, std::string("Working directory: " + workingDirectory).c_str());
 
     //Change Directory
     //If we cant find the directory we exit with failure.
     if ((chdir("/")) < 0) { exit(EXIT_FAILURE); }
 
     //Close Standard File Descriptors
-     syslog (LOG_NOTICE, "Close descripors");
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
 
-    //----------------
-    //Main Process
-    //----------------
-
-    // TODO: init raumkernel
-    // set log file to??
-
     // create raumserver object adn do init init
-    raumserverObject.setSettingsFile(fullFileName + "raumserver.xml");
-    raumserverObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_ERROR, fullFileName + "logs/");
+    raumserverObject.setSettingsFile(workingDirectory + "raumserver.xml");
+    raumserverObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_ERROR, workingDirectory + "logs/");
     raumserverObject.init();
-    /*
-    raumserverObject = std::unique_ptr<Raumserver::Raumserver>(new Raumserver::Raumserver());
-    raumserverObject->setSettingsFile(settingsFile);
-    raumserverObject->initLogObject(Raumkernel::Log::LogType::LOGTYPE_ERROR, logFileDirectory);
 
-    connections.connect(raumserverObject->getLogObject()->sigLog, this, &RaumserverService::onLog);
-
-    raumserverObject->init();
-    */
-
-
+    // go into an endless loop and wait until daemon is killed by the syste,
     while(true)
     {
-        syslog (LOG_NOTICE, "Process");
-        process();    //Run our Process
         sleep(60);    //Sleep for 60 seconds
     }
 
