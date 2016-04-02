@@ -1,0 +1,68 @@
+#!/bin/bash
+#
+# Daemon Name: raumsrvDaemon
+#  
+# chkconfig: - 58 74
+# description: Raumserver Daemon start/stop/restart script
+
+# Source function library.
+#. /etc/init.d/functions
+
+# Source networking configuration.
+#. /etc/sysconfig/myconfig
+
+prog=raumsrvDaemon
+lockfile=/var/lock/subsys/$prog
+
+start() { 
+    #Make some checks for requirements before continuing
+    # TODO: wait until network is ready
+    #[ "$NETWORKING" = "no" ] && exit 1
+    [ -x /usr/development/raumfeld/git/Raumserver/source/RaumserverDaemon/$prog ] || exit 5
+
+
+    # Start our daemon
+    echo -n $"Starting $prog: "
+
+    # TODO: check if deamon is already running
+
+    daemon --pidfile /var/run/${proc}.pid $prog
+    RETVAL=$?
+    echo
+
+    #If all is well touch the lock file
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Shutting down $prog: "
+    #killproc $prog
+    pkill $prog
+    RETVAL=$?
+    echo
+
+    #If all is well remove the lockfile
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status $prog
+        ;;
+  restart)
+        stop
+        start
+        ;;
+   *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+        exit 2
+esac
