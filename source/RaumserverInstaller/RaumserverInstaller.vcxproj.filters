@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="includes\sciter\sciter-win-main.cpp" />
+    <ClCompile Include="raumserverInstaller.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\moveable-view.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\resizeable.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\installer.htm">
+      <Filter>res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>{846724c6-4a5a-4300-ab70-3a02c2e6e6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes">
+      <UniqueIdentifier>{5affef2e-4150-4be4-871a-3467f34e424c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
