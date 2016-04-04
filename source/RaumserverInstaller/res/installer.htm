@@ -1,12 +1,11 @@
-<html>
-  <head>
+<html custom-frame="layered" resizeable>
+<head>
     <title></title>
-    <style>    
+    <style>
+        html {
+            background: transparent;
+        }
 
-    html {
-        background: transparent;
-    } 
-    
 
 
         body {
@@ -23,136 +22,199 @@
             color: white;
         }
 
-        body.shown {
-            transform: scale(1);
-            transition: transform(linear,300ms);
-        }
-
-        body.hidden {
-            transform: scale(0.1);
-            transition: transform(linear,300ms);
-        }
-
-        body > header {
-            text-align: center;
-            color: brown;
-            margin-top: 36dip;
-            font-weight: bold;
-        }
-
-        body > div.header {
-            background: white;   
-            color: #808080;                             
-        }
-
-        body > div.header > div.left {
-            float:left
-        }
-
-        body > div.header > div.right {
-            float: right;
-            width: 105px;
-        }
-
-        body > div.header > div.left > h1.caption {
-            margin: 10px;        
-        }
-
-        body > div.header > div.right > div.closeIcon {
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 24dip;
-            //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
-            background-image: url(png/close.png); /* svg that has no intrinsic styles */
-            fill: blue; /* defining default fill color of used SVG image */
-            float: left;
-            width: 50px;
-            height: 50px;
-        }
-
-            body > div.header > div.right > div.minimizeIcon {
-                background-repeat: no-repeat;
-                background-position: center;
-                background-size: 24dip;
-                //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
-                background-image: url(png/close.png); /* svg that has no intrinsic styles */
-                fill: blue; /* defining default fill color of used SVG image */
-                float: left;
-                width: 50px;
-                height: 50px;
+            body.shown {
+                transform: scale(1);
+                transition: transform(linear,300ms);
             }
 
+            body.hidden {
+                transform: scale(0.1);
+                transition: transform(linear,300ms);
+            }
+
+            body > header {
+                text-align: center;
+                color: brown;
+                margin-top: 36dip;
+                font-weight: bold;
+            }
+
+            body > div.header {
+                background: white;
+                color: #808080;
+            }
+
+                body > div.header > div.left {
+                    float: left;
+                }
+
+                body > div.header > div.right {
+                    float: right;
+                    width: 105px;
+                }
+
+                body > div.header > div.left > h1.caption {
+                    margin: 10px;
+                }
+
+                body > div.header > div.right > div.closeIcon {
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 24dip;
+                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
+                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
+                    fill: blue; /* defining default fill color of used SVG image */
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                }
+
+                body > div.header > div.right > div.minimizeIcon {
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 24dip;
+                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
+                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
+                    fill: blue; /* defining default fill color of used SVG image */
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                }
+
         div {
-            
             border: 1px solid lightgray;
         }
-   
-    
     </style>
     <script type="text/tiscript">
 
-     include "moveable-view.tis";
+           include "moveable-view.tis";
 
-        const body = $(body);
-    
-  self.ready = function() // html loaded - DOM ready
-  {
-    view.caption = "Raumfeld Installer";
-  
-    // positioning the window in the middle of the screen:
-    var (sx,sy,sw,sh) = view.screenBox(#workarea,#rectw); // gettting screen/monitor size
-    var (w,h) = self.$(body).box(#dimension); 
-    w += w/2; h += h/2; // to accomodate expanding animation
-    
-    view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
+              const body = $(body);
 
-    body.timer(40, function() { body.attributes.addClass("shown") });
-    $(span#platform).text = System.PLATFORM;
-    $(span#arch).text = view.architecture(); // calling native function defined in ulayered.cpp
-  }
+        self.ready = function() // html loaded - DOM ready
+        {
+          view.caption = "Raumfeld Installer";
 
-  // <button #close> click handler 
-  $(#close).on("click",function()
-  {
-    body.onAnimationEnd = function() { view.close(); };
-    body.attributes.removeClass("shown");
-  });
+          // positioning the window in the middle of the screen:
+          var (sx,sy,sw,sh) = view.screenBox(#workarea,#rectw); // gettting screen/monitor size
+          var (w,h) = self.$(body).box(#dimension);
+          w += w/2; h += h/2; // to accomodate expanding animation
 
-  // <button #minimize> click handler
-  $(#minimize).on("click",function()
-  {
-    view.state = View.WINDOW_MINIMIZED;
-  });
- 
-    // setup movable window handler:
-    movableView();
+          view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
+
+          body.timer(40, function() { body.attributes.addClass("shown") });
+          //$(span#platform).text = System.PLATFORM;
+          //$(span#arch).text = view.architecture(); // calling native function defined in ulayered.cpp
+
+          //var networkAdaperInformation = view.getNetworkAdapterInformation();
+          //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);
+
+        }
+
+
+
+
+
+        /**
+        * 
+        */
+        namespace NetworkAdapterSelection 
+        {
+            /**
+            * Adds a network adapter information information list to the network Choosement list
+            */
+            function addNetworkAdapters(adapterInformationAry) {
+                //for(i=0; i<= adapterInformationAry.)
+                //addNetworkAdapter()
+            }
+
+            /**
+            * Adds one network adapter information to the network Choosement list
+            */
+            function addNetworkAdapter(adapterInformation) {
+                $(#testlog).append("<br>Data Info: " + adapterInformation);
+            }        
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // <button #close> click handler
+        $(#close).on("click",function()
+        {
+          body.onAnimationEnd = function() { view.close(); };
+          body.attributes.removeClass("shown");
+        });
+
+        // <button #close> click handler
+        $(#closeIconContainer).on("click",function()
+        {
+          $(#testlog).$content("Close clicked");
+          body.onAnimationEnd = function() { view.close(); };
+          body.attributes.removeClass("shown");
+        });
+
+        // <button #minimize> click handler
+        $(#minimize).on("click",function()
+        {
+           
+            var networkAdaperInformation = view.getNetworkAdapterInformation();
+            //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);                 
+            //$(#testlog).$content($networkAdaperInformation);     
+            
+            
+            $(#testlog).value = String.printf("%v",networkAdaperInformation);
+             
+            //$(#testlog).$content($networkAdaperInformation);      
+            view.testCpp("", "");
+        });
+
+        // <button #minimize> click handler
+        $(#minimizeIconContainer).on("click",function()
+        {
+            $(#testlog).$content("Minimizes clicked");
+          view.state = View.WINDOW_MINIMIZED;
+        });
+
+          // setup movable window handler:
+          movableView();
 
     </script>
 
-  </head>
+</head>
 <body>
 
     <!-- Header of installer -->
     <div class="header">
         <div class="left"><h1 class=" caption">Raumserver Installer</h1></div>
-        <div class="right"><div class="minimizeIcon"></div><div class="closeIcon"></div></div>       
+        <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"></div><div class="closeIcon" id="closeIconContainer"></div></div>
     </div>
 
-  
-  <p>Running on <em #machine /> machine</p>
-  
-  <button #append>Append</button> 
-  <button #open>Open</button> 
-  <select>
-    <option>First</option>
-    <option>Second</option>
-    <option>Third</option>
-  </select>
 
-    <footer>   
-            <button #minimize>Minimize Window</button>
-            <button #close>Close Window</button>
+    <p>Running on <em #machine /> machine</p>
+
+    <button #append>Append</button>
+    <button #open>Open</button>
+    <select>
+        <option>First</option>
+        <option>Second</option>
+        <option>Third</option>
+    </select>
+
+    <footer>
+        <button #minimize>Minimize Window</button>
+        <button #close>Close Window</button>
     </footer>
+
+    <div #testlog></div>
 
 </body>
 </html>
+

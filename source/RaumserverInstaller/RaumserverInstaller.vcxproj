@@ -67,7 +67,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
-    <IncludePath>includes\sciter;$(IncludePath)</IncludePath>
+    <IncludePath>includes;includes\sciter;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -155,7 +155,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="includes\sciter\sciter-win-main.cpp" />
+    <ClCompile Include="json\jsoncpp.cpp" />
     <ClCompile Include="raumserverInstaller.cpp" />
+    <ClCompile Include="raumserverInstallerView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\installer.htm">
@@ -163,6 +165,11 @@
     </None>
     <None Include="res\moveable-view.tis" />
     <None Include="res\resizeable.tis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\json\json-forwards.h" />
+    <ClInclude Include="includes\json\json.h" />
+    <ClInclude Include="includes\raumserverInstallerView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
