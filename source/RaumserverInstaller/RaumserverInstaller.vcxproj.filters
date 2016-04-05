@@ -7,6 +7,19 @@
     <ClCompile Include="json\jsoncpp.cpp">
       <Filter>json</Filter>
     </ClCompile>
+    <ClCompile Include="deviceFinder\deviceFinder.cpp">
+      <Filter>deviceFinder</Filter>
+    </ClCompile>
+    <ClCompile Include="deviceFinder\deviceFinder_Raumfeld.cpp">
+      <Filter>deviceFinder</Filter>
+    </ClCompile>
+    <ClCompile Include="logger\logger.cpp">
+      <Filter>logger</Filter>
+    </ClCompile>
+    <ClCompile Include="logger\loggerAdapter.cpp">
+      <Filter>logger</Filter>
+    </ClCompile>
+    <ClCompile Include="raumserverInstallerBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\moveable-view.tis">
@@ -32,6 +45,36 @@
     <Filter Include="includes\json">
       <UniqueIdentifier>{0d173a22-6c14-4ade-ace6-3a5bed67f0e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="includes\deviceFinder">
+      <UniqueIdentifier>{8acf5280-d15c-4cfe-a770-b971e08670c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\installHandler">
+      <UniqueIdentifier>{5bca2de1-fdab-40af-9e23-a913bc2adacb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="installHandler">
+      <UniqueIdentifier>{57cc5ff0-afe6-42e2-87f8-6fc13e335757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="deviceFinder">
+      <UniqueIdentifier>{0100edde-6a40-4470-8d0c-443dc7dc0105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\logger">
+      <UniqueIdentifier>{729655bb-29a4-4612-82ca-2ef4c602b029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logger">
+      <UniqueIdentifier>{f1152fd2-f219-4b4c-8d58-95f585a9978b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\signals">
+      <UniqueIdentifier>{2127a6b7-9e74-4862-9ad4-a48bceb5415e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\os">
+      <UniqueIdentifier>{aea1498b-fcda-45e3-8605-8f8489b530e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\tools">
+      <UniqueIdentifier>{47c3a43a-5be4-427d-9d1d-59191694c463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="includes\exception">
+      <UniqueIdentifier>{8bf61c82-1c77-4067-8125-971a4e91c0d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\raumserverInstallerView.h">
@@ -42,6 +85,66 @@
     </ClInclude>
     <ClInclude Include="includes\json\json-forwards.h">
       <Filter>includes\json</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\deviceFinder\deviceFinder.h">
+      <Filter>includes\deviceFinder</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\deviceFinder\deviceFinder_Raumfeld.h">
+      <Filter>includes\deviceFinder</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\logger\logger.h">
+      <Filter>includes\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\logger\loggerAdapter.h">
+      <Filter>includes\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\logger\loggerBase.h">
+      <Filter>includes\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\signals\config.hpp">
+      <Filter>includes\signals</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\signals\connection.hpp">
+      <Filter>includes\signals</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\signals\connections.hpp">
+      <Filter>includes\signals</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\signals\signal.hpp">
+      <Filter>includes\signals</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\signals\signals.hpp">
+      <Filter>includes\signals</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\os\os.h">
+      <Filter>includes\os</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\raumserverInstallerBase.h">
+      <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\commonUtil.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\dateUtil.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\numUtil.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\stringUtil.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\uriUtil.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\urlParser.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\versionInfo.h">
+      <Filter>includes\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\exception\exception.h">
+      <Filter>includes\exception</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 by ChriD
+// Copyright (c) 2015 by ChriD
 //
 // Permission is hereby granted, free of charge,  to any person obtaining a copy of
 // this software and  associated documentation  files  (the "Software"), to deal in
@@ -22,32 +22,45 @@
 //
 
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
+#ifndef RAUMKERNEL_NUMUTIL_H
+#define RAUMKERNEL_NUMUTIL_H
 
-#include <signals/signals.hpp>
-#include "sciter-x-window.hpp"
-#include "json/json.h"
+#include <stdio.h>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <algorithm>
+#include <ctype.h>
+#include <cstdint>
+#include <iostream>
+#include <sstream>
+#include <time.h>
+#include <vector>
 
-static RECT wrc = { 100, 100, 600, 400 };
-
-class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
+namespace Raumkernel
 {
-public:
-    frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
+    namespace Tools
+    {
+        class NumUtil
+        {
+            public:            
 
-    json::value getNetworkAdapterInformation();
-
-    sciter::value testCpp(json::value param1, json::value param2);
-
-    BEGIN_FUNCTION_MAP
-        FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
-        FUNCTION_2("testCpp", testCpp);        
-    END_FUNCTION_MAP
-
-};
+                static std::uint32_t toUInt32(std::string _s)
+                {
+                    try
+                    {
+                        return std::stoi(_s);
+                    }
+                    catch (...)
+                    {
+                    }
+                    return 0;
+                }
+               
+        };
+            
+    }
+}
 
 
 #endif

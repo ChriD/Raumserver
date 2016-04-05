@@ -1,7 +1,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 by ChriD
+// Copyright (c) 2013 by Konstantin (Kosta) Baumann & Autodesk Inc.
 //
 // Permission is hereby granted, free of charge,  to any person obtaining a copy of
 // this software and  associated documentation  files  (the "Software"), to deal in
@@ -22,32 +22,8 @@
 //
 
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
 
-#include <signals/signals.hpp>
-#include "sciter-x-window.hpp"
-#include "json/json.h"
-
-static RECT wrc = { 100, 100, 600, 400 };
-
-class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
-{
-public:
-    frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
-
-    json::value getNetworkAdapterInformation();
-
-    sciter::value testCpp(json::value param1, json::value param2);
-
-    BEGIN_FUNCTION_MAP
-        FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
-        FUNCTION_2("testCpp", testCpp);        
-    END_FUNCTION_MAP
-
-};
-
-
-#endif
+#include "config.hpp"
+#include "connection.hpp"
+#include "connections.hpp"
+#include "signal.hpp"

@@ -168,18 +168,31 @@
             var networkAdaperInformation = view.getNetworkAdapterInformation();
             //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);                 
             //$(#testlog).$content($networkAdaperInformation);     
-            
+    
+
+            //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);
+
+            var test = JSON.stringify(networkAdaperInformation)
+
+            /*
+            for (var item in networkAdaperInformation)
+            {
+                $(#testlog2).$append("item");
+            }
+            */
+                
             
             $(#testlog).value = String.printf("%v",networkAdaperInformation);
+            $(#testlog2).value = test
              
             //$(#testlog).$content($networkAdaperInformation);      
-            view.testCpp("", "");
+            //view.testCpp("", "");
         });
 
         // <button #minimize> click handler
         $(#minimizeIconContainer).on("click",function()
         {
-            $(#testlog).$content("Minimizes clicked");
+          //  $(#testlog).$content("Minimizes clicked");
           view.state = View.WINDOW_MINIMIZED;
         });
 
@@ -214,6 +227,7 @@
     </footer>
 
     <div #testlog></div>
+    <div #testlog2></div>
 
 </body>
 </html>

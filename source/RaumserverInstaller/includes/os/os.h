@@ -1,7 +1,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 by ChriD
+// Copyright (c) 2015 by ChriD
 //
 // Permission is hereby granted, free of charge,  to any person obtaining a copy of
 // this software and  associated documentation  files  (the "Software"), to deal in
@@ -22,32 +22,34 @@
 //
 
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
+#ifndef RAUMKERNEL_OS_H
+#define RAUMKERNEL_OS_H
 
-#include <signals/signals.hpp>
-#include "sciter-x-window.hpp"
-#include "json/json.h"
 
-static RECT wrc = { 100, 100, 600, 400 };
+// Microsoft
+#if defined(_MSC_VER)
+    #define EXPORT __declspec(dllexport)
+    #define IMPORT __declspec(dllimport)
+    #define CURRENT_FUNCTION __FUNCTION__
+    #define CURRENT_LINE __LINE__    
+    #define CONSOLE_COLS 79
+//  GCC
+#elif defined(_GCC)
+    #define EXPORT __attribute__((visibility("default")))
+    #define IMPORT
+    #define CURRENT_FUNCTION __func__
+    #define CURRENT_LINE __LINE__
+    #define CONSOLE_COLS 0
+// no idea which compiler	
+#else
+    #define EXPORT __attribute__((visibility("default")))
+    #define IMPORT
+    #define CURRENT_FUNCTION __func__
+    #define CURRENT_LINE __LINE__
+    #define CONSOLE_COLS 0
+    #pragma warning Unknown dynamic link import/export semantics.
+#endif
 
-class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
-{
-public:
-    frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
-
-    json::value getNetworkAdapterInformation();
-
-    sciter::value testCpp(json::value param1, json::value param2);
-
-    BEGIN_FUNCTION_MAP
-        FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
-        FUNCTION_2("testCpp", testCpp);        
-    END_FUNCTION_MAP
-
-};
-
+#define CURRENT_POSITION CURRENT_FUNCTION
 
 #endif

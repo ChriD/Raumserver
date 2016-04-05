@@ -1,7 +1,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 by ChriD
+// Copyright (c) 2015 by ChriD
 //
 // Permission is hereby granted, free of charge,  to any person obtaining a copy of
 // this software and  associated documentation  files  (the "Software"), to deal in
@@ -22,32 +22,39 @@
 //
 
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
+#ifndef RAUMKERNEL_LOGGERBASE_H
+#define RAUMKERNEL_LOGGERBASE_H
 
+#include <string>
+#include <iostream>
+#include <mutex>
+#include <chrono>
+#include <ctime>
+#include <fstream>
+#include <exception>
+
+#include <os/os.h>
+#include <tools/stringUtil.h>
+#include <tools/dateUtil.h>
 #include <signals/signals.hpp>
-#include "sciter-x-window.hpp"
-#include "json/json.h"
+#include <exception/exception.h>
 
-static RECT wrc = { 100, 100, 600, 400 };
-
-class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
+namespace Raumkernel
 {
-public:
-    frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
+    namespace Log
+    {
 
-    json::value getNetworkAdapterInformation();
+        enum class LogType : int8_t { LOGTYPE_CRITICALERROR = 0, LOGTYPE_ERROR = 1, LOGTYPE_WARNING = 2, LOGTYPE_INFO = 3, LOGTYPE_DEBUG = 4 };
 
-    sciter::value testCpp(json::value param1, json::value param2);
+        struct LogData
+        {
+            LogType type;
+            std::string log;
+            std::string location;
+            Raumkernel::Tools::DateTimeStamp logDateTimeStamp;
+        };
 
-    BEGIN_FUNCTION_MAP
-        FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
-        FUNCTION_2("testCpp", testCpp);        
-    END_FUNCTION_MAP
-
-};
-
+    }
+}
 
 #endif

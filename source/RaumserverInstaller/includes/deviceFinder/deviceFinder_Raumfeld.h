@@ -21,33 +21,30 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
+#ifndef RAUMKSERVERINSTALLER_DEVICEFINDER_RF_H
+#define RAUMKSERVERINSTALLER_DEVICEFINDER_RF_H
 
-#include <signals/signals.hpp>
-#include "sciter-x-window.hpp"
-#include "json/json.h"
+#include "deviceFinder/deviceFinder.h"
 
-static RECT wrc = { 100, 100, 600, 400 };
 
-class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
+namespace RaumkernelInstaller
 {
-public:
-    frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
+    namespace DeviceFinder
+    {
 
-    json::value getNetworkAdapterInformation();
+        class DeviceFinder_Raumfeld : DeviceFinder
+        {
+            public:
+                DeviceFinder_Raumfeld();
+                ~DeviceFinder_Raumfeld();
 
-    sciter::value testCpp(json::value param1, json::value param2);
+            private:
 
-    BEGIN_FUNCTION_MAP
-        FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
-        FUNCTION_2("testCpp", testCpp);        
-    END_FUNCTION_MAP
+        };
 
-};
-
+    }
+}
 
 #endif

@@ -1,7 +1,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 by ChriD
+// Copyright (c) 2015 by ChriD
 //
 // Permission is hereby granted, free of charge,  to any person obtaining a copy of
 // this software and  associated documentation  files  (the "Software"), to deal in
@@ -22,32 +22,27 @@
 //
 
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
+#ifndef RAUMKERNEL_VERSIONINFO_H
+#define RAUMKERNEL_VERSIONINFO_H
 
-#include <signals/signals.hpp>
-#include "sciter-x-window.hpp"
-#include "json/json.h"
 
-static RECT wrc = { 100, 100, 600, 400 };
+#include <string>
 
-class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
+#include <raumkernel/os/os.h>
+
+namespace Raumkernel
 {
-public:
-    frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
+    namespace Tools
+    {
+        struct VersionInfo
+        {
+            std::string appName = "";
+            std::string appVersion = "";
+            bool isBeta = false;
+        };       
 
-    json::value getNetworkAdapterInformation();
-
-    sciter::value testCpp(json::value param1, json::value param2);
-
-    BEGIN_FUNCTION_MAP
-        FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
-        FUNCTION_2("testCpp", testCpp);        
-    END_FUNCTION_MAP
-
-};
+    }
+}
 
 
 #endif

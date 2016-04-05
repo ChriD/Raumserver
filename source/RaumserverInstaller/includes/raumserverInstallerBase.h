@@ -22,32 +22,35 @@
 //
 
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
+#ifndef RAUMKSERVERINSTALLER_BASE_H
+#define RAUMKSERVERINSTALLER_BASE_H
 
 #include <signals/signals.hpp>
-#include "sciter-x-window.hpp"
-#include "json/json.h"
+#include <logger/logger.h>
 
-static RECT wrc = { 100, 100, 600, 400 };
 
-class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
+namespace RaumkernelInstaller
 {
-public:
-    frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
+    class RaumserverInstallerBase
+    {
+        public:
+            RaumserverInstallerBase();
+            ~RaumserverInstallerBase();
 
-    json::value getNetworkAdapterInformation();
+            EXPORT void setLogObject(std::shared_ptr<Raumkernel::Log::Log> _log);
+            EXPORT std::shared_ptr<Raumkernel::Log::Log> getLogObject();
 
-    sciter::value testCpp(json::value param1, json::value param2);
+        private:
+            std::shared_ptr<Raumkernel::Log::Log> logObject;
 
-    BEGIN_FUNCTION_MAP
-        FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
-        FUNCTION_2("testCpp", testCpp);        
-    END_FUNCTION_MAP
+            EXPORT virtual void logDebug(const std::string &_log, const std::string &_location);
+            EXPORT virtual void logWarning(const std::string &_log, const std::string &_location);
+            EXPORT virtual void logInfo(const std::string &_log, const std::string &_location);
+            EXPORT virtual void logError(const std::string &_log, const std::string &_location);
+            EXPORT virtual void logCritical(const std::string &_log, const std::string &_location);
 
-};
+    };
 
+}
 
 #endif
