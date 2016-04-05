@@ -5,7 +5,7 @@
 //http://sciter.com/developers/embedding-principles/
 //http://www.terrainformatica.com/2012/11/sciter-ui-application-architecture/
 
-json::value frame::getNetworkAdapterInformation()
+sciter::value frame::getNetworkAdapterInformation()
 {
     //json::value returnValue;    
 
@@ -39,6 +39,11 @@ json::value frame::getNetworkAdapterInformation()
     //returnValue.set_item("SubnetMask:", sciter::value("255.0.0.0"));
 
     auto test = root.toStyledString();
+
+    std::string str = root.toStyledString();
+
+    //j//son::value
+
 
     return sciter::value(root.toStyledString());
 }

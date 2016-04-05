@@ -165,14 +165,35 @@
         $(#minimize).on("click",function()
         {
            
-            var networkAdaperInformation = view.getNetworkAdapterInformation();
+            var networkAdaperInformation = view.getNetworkAdapterInformation().toString();
             //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);                 
             //$(#testlog).$content($networkAdaperInformation);     
     
+            var stringx = "test";
+            if(stringx.length > 0)
+            {
+            }
 
             //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);
 
-            var test = JSON.stringify(networkAdaperInformation)
+            //var test = JSON.stringify(networkAdaperInformation)
+
+            //networkAdaperInformation// = networkAdaperInformation.substr(1, networkAdaperInformation.length);
+
+            var test2 = parseData(networkAdaperInformation);
+            //var test2 = parseData(test);
+
+            $(#testlog).value = String.printf("%v",networkAdaperInformation);
+            $(#testlog2).value =  String.printf("%v",JSON.stringify(test2));
+
+            
+            for (var x in test2)
+            {
+                 $(#testlog2).append("loop");
+            }
+            
+
+             $(#testlog2).append("done");
 
             /*
             for (var item in networkAdaperInformation)
@@ -182,8 +203,7 @@
             */
                 
             
-            $(#testlog).value = String.printf("%v",networkAdaperInformation);
-            $(#testlog2).value = test
+           
              
             //$(#testlog).$content($networkAdaperInformation);      
             //view.testCpp("", "");

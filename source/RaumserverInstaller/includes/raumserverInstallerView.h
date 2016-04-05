@@ -38,7 +38,7 @@ class frame : /*public sciter::window*/
 public:
     frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       
 
-    json::value getNetworkAdapterInformation();
+    sciter::value getNetworkAdapterInformation();
 
     sciter::value testCpp(json::value param1, json::value param2);
 
