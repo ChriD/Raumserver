@@ -32,8 +32,7 @@
 static RECT wrc = { 100, 100, 600, 400 };
 
 class frame : /*public sciter::window*/
-    public sciter::window
-    , public sciter::event_handler
+    public sciter::window 
 {
 public:
     frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) {}       

@@ -164,36 +164,58 @@
         // <button #minimize> click handler
         $(#minimize).on("click",function()
         {
-           
-            var networkAdaperInformation = view.getNetworkAdapterInformation().toString();
-            //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);                 
-            //$(#testlog).$content($networkAdaperInformation);     
-    
-            var stringx = "test";
-            if(stringx.length > 0)
-            {
-            }
+            //var obj = parseData( " { one:1, two:2 } " );
+            //$(#testlog).value = String.printf("%v",obj);
 
-            //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);
+            //var tets = obj['one'];
+                 
 
-            //var test = JSON.stringify(networkAdaperInformation)
 
-            //networkAdaperInformation// = networkAdaperInformation.substr(1, networkAdaperInformation.length);
+            var networkAdaperInformation = view.getNetworkAdapterInformation().toString();            
+            var networkAdaperInformationJsonsObject = parseData(networkAdaperInformation);              
+            var networkAdapterInformationArray = networkAdaperInformationJsonsObject.propertyAt("networkAdapterInformations");
 
-            var test2 = parseData(networkAdaperInformation);
-            //var test2 = parseData(test);
+            
 
             $(#testlog).value = String.printf("%v",networkAdaperInformation);
-            $(#testlog2).value =  String.printf("%v",JSON.stringify(test2));
-
+            //$(#testlog).value = String.printf("%v",networkAdapterInformationObject);
+              
+            //$(#testlog2).append(networkAdapterInformationObject.toString());
             
-            for (var x in test2)
+            //networkAdapterInformationObject.show();
+                
+            
+            for (var adapterObject in networkAdapterInformationArray)
             {
-                 $(#testlog2).append("loop");
+                //$(#testlog2).append(adapterObject.toString());
+
+                adapterObject.show(); 
+                var test = adapterObject.propertyAt("networkAdapter");
+                test.show();
+
+                var name = test.propertyAt("name");
+                var subentMask = test.subnetMask;
+
+                $(#testlog2).append("<br>");                
+                $(#testlog2).append(name);    
+                $(#testlog2).append(" - ");    
+                $(#testlog2).append(subentMask);
+                 
+
+                //var xx = adapterObject.propertyAt("name");
+                //$(#testlog2).append(xx.toString());
+
+                //var adapter = adapterObject.propertyAt("networkAdapter");
+                //var adapterName = vadapterName.propertyAt("adapterName");
+                //$(#testlog2).append(adapterName.toString());  
+
+                 //$(#testlog2).append("<br>adapters: ");                
+                 //$(#testlog2).append(adapterObject.toString());     
             }
             
+            
 
-             $(#testlog2).append("done");
+             $(#testlog2).append("<br>----");
 
             /*
             for (var item in networkAdaperInformation)

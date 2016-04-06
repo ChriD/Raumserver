@@ -27,11 +27,11 @@ sciter::value frame::getNetworkAdapterInformation()
     //root["networkAdapterInformations"
 
     networkAdapter["networkAdapter"]["name"] = "Adapter 1";
-    networkAdapter["networkAdapter"]["SubnetMask"] = "255.0.0.0";
+    networkAdapter["networkAdapter"]["subnetMask"] = "255.0.0.0";
     root["networkAdapterInformations"].append(networkAdapter);
 
     networkAdapter["networkAdapter"]["name"] = "Adapter 2";
-    networkAdapter["networkAdapter"]["SubnetMask"] = "255.0.0.0";
+    networkAdapter["networkAdapter"]["subnetMask"] = "255.0.0.0";
     root["networkAdapterInformations"].append(networkAdapter);
 
     
@@ -45,7 +45,8 @@ sciter::value frame::getNetworkAdapterInformation()
     //j//son::value
 
 
-    return sciter::value(root.toStyledString());
+    return root.toStyledString();
+    //return sciter::value(root.toStyledString());
 }
 
 
