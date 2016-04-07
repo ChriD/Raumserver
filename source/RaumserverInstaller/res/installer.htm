@@ -2,10 +2,27 @@
 <head>
     <title></title>
     <style>
+
+        @import url(vgrid.css);
+
         html {
             background: transparent;
         }
 
+
+        table {
+            style-set: vgrid;
+            // see vgrid.css width:*;
+            height: *;
+        }
+
+            table th:nth-child(2) {
+                width: *;
+            }
+
+            table th:last-child {
+                width: 8em;
+            }
 
 
         body {
@@ -81,6 +98,13 @@
                     height: 50px;
                 }
 
+
+            body > div.page {
+                color: #FFFFFF;
+                margin: 10px;
+            }
+
+
         div {
             border: 1px solid lightgray;
         }
@@ -109,6 +133,32 @@
           //var networkAdaperInformation = view.getNetworkAdapterInformation();
           //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);
 
+          var records = new Array(500);
+    
+            for(var i = 0; i < records.length; ++i)
+              records[i] = {index: i, caption:"Item", status:"" };
+
+            var n = records.length;
+            var p = 0;
+       
+            var vlist = $(table);
+    
+            // feed it by these records
+            vlist.value = records;
+
+            // setting first item as current:    
+            vlist.tbody.currentIndex = 0;
+
+
+            NetworkAdapterSelection.fillNetworkAdapterList();
+
+            var btn = $(select#networkadapterSelectionComboBox);
+            btn.on("change", function() { $(#testlog2).append("<br>Selected"); });
+
+            var btn2 = $(select#selectionTest);
+            btn2.on("change", function() { $(#testlog2).append("<br>Selected"); });            
+
+
         }
 
 
@@ -116,34 +166,46 @@
 
 
         /**
-        * 
+        * functions which contains to the network selection page
         */
         namespace NetworkAdapterSelection 
         {
+
+             
             /**
-            * Adds a network adapter information information list to the network Choosement list
+            * Fills the netwokr adapter selection combo box with the items got from the backend
             */
-            function addNetworkAdapters(adapterInformationAry) {
-                //for(i=0; i<= adapterInformationAry.)
-                //addNetworkAdapter()
+            function fillNetworkAdapterList() 
+            { 
+                var networkAdaperInformation = view.getNetworkAdapterInformation().toString();            
+                var networkAdaperInformationJsonsObject = parseData(networkAdaperInformation);
+                var networkAdapterInformationArray = networkAdaperInformationJsonsObject.propertyAt("networkAdapterInformations");
+                addNetworkAdapters(networkAdapterInformationArray);
             }
 
             /**
-            * Adds one network adapter information to the network Choosement list
+            * Adds a network adapter information information list to the network Choosement list
             */
-            function addNetworkAdapter(adapterInformation) {
-                $(#testlog).append("<br>Data Info: " + adapterInformation);
+            function addNetworkAdapters(_networkAdapterInformationArray) 
+            {   
+                // run through the given array which consists of a list of networkAdapter Information objects
+                for (var arrayPosition in _networkAdapterInformationArray)
+                {                 
+                    // get the "networkAdapter" object pf the array position                  
+                    var networkAdapterInfoObject = arrayPosition.propertyAt("networkAdapter");             
+                    addNetworkAdapter(networkAdapterInfoObject);
+                }                                    
+            }
+
+            /**
+            * Adds one network adapter information to the network Choosement combo box
+            */
+            function addNetworkAdapter(_networkAdapterInformationObject) 
+            {   
+                var option = new Element("option", _networkAdapterInformationObject.propertyAt("name").toString());          
+                $(#networkadapterSelectionComboBox).options.append(option);     
             }        
         }
-
-
-
-
-
-
-
-
-
 
 
         // <button #close> click handler
@@ -164,27 +226,19 @@
         // <button #minimize> click handler
         $(#minimize).on("click",function()
         {
-            //var obj = parseData( " { one:1, two:2 } " );
-            //$(#testlog).value = String.printf("%v",obj);
-
-            //var tets = obj['one'];
-                 
 
 
             var networkAdaperInformation = view.getNetworkAdapterInformation().toString();            
             var networkAdaperInformationJsonsObject = parseData(networkAdaperInformation);              
             var networkAdapterInformationArray = networkAdaperInformationJsonsObject.propertyAt("networkAdapterInformations");
 
-            
+            // add the adapters given by the backend to the selectable combo box
+            NetworkAdapterSelection.addNetworkAdapters(networkAdapterInformationArray);
 
-            $(#testlog).value = String.printf("%v",networkAdaperInformation);
-            //$(#testlog).value = String.printf("%v",networkAdapterInformationObject);
-              
-            //$(#testlog2).append(networkAdapterInformationObject.toString());
-            
-            //networkAdapterInformationObject.show();
+           // $(#testlog).value = String.printf("%v",networkAdaperInformation);
+      
                 
-            
+            /*
             for (var adapterObject in networkAdapterInformationArray)
             {
                 //$(#testlog2).append(adapterObject.toString());
@@ -195,40 +249,14 @@
 
                 var name = test.propertyAt("name");
                 var subentMask = test.subnetMask;
-
-                $(#testlog2).append("<br>");                
-                $(#testlog2).append(name);    
-                $(#testlog2).append(" - ");    
-                $(#testlog2).append(subentMask);
-                 
-
-                //var xx = adapterObject.propertyAt("name");
-                //$(#testlog2).append(xx.toString());
-
-                //var adapter = adapterObject.propertyAt("networkAdapter");
-                //var adapterName = vadapterName.propertyAt("adapterName");
-                //$(#testlog2).append(adapterName.toString());  
-
-                 //$(#testlog2).append("<br>adapters: ");                
-                 //$(#testlog2).append(adapterObject.toString());     
-            }
-            
-            
-
-             $(#testlog2).append("<br>----");
-
-            /*
-            for (var item in networkAdaperInformation)
-            {
-                $(#testlog2).$append("item");
-            }
-            */
-                
-            
-           
              
-            //$(#testlog).$content($networkAdaperInformation);      
-            //view.testCpp("", "");
+                 
+            }*/
+            
+            
+
+             //$(#testlog2).append("<br>----");
+
         });
 
         // <button #minimize> click handler
@@ -241,6 +269,8 @@
           // setup movable window handler:
           movableView();
 
+     
+
     </script>
 
 </head>
@@ -252,12 +282,31 @@
         <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"></div><div class="closeIcon" id="closeIconContainer"></div></div>
     </div>
 
+    <div id="page1" class="page">
+
+        <div>
+            This installer helps you to install the RaumfeldServer application onto an raumfeld device
+        </div>
+
+        <div>
+            Please select a Network-Adapter where to search for Raumfeld devices:
+            <select id="networkadapterSelectionComboBox"></select>
+        </div>
+
+        <div>
+            <button>Next</button>
+        </div>
+    
+    </div>
+
+    
+    
 
     <p>Running on <em #machine /> machine</p>
 
     <button #append>Append</button>
     <button #open>Open</button>
-    <select>
+    <select id="selectionTest">
         <option>First</option>
         <option>Second</option>
         <option>Third</option>
@@ -270,6 +319,16 @@
 
     <div #testlog></div>
     <div #testlog2></div>
+
+
+    <table resizeable>
+        <thead>
+            <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
+        </tbody>
+    </table>
 
 </body>
 </html>
