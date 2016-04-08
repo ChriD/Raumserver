@@ -1,7 +1,7 @@
 
 #include "raumserverInstallerBase.h"
 
-namespace RaumkernelInstaller
+namespace RaumserverInstaller
 {
 
     RaumserverInstallerBase::RaumserverInstallerBase()

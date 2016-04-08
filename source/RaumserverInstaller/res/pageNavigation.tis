@@ -1,0 +1,35 @@
+
+/**
+*
+*/
+namespace PageNavigation
+{        
+    var  pageCount = 3;
+
+    function init() 
+    {         
+        // when starting first page is visible, all others are hidden!
+        navigateTo(1);  
+
+        // we do have a "next" and a "back" button and if one of them are clicked we have to update the viewing page
+        $(#page1_viewSelectionPage).on("click", function() { PageNavigation.navigateTo(2); });
+        $(#page2_viewAdapterSelectionPage).on("click", function() { PageNavigation.navigateTo(1); });
+        $(#page2_viewInstallProgressPage).on("click", function() { PageNavigation.navigateTo(3); });
+        $(#page3_viewSelectionPage).on("click", function() { PageNavigation.navigateTo(2); });     
+    }
+
+
+    function navigateTo(_pageIdx)
+    {
+        for(var i=1; i<=pageCount; i++)
+        {
+            eval("$(#page" + i + ").hide()");
+        }
+         eval("$(#page" + _pageIdx + ").show()");
+    }
+
+  
+
+    
+
+ }

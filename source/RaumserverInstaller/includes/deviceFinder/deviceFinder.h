@@ -29,7 +29,7 @@
 #include "raumserverInstallerBase.h"
 
 
-namespace RaumkernelInstaller
+namespace RaumserverInstaller
 {
     namespace DeviceFinder
     {
@@ -39,6 +39,8 @@ namespace RaumkernelInstaller
             public:
                 DeviceFinder();
                 ~DeviceFinder();
+
+                virtual void init();
 
             private:
 

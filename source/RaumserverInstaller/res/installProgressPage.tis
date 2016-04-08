@@ -1,0 +1,13 @@
+
+/**
+*
+*/
+namespace InstallProgressPage
+{        
+  
+    function init() 
+    {         
+       // TODO          
+    }
+
+ }

@@ -29,7 +29,7 @@
 #include <logger/logger.h>
 
 
-namespace RaumkernelInstaller
+namespace RaumserverInstaller
 {
     class RaumserverInstallerBase
     {
@@ -40,7 +40,7 @@ namespace RaumkernelInstaller
             EXPORT void setLogObject(std::shared_ptr<Raumkernel::Log::Log> _log);
             EXPORT std::shared_ptr<Raumkernel::Log::Log> getLogObject();
 
-        private:
+        protected:
             std::shared_ptr<Raumkernel::Log::Log> logObject;
 
             EXPORT virtual void logDebug(const std::string &_log, const std::string &_location);

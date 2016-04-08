@@ -1,0 +1,55 @@
+
+/**
+* functions which contains to the network selection
+*/
+namespace NetworkAdapterSelection 
+{        
+    /**
+    * Fills the networkr adapter selection combo box with the items got from the backend
+    */
+    function fillNetworkAdapterList() 
+    {         
+        var networkAdaperInformation = view.getNetworkAdapterInformation().toString();            
+        var networkAdaperInformationJsonsObject = parseData(networkAdaperInformation);
+        var networkAdapterInformationArray = networkAdaperInformationJsonsObject.propertyAt("networkAdapterInformations");
+        addNetworkAdapters(networkAdapterInformationArray);
+    }
+
+    /**
+    * Adds a network adapter information information list to the network Choosement list
+    */
+    function addNetworkAdapters(_networkAdapterInformationArray) 
+    {   
+        var selected = true;
+        // run through the given array which consists of a list of networkAdapter Information objects
+        for (var arrayPosition in _networkAdapterInformationArray)
+        {                 
+            // get the "networkAdapter" object of the array position                  
+            var networkAdapterInfoObject = arrayPosition.propertyAt("networkAdapter");             
+            addNetworkAdapter(networkAdapterInfoObject, selected);
+            selected = false;
+        }                                              
+    }
+
+    /**
+    * Adds one network adapter information to the network Choosement combo box
+    */
+    function addNetworkAdapter(_networkAdapterInformationObject, _setSelected) 
+    {   
+        var option = new Element("option", _networkAdapterInformationObject.propertyAt("name").toString());                                  
+        option.attributes["value"] = _networkAdapterInformationObject.propertyAt("id").toString();
+        $(#networkadapterSelectionComboBox).options.append(option);  
+        if(_setSelected)               
+            $(#networkadapterSelectionComboBox).value = option.attributes["value"];      
+                
+    }   
+    
+    /**
+    * Adapter selected
+    */
+    function selectAdapter(_adapterId) 
+    { 
+        view.selectNetworkAdapter(_adapterId);
+    }
+             
+}

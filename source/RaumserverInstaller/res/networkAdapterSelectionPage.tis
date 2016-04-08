@@ -1,0 +1,19 @@
+
+/**
+* functions which contains to the network selection page
+*/
+namespace NetworkAdapterSelectionPage
+{        
+
+    function init() 
+    {         
+        NetworkAdapterSelection.fillNetworkAdapterList();
+        // select the first adapter we have loaded
+        NetworkAdapterSelection.selectAdapter($(select#networkadapterSelectionComboBox).value)
+
+        // when the adapter is changed by the user we have to notify the backend
+        var btn = $(select#networkadapterSelectionComboBox);
+        btn.on("change", function() { NetworkAdapterSelection.selectAdapter($(select#networkadapterSelectionComboBox).value) });          
+    }
+
+ }

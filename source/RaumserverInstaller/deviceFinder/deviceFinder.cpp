@@ -2,7 +2,7 @@
 #include "deviceFinder/deviceFinder.h"
 
 
-namespace RaumkernelInstaller
+namespace RaumserverInstaller
 {
     namespace DeviceFinder
     {
@@ -13,6 +13,11 @@ namespace RaumkernelInstaller
 
 
         DeviceFinder::~DeviceFinder()
+        {
+        }
+
+
+        void DeviceFinder::init()
         {
         }
 

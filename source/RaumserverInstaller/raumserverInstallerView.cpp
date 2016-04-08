@@ -5,63 +5,54 @@
 //http://sciter.com/developers/embedding-principles/
 //http://www.terrainformatica.com/2012/11/sciter-ui-application-architecture/
 
-sciter::value frame::getNetworkAdapterInformation()
+
+frame::frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) 
 {
-    //json::value returnValue;    
-
-    Json::Value root, networkAdapter;
-    //std::string my_encoding = root.get("my-encoding", "UTF-32").asString();
-
-
-   // const Json::Value my_plugins = root["my-plug-ins"];
-    //for (int index = 0; index < my_plugins.size(); ++index)  // Iterates over the sequence elements.
-    //    yourlib::loadPlugIn(my_plugins[index].asString());
-
- //   yourlib::setIndentLength(root["my-indent"].get("length", 3).asInt());
- //   yourlib::setIndentUseSpace(root["my-indent"].get("use_space", true).asBool());
-
-    // ...
-    // At application shutdown to make the new configuration document:
-    // Since Json::Value has implicit constructor for all value types, it is not
-    // necessary to explicitly construct the Json::Value object:
-    //root["networkAdapterInformations"
-
-    networkAdapter["networkAdapter"]["name"] = "Adapter 1";
-    networkAdapter["networkAdapter"]["subnetMask"] = "255.0.0.0";
-    root["networkAdapterInformations"].append(networkAdapter);
-
-    networkAdapter["networkAdapter"]["name"] = "Adapter 2";
-    networkAdapter["networkAdapter"]["subnetMask"] = "255.0.0.0";
-    root["networkAdapterInformations"].append(networkAdapter);
-
-    
-    //returnValue.set_item("Name", sciter::value("Test1"));
-    //returnValue.set_item("SubnetMask:", sciter::value("255.0.0.0"));
-
-    auto test = root.toStyledString();
-
-    std::string str = root.toStyledString();
-
-    //j//son::value
-
-
-    return root.toStyledString();
-    //return sciter::value(root.toStyledString());
+    raumfeldDeviceFinder.init();
+    raumfeldDeviceFinder.loadNetworkAdaptersInformation();
 }
 
 
+sciter::value frame::getNetworkAdapterInformation()
+{
+    Json::Value root, networkAdapter;
+    auto adaptersInfo = raumfeldDeviceFinder.getNetworkAdaptersInformation();
+
+    for (auto adapterInfo : adaptersInfo)
+    {
+        networkAdapter["networkAdapter"]["name"] = adapterInfo.name;
+        networkAdapter["networkAdapter"]["address"] = adapterInfo.address;
+        networkAdapter["networkAdapter"]["id"] = adapterInfo.id;
+        root["networkAdapterInformations"].append(networkAdapter);
+    }
+
+    if (!adaptersInfo.size())
+    {
+        networkAdapter["networkAdapter"]["name"] = "No network adapter available";
+        networkAdapter["networkAdapter"]["address"] = "";
+        networkAdapter["networkAdapter"]["id"] = 0;
+        root["networkAdapterInformations"].append(networkAdapter);
+    }
+    
+    return root.toStyledString();    
+}
+
+
+sciter::value frame::selectNetworkAdapter(sciter::value _adapterId)
+{            
+
+    raumfeldDeviceFinder.selectAdapterId(_adapterId.get(0));
+    return true;
+}
+
+/*
 sciter::value frame::testCpp(json::value param1, json::value param2)
 {
     //window* pw = ...    
     this->call_function("NetworkAdapterSelection.addNetworkAdapter", "Test1");
     this->call_function("NetworkAdapterSelection.addNetworkAdapter", "Test2");    
 
-    /*
-    WINDOWPLACEMENT wp = {};
-    wp.length = sizeof (WINDOWPLACEMENT);
-    //GetWindowPlacement(Sess.M_hdl, &wp);
-    const sciter::value arr[4] = { wp.rcNormalPosition.left, wp.rcNormalPosition.top, wp.rcNormalPosition.right - wp.rcNormalPosition.left, wp.rcNormalPosition.bottom - wp.rcNormalPosition.top };
-    return sciter::value(arr);
-    */
+
     return sciter::value(1);
 }
+*/

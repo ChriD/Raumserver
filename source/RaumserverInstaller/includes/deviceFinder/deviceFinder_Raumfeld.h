@@ -26,21 +26,44 @@
 #ifndef RAUMKSERVERINSTALLER_DEVICEFINDER_RF_H
 #define RAUMKSERVERINSTALLER_DEVICEFINDER_RF_H
 
+#include <list>
+
 #include "deviceFinder/deviceFinder.h"
 
+#include <OpenHome/Net/Cpp/OhNet.h>
+#include <OpenHome/Net/Cpp/CpDevice.h>
+#include <OpenHome/Net/Cpp/CpDeviceDv.h>
+#include <OpenHome/Net/Cpp/CpDeviceUpnp.h>
 
-namespace RaumkernelInstaller
+
+namespace RaumserverInstaller
 {
     namespace DeviceFinder
     {
+        struct NetworkAdaperInformation
+        {
+            std::string name;
+            std::string fullName;
+            TIpAddress address;
+            std::uint16_t id;
+        };
 
-        class DeviceFinder_Raumfeld : DeviceFinder
+
+        class DeviceFinder_Raumfeld : public DeviceFinder
         {
             public:
                 DeviceFinder_Raumfeld();
                 ~DeviceFinder_Raumfeld();
 
-            private:
+                virtual void init() override;
+                virtual void startSearchingForDevices();
+                virtual void selectAdapterId(const std::uint8_t &_adapterId);
+                virtual void loadNetworkAdaptersInformation();
+                virtual std::vector<NetworkAdaperInformation> getNetworkAdaptersInformation();                
+
+            protected:
+                std::vector<NetworkAdaperInformation> networkAdapterInfomationList;
+                std::uint8_t selectedAdapterId;
 
         };
 

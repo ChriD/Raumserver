@@ -1,0 +1,28 @@
+
+/**
+*
+*/
+namespace DeviceSelectionPage
+{        
+  
+    function init() 
+    {         
+       // TODO  
+         var records = new Array(500);
+    
+            for(var i = 0; i < records.length; ++i)
+              records[i] = {index: i, caption:"Item", status:"" };
+
+            var n = records.length;
+            var p = 0;
+       
+            var vlist = $(table);
+    
+            // feed it by these records
+            vlist.value = records;
+
+            // setting first item as current:    
+            vlist.tbody.currentIndex = 0;      
+    }
+
+ }

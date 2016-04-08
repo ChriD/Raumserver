@@ -31,6 +31,24 @@
     <None Include="res\installer.htm">
       <Filter>res</Filter>
     </None>
+    <None Include="res\networkAdapterSelection.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\networkAdapterSelectionPage.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\deviceSelectionPage.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\global.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\installProgressPage.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\pageNavigation.tis">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">

@@ -94,6 +94,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\RaumserverInstaller\libs\windows_x86\VS2013\Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ohNetCore.lib;ohNetProxies.lib;ohNetDevices.lib;Ws2_32.lib;Dbghelp.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>call $(ProjectDir)pack-resources.bat</Command>
@@ -129,6 +131,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)\RaumserverInstaller\\libs\windows_x86\VS2013\Release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ohNetCore.lib;ohNetProxies.lib;ohNetDevices.lib;Ws2_32.lib;Dbghelp.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>call $(ProjectDir)pack-resources.bat</Command>
@@ -165,10 +169,16 @@
     <ClCompile Include="raumserverInstallerView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\deviceSelectionPage.tis" />
+    <None Include="res\global.tis" />
     <None Include="res\installer.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="res\installProgressPage.tis" />
     <None Include="res\moveable-view.tis" />
+    <None Include="res\networkAdapterSelection.tis" />
+    <None Include="res\networkAdapterSelectionPage.tis" />
+    <None Include="res\pageNavigation.tis" />
     <None Include="res\resizeable.tis" />
   </ItemGroup>
   <ItemGroup>

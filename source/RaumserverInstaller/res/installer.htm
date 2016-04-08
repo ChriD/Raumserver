@@ -104,111 +104,60 @@
                 margin: 10px;
             }
 
+          
+
 
         div {
             border: 1px solid lightgray;
         }
     </style>
     <script type="text/tiscript">
+              
+        // include some global functions  
+        include "global.tis";
+        // include script for moveable window
+        include "moveable-view.tis";
+        // include the scripts for the 'first' page which is the network adapter selection page
+        include "networkAdapterSelection.tis"
+        include "networkAdapterSelectionPage.tis"
+        // include the scripts for the 'second' page which is the device selection page  
+        include "deviceSelectionPage.tis"
+         // include the scripts for the 'second' page which is the device selection page  
+        include "installProgressPage.tis"
+        // page navigation
+        include "pageNavigation.tis"
+        
 
-           include "moveable-view.tis";
+        const body = $(body);
 
-              const body = $(body);
+       
 
-        self.ready = function() // html loaded - DOM ready
+        // when ths document is loaded ad the DO is ready we can do our stuff 
+        self.ready = function()
         {
           view.caption = "Raumfeld Installer";
 
           // positioning the window in the middle of the screen:
-          var (sx,sy,sw,sh) = view.screenBox(#workarea,#rectw); // gettting screen/monitor size
+          var (sx,sy,sw,sh) = view.screenBox(#workarea,#rectw); 
           var (w,h) = self.$(body).box(#dimension);
           w += w/2; h += h/2; // to accomodate expanding animation
 
           view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
 
           body.timer(40, function() { body.attributes.addClass("shown") });
-          //$(span#platform).text = System.PLATFORM;
-          //$(span#arch).text = view.architecture(); // calling native function defined in ulayered.cpp
 
-          //var networkAdaperInformation = view.getNetworkAdapterInformation();
-          //var networkAdaperInformationParsed = JSON.parse(networkAdaperInformation);
+            // init page navigation
+            PageNavigation.init();
 
-          var records = new Array(500);
-    
-            for(var i = 0; i < records.length; ++i)
-              records[i] = {index: i, caption:"Item", status:"" };
+            // initialize the networkAdapter Selection Page
+            NetworkAdapterSelectionPage.init();
 
-            var n = records.length;
-            var p = 0;
-       
-            var vlist = $(table);
-    
-            // feed it by these records
-            vlist.value = records;
-
-            // setting first item as current:    
-            vlist.tbody.currentIndex = 0;
-
-
-            NetworkAdapterSelection.fillNetworkAdapterList();
-
-            var btn = $(select#networkadapterSelectionComboBox);
-            btn.on("change", function() { $(#testlog2).append("<br>Selected"); });
-
-            var btn2 = $(select#selectionTest);
-            btn2.on("change", function() { $(#testlog2).append("<br>Selected"); });            
-
-
+            // initialize the deviceSelection Page
+            DeviceSelectionPage.init()
         }
 
 
-
-
-
-        /**
-        * functions which contains to the network selection page
-        */
-        namespace NetworkAdapterSelection 
-        {
-
-             
-            /**
-            * Fills the netwokr adapter selection combo box with the items got from the backend
-            */
-            function fillNetworkAdapterList() 
-            { 
-                var networkAdaperInformation = view.getNetworkAdapterInformation().toString();            
-                var networkAdaperInformationJsonsObject = parseData(networkAdaperInformation);
-                var networkAdapterInformationArray = networkAdaperInformationJsonsObject.propertyAt("networkAdapterInformations");
-                addNetworkAdapters(networkAdapterInformationArray);
-            }
-
-            /**
-            * Adds a network adapter information information list to the network Choosement list
-            */
-            function addNetworkAdapters(_networkAdapterInformationArray) 
-            {   
-                // run through the given array which consists of a list of networkAdapter Information objects
-                for (var arrayPosition in _networkAdapterInformationArray)
-                {                 
-                    // get the "networkAdapter" object pf the array position                  
-                    var networkAdapterInfoObject = arrayPosition.propertyAt("networkAdapter");             
-                    addNetworkAdapter(networkAdapterInfoObject);
-                }                                    
-            }
-
-            /**
-            * Adds one network adapter information to the network Choosement combo box
-            */
-            function addNetworkAdapter(_networkAdapterInformationObject) 
-            {   
-                var option = new Element("option", _networkAdapterInformationObject.propertyAt("name").toString());          
-                $(#networkadapterSelectionComboBox).options.append(option);     
-            }        
-        }
-
-
-        // <button #close> click handler
+     // <button #close> click handler
         $(#close).on("click",function()
         {
           body.onAnimationEnd = function() { view.close(); };
@@ -221,43 +170,7 @@
           $(#testlog).$content("Close clicked");
           body.onAnimationEnd = function() { view.close(); };
           body.attributes.removeClass("shown");
-        });
-
-        // <button #minimize> click handler
-        $(#minimize).on("click",function()
-        {
-
-
-            var networkAdaperInformation = view.getNetworkAdapterInformation().toString();            
-            var networkAdaperInformationJsonsObject = parseData(networkAdaperInformation);              
-            var networkAdapterInformationArray = networkAdaperInformationJsonsObject.propertyAt("networkAdapterInformations");
-
-            // add the adapters given by the backend to the selectable combo box
-            NetworkAdapterSelection.addNetworkAdapters(networkAdapterInformationArray);
-
-           // $(#testlog).value = String.printf("%v",networkAdaperInformation);
-      
-                
-            /*
-            for (var adapterObject in networkAdapterInformationArray)
-            {
-                //$(#testlog2).append(adapterObject.toString());
-
-                adapterObject.show(); 
-                var test = adapterObject.propertyAt("networkAdapter");
-                test.show();
-
-                var name = test.propertyAt("name");
-                var subentMask = test.subnetMask;
-             
-                 
-            }*/
-            
-            
-
-             //$(#testlog2).append("<br>----");
-
-        });
+        });       
 
         // <button #minimize> click handler
         $(#minimizeIconContainer).on("click",function()
@@ -282,6 +195,7 @@
         <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"></div><div class="closeIcon" id="closeIconContainer"></div></div>
     </div>
 
+    <!-- First page -->
     <div id="page1" class="page">
 
         <div>
@@ -294,41 +208,61 @@
         </div>
 
         <div>
-            <button>Next</button>
+            <button id="page1_viewSelectionPage">Next</button>
         </div>
     
     </div>
 
-    
-    
 
-    <p>Running on <em #machine /> machine</p>
+    <!-- Second page -->
+    <div id="page2" class="page">
 
-    <button #append>Append</button>
-    <button #open>Open</button>
-    <select id="selectionTest">
-        <option>First</option>
-        <option>Second</option>
-        <option>Third</option>
-    </select>
+        <div>
+            Please wait while installer is trying to find proper devices!
+        </div>   
 
-    <footer>
-        <button #minimize>Minimize Window</button>
-        <button #close>Close Window</button>
-    </footer>
+        <div>
+            <table resizeable>
+                <thead>
+                    <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <button id="page2_viewAdapterSelectionPage">Prev</button>
+            <button id="page2_viewInstallProgressPage">Next</button>
+        </div>
+
+    </div>
+
+
+    <!-- Third page -->
+    <div id="page3" class="page">
+
+        <div>
+            Please wait while installing on device!
+        </div>
+
+        <div>
+            Install progress bar           
+        </div>
+
+        <div>
+            <button id="page3_viewSelectionPage">Prev</button>
+            <button id="close">Close</button>
+        </div>
+
+    </div>
 
     <div #testlog></div>
     <div #testlog2></div>
 
 
-    <table resizeable>
-        <thead>
-            <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
-        </thead>
-        <tbody>
-            <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
-        </tbody>
-    </table>
+   
 
 </body>
 </html>

@@ -1,0 +1,12 @@
+function Element.hide()
+{
+	this.attributes["hidden"] = true;
+}
+function Element.show()
+{
+	this.attributes["hidden"] = undefined;
+}
+function Element.toggle()
+{
+	this.attributes["hidden"] = this.attributes["hidden"] ? undefined : true;
+}
