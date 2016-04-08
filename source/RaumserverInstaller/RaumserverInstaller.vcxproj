@@ -169,6 +169,8 @@
     <ClCompile Include="raumserverInstallerView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\application.css" />
+    <None Include="res\application.tis" />
     <None Include="res\deviceSelectionPage.tis" />
     <None Include="res\global.tis" />
     <None Include="res\installer.htm">
@@ -179,7 +181,9 @@
     <None Include="res\networkAdapterSelection.tis" />
     <None Include="res\networkAdapterSelectionPage.tis" />
     <None Include="res\pageNavigation.tis" />
+    <None Include="res\resizeable.css" />
     <None Include="res\resizeable.tis" />
+    <None Include="res\vgrid.css" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\deviceFinder\deviceFinder.h" />

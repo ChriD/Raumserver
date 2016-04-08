@@ -1,269 +1,88 @@
-<html custom-frame="layered" resizeable>
-<head>
-    <title></title>
-    <style>
+<html custom-frame="layered">
+    <head>
+        <title></title>
+        <style>
+            @import url(vgrid.css);
+            @import url(application.css);       
+        </style>
 
-        @import url(vgrid.css);
+        <script type="text/tiscript">                             
+            // include main script for this application
+            // this script will include all other scripts used to keep the html file clear
+            include "application.tis"        
+        </script>
+    </head>
+    <body>
 
-        html {
-            background: transparent;
-        }
-
-
-        table {
-            style-set: vgrid;
-            // see vgrid.css width:*;
-            height: *;
-        }
-
-            table th:nth-child(2) {
-                width: *;
-            }
-
-            table th:last-child {
-                width: 8em;
-            }
-
-
-        body {
-            // will draw clock in between background and content layers border-radius:50%;
-            border: 1px solid black;
-            background: #1585b5;
-            //margin: *;
-            // flex margins will move the body in the mddle of the root //size: 500dip;
-            flow: vertical;
-            transform: scale(0.1);
-            // initially it is collapsed to center overflow:hidden;
-            font-size: 10pt;
-            font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
-            color: white;
-        }
-
-            body.shown {
-                transform: scale(1);
-                transition: transform(linear,300ms);
-            }
-
-            body.hidden {
-                transform: scale(0.1);
-                transition: transform(linear,300ms);
-            }
-
-            body > header {
-                text-align: center;
-                color: brown;
-                margin-top: 36dip;
-                font-weight: bold;
-            }
-
-            body > div.header {
-                background: white;
-                color: #808080;
-            }
-
-                body > div.header > div.left {
-                    float: left;
-                }
-
-                body > div.header > div.right {
-                    float: right;
-                    width: 105px;
-                }
-
-                body > div.header > div.left > h1.caption {
-                    margin: 10px;
-                }
-
-                body > div.header > div.right > div.closeIcon {
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-size: 24dip;
-                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
-                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
-                    fill: blue; /* defining default fill color of used SVG image */
-                    float: left;
-                    width: 50px;
-                    height: 50px;
-                }
-
-                body > div.header > div.right > div.minimizeIcon {
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-size: 24dip;
-                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
-                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
-                    fill: blue; /* defining default fill color of used SVG image */
-                    float: left;
-                    width: 50px;
-                    height: 50px;
-                }
-
-
-            body > div.page {
-                color: #FFFFFF;
-                margin: 10px;
-            }
-
-          
-
-
-        div {
-            border: 1px solid lightgray;
-        }
-    </style>
-    <script type="text/tiscript">
-              
-        // include some global functions  
-        include "global.tis";
-        // include script for moveable window
-        include "moveable-view.tis";
-        // include the scripts for the 'first' page which is the network adapter selection page
-        include "networkAdapterSelection.tis"
-        include "networkAdapterSelectionPage.tis"
-        // include the scripts for the 'second' page which is the device selection page  
-        include "deviceSelectionPage.tis"
-         // include the scripts for the 'second' page which is the device selection page  
-        include "installProgressPage.tis"
-        // page navigation
-        include "pageNavigation.tis"
-        
-
-        const body = $(body);
-
-       
-
-        // when ths document is loaded ad the DO is ready we can do our stuff 
-        self.ready = function()
-        {
-          view.caption = "Raumfeld Installer";
-
-          // positioning the window in the middle of the screen:
-          var (sx,sy,sw,sh) = view.screenBox(#workarea,#rectw); 
-          var (w,h) = self.$(body).box(#dimension);
-          w += w/2; h += h/2; // to accomodate expanding animation
-
-          view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
-
-          body.timer(40, function() { body.attributes.addClass("shown") });
-
-            // init page navigation
-            PageNavigation.init();
-
-            // initialize the networkAdapter Selection Page
-            NetworkAdapterSelectionPage.init();
-
-            // initialize the deviceSelection Page
-            DeviceSelectionPage.init()
-        }
-
-
-     // <button #close> click handler
-        $(#close).on("click",function()
-        {
-          body.onAnimationEnd = function() { view.close(); };
-          body.attributes.removeClass("shown");
-        });
-
-        // <button #close> click handler
-        $(#closeIconContainer).on("click",function()
-        {
-          $(#testlog).$content("Close clicked");
-          body.onAnimationEnd = function() { view.close(); };
-          body.attributes.removeClass("shown");
-        });       
-
-        // <button #minimize> click handler
-        $(#minimizeIconContainer).on("click",function()
-        {
-          //  $(#testlog).$content("Minimizes clicked");
-          view.state = View.WINDOW_MINIMIZED;
-        });
-
-          // setup movable window handler:
-          movableView();
-
-     
-
-    </script>
-
-</head>
-<body>
-
-    <!-- Header of installer -->
-    <div class="header">
-        <div class="left"><h1 class=" caption">Raumserver Installer</h1></div>
-        <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"></div><div class="closeIcon" id="closeIconContainer"></div></div>
-    </div>
-
-    <!-- First page -->
-    <div id="page1" class="page">
-
-        <div>
-            This installer helps you to install the RaumfeldServer application onto an raumfeld device
+        <!-- Header of installer -->
+        <div class="header">
+            <div class="left"><h1 class=" caption">Raumserver Installer</h1></div>
+            <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"></div><div class="closeIcon" id="closeIconContainer"></div></div>
         </div>
 
-        <div>
-            Please select a Network-Adapter where to search for Raumfeld devices:
-            <select id="networkadapterSelectionComboBox"></select>
-        </div>
+        <!-- First page -->
+        <div id="page1" class="page">
 
-        <div>
-            <button id="page1_viewSelectionPage">Next</button>
-        </div>
+            <div>
+                This installer helps you to install the RaumfeldServer application onto an raumfeld device
+            </div>
+
+            <div>
+                Please select a Network-Adapter where to search for Raumfeld devices:
+                <select id="networkadapterSelectionComboBox"></select>
+            </div>
+
+            <div>
+                <button id="page1_viewSelectionPage">Next</button>
+            </div>
     
-    </div>
-
-
-    <!-- Second page -->
-    <div id="page2" class="page">
-
-        <div>
-            Please wait while installer is trying to find proper devices!
-        </div>   
-
-        <div>
-            <table resizeable>
-                <thead>
-                    <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
-                </tbody>
-            </table>
         </div>
 
-        <div>
-            <button id="page2_viewAdapterSelectionPage">Prev</button>
-            <button id="page2_viewInstallProgressPage">Next</button>
+
+        <!-- Second page -->
+        <div id="page2" class="page">
+
+            <div>
+                Please wait while installer is trying to find proper devices!
+            </div>   
+
+            <div>
+                <table resizeable>
+                    <thead>
+                        <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <button id="page2_viewAdapterSelectionPage">Prev</button>
+                <button id="page2_viewInstallProgressPage">Next</button>
+            </div>
+
         </div>
 
-    </div>
 
+        <!-- Third page -->
+        <div id="page3" class="page">
 
-    <!-- Third page -->
-    <div id="page3" class="page">
+            <div>
+                Please wait while installing on device!
+            </div>
 
-        <div>
-            Please wait while installing on device!
+            <div>
+                Install progress bar           
+            </div>
+
+            <div>
+                <button id="page3_viewSelectionPage">Prev</button>
+                <button id="page3_close">Close</button>
+            </div>
+
         </div>
 
-        <div>
-            Install progress bar           
-        </div>
-
-        <div>
-            <button id="page3_viewSelectionPage">Prev</button>
-            <button id="close">Close</button>
-        </div>
-
-    </div>
-
-    <div #testlog></div>
-    <div #testlog2></div>
-
-
-   
-
-</body>
+    </body>
 </html>
 

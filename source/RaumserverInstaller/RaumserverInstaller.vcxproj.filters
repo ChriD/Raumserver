@@ -49,6 +49,18 @@
     <None Include="res\pageNavigation.tis">
       <Filter>res</Filter>
     </None>
+    <None Include="res\application.tis">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\application.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\resizeable.css">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\vgrid.css">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">

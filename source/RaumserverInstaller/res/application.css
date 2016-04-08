@@ -1,0 +1,105 @@
+html {
+            background: transparent;
+        }
+
+
+        table {
+            style-set: vgrid;
+            // see vgrid.css width:*;
+            height: *;
+        }
+
+            table th:nth-child(2) {
+                width: *;
+            }
+
+            table th:last-child {
+                width: 8em;
+            }
+
+
+        body {
+            // will draw clock in between background and content layers border-radius:50%;
+            border: 1px solid black;
+            background: #1585b5;
+            //margin: *;
+            // flex margins will move the body in the mddle of the root //size: 500dip;
+            flow: vertical;
+            transform: scale(0.1);
+            // initially it is collapsed to center overflow:hidden;
+            font-size: 10pt;
+            font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
+            color: white;
+        }
+
+            body.shown {
+                transform: scale(1);
+                transition: transform(linear,300ms);
+            }
+
+            body.hidden {
+                transform: scale(0.1);
+                transition: transform(linear,300ms);
+            }
+
+            body > header {
+                text-align: center;
+                color: brown;
+                margin-top: 36dip;
+                font-weight: bold;
+            }
+
+            body > div.header {
+                background: white;
+                color: #808080;
+            }
+
+                body > div.header > div.left {
+                    float: left;
+                }
+
+                body > div.header > div.right {
+                    float: right;
+                    width: 105px;
+                }
+
+                body > div.header > div.left > h1.caption {
+                    margin: 10px;
+                }
+
+                body > div.header > div.right > div.closeIcon {
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 24dip;
+                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
+                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
+                    fill: blue; /* defining default fill color of used SVG image */
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                }
+
+                body > div.header > div.right > div.minimizeIcon {
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 24dip;
+                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
+                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
+                    fill: blue; /* defining default fill color of used SVG image */
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                }
+
+
+            body > div.page {
+                color: #FFFFFF;
+                margin: 10px;
+            }
+
+          
+
+
+        div {
+            border: 1px solid lightgray;
+        }

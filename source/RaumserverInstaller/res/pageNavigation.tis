@@ -12,13 +12,17 @@ namespace PageNavigation
         navigateTo(1);  
 
         // we do have a "next" and a "back" button and if one of them are clicked we have to update the viewing page
+        // we'll do this with key identifiers on each view
         $(#page1_viewSelectionPage).on("click", function() { PageNavigation.navigateTo(2); });
         $(#page2_viewAdapterSelectionPage).on("click", function() { PageNavigation.navigateTo(1); });
         $(#page2_viewInstallProgressPage).on("click", function() { PageNavigation.navigateTo(3); });
-        $(#page3_viewSelectionPage).on("click", function() { PageNavigation.navigateTo(2); });     
+        $(#page3_viewSelectionPage).on("click", function() { PageNavigation.navigateTo(2); });             
     }
 
 
+    /**
+    * use this function to navigate between the 'DIV' pages
+    */
     function navigateTo(_pageIdx)
     {
         for(var i=1; i<=pageCount; i++)

@@ -1,0 +1,79 @@
+
+// include some global functions  
+include "global.tis";
+// include script for moveable window
+include "moveable-view.tis";
+// include the scripts for the 'first' page which is the network adapter selection page
+include "networkAdapterSelection.tis"
+include "networkAdapterSelectionPage.tis"
+// include the scripts for the 'second' page which is the device selection page  
+include "deviceSelectionPage.tis"
+    // include the scripts for the 'third' page which is the installation progress page  
+include "installProgressPage.tis"        
+// add simple page navigation
+include "pageNavigation.tis"
+
+/**
+*
+*/
+namespace Application
+{       
+    const body = $(body); 
+
+    function init() 
+    {              
+        // do position of window (center application window)
+        Application.initAppWindow();
+           
+        // init the simple  page navigation
+        PageNavigation.init();
+        // initialize the networkAdapter Selection Page
+        NetworkAdapterSelectionPage.init();
+        // initialize the deviceSelection Page
+        DeviceSelectionPage.init()
+        // initialize the install progress Page
+        InstallProgressPage.init();     
+      
+        $(#page3_close).on("click",function(){ Application.close(); });
+
+        movableView();
+              
+    }
+
+
+    function initAppWindow()
+    {
+        // positioning the window in the middle of the screen:
+        var (sx,sy,sw,sh) = view.screenBox(#workarea,#rectw); // gettting screen/monitor size
+        var (w,h) = self.$(body).box(#dimension); 
+        w += w/2; h += h/2; // to accomodate expanding animation
+    
+        view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
+
+        body.timer(40, function() { body.attributes.addClass("shown") });
+    }
+
+
+    function minimize()
+    {
+        view.state = View.WINDOW_MINIMIZED;
+    }
+
+
+    function close()
+    {
+        body.onAnimationEnd = function() { view.close(); };
+        body.attributes.removeClass("shown");
+    }
+
+ }
+
+
+// when ths document is loaded ad the DO is ready we can do our stuff 
+self.ready = function()
+{
+    view.caption = "Raumfeld Installer";          
+    Application.init();          
+}
+
+       
