@@ -8,13 +8,14 @@
 
 frame::frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) 
 {
-    raumfeldDeviceFinder.init();
-    raumfeldDeviceFinder.loadNetworkAdaptersInformation();
+    //raumfeldDeviceFinder.init();
+    //raumfeldDeviceFinder.loadNetworkAdaptersInformation();
 }
 
 
 sciter::value frame::getNetworkAdapterInformation()
 {
+    /*
     Json::Value root, networkAdapter;
     auto adaptersInfo = raumfeldDeviceFinder.getNetworkAdaptersInformation();
 
@@ -35,15 +36,26 @@ sciter::value frame::getNetworkAdapterInformation()
     }
     
     return root.toStyledString();    
+    */
+    return "";
 }
 
 
 sciter::value frame::selectNetworkAdapter(sciter::value _adapterId)
 {            
 
-    raumfeldDeviceFinder.selectAdapterId(_adapterId.get(0));
+    //raumfeldDeviceFinder.selectAdapterId(_adapterId.get(0));
     return true;
 }
+
+
+sciter::value frame::startSearchingForDevices()
+{
+
+    //raumfeldDeviceFinder.startSearchingForDevices();
+    return true;
+}
+
 
 /*
 sciter::value frame::testCpp(json::value param1, json::value param2)

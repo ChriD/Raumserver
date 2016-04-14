@@ -30,6 +30,10 @@ namespace PageNavigation
             eval("$(#page" + i + ").hide()");
         }
          eval("$(#page" + _pageIdx + ").show()");
+
+         if(_pageIdx == 1) NetworkAdapterSelectionPage.pageActivated();
+         if(_pageIdx == 2) DeviceSelectionPage.pageActivated();
+         if(_pageIdx == 3) InstallProgressPage.pageActivated();
     }
 
   

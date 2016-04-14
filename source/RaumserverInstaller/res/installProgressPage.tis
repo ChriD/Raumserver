@@ -10,4 +10,9 @@ namespace InstallProgressPage
        // TODO          
     }
 
+
+    function pageActivated()
+    {
+    }
+
  }

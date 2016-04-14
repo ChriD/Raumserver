@@ -158,14 +158,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="deviceFinder\deviceFinder.cpp" />
-    <ClCompile Include="deviceFinder\deviceFinder_Raumfeld.cpp" />
     <ClCompile Include="includes\sciter\sciter-win-main.cpp" />
-    <ClCompile Include="json\jsoncpp.cpp" />
-    <ClCompile Include="logger\logger.cpp" />
-    <ClCompile Include="logger\loggerAdapter.cpp" />
     <ClCompile Include="raumserverInstaller.cpp" />
-    <ClCompile Include="raumserverInstallerBase.cpp" />
     <ClCompile Include="raumserverInstallerView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,29 +180,7 @@
     <None Include="res\vgrid.css" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\deviceFinder\deviceFinder.h" />
-    <ClInclude Include="includes\deviceFinder\deviceFinder_Raumfeld.h" />
-    <ClInclude Include="includes\exception\exception.h" />
-    <ClInclude Include="includes\json\json-forwards.h" />
-    <ClInclude Include="includes\json\json.h" />
-    <ClInclude Include="includes\logger\logger.h" />
-    <ClInclude Include="includes\logger\loggerAdapter.h" />
-    <ClInclude Include="includes\logger\loggerBase.h" />
-    <ClInclude Include="includes\os\os.h" />
-    <ClInclude Include="includes\raumserverInstallerBase.h" />
     <ClInclude Include="includes\raumserverInstallerView.h" />
-    <ClInclude Include="includes\signals\config.hpp" />
-    <ClInclude Include="includes\signals\connection.hpp" />
-    <ClInclude Include="includes\signals\connections.hpp" />
-    <ClInclude Include="includes\signals\signal.hpp" />
-    <ClInclude Include="includes\signals\signals.hpp" />
-    <ClInclude Include="includes\tools\commonUtil.h" />
-    <ClInclude Include="includes\tools\dateUtil.h" />
-    <ClInclude Include="includes\tools\numUtil.h" />
-    <ClInclude Include="includes\tools\stringUtil.h" />
-    <ClInclude Include="includes\tools\uriUtil.h" />
-    <ClInclude Include="includes\tools\urlParser.h" />
-    <ClInclude Include="includes\tools\versionInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

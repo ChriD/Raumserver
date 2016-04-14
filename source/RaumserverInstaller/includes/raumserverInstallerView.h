@@ -25,10 +25,7 @@
 #ifndef RAUMKSERVERINSTALLER_H
 #define RAUMKSERVERINSTALLER_H
 
-#include <signals/signals.hpp>
 #include "sciter-x-window.hpp"
-#include "json/json.h"
-#include "deviceFinder/deviceFinder_Raumfeld.h"
 
 static RECT wrc = { 100, 100, 600, 400 };
 
@@ -39,14 +36,15 @@ class frame : public sciter::window
 
         sciter::value getNetworkAdapterInformation();
         sciter::value selectNetworkAdapter(sciter::value _adapterId);
+        sciter::value startSearchingForDevices();
 
         BEGIN_FUNCTION_MAP
             FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
             FUNCTION_1("selectNetworkAdapter", selectNetworkAdapter);              
+            FUNCTION_0("startSearchingForDevices", startSearchingForDevices);
         END_FUNCTION_MAP
 
-    protected:
-        RaumserverInstaller::DeviceFinder::DeviceFinder_Raumfeld raumfeldDeviceFinder;
+    protected:        
 
 
 };

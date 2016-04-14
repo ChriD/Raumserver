@@ -25,4 +25,11 @@ namespace DeviceSelectionPage
             vlist.tbody.currentIndex = 0;      
     }
 
+
+    function pageActivated()
+    {
+        // when the page is beeing activated we do start the search for devices we can install the raumserver onto
+        view.startSearchingForDevices();
+    }
+
  }

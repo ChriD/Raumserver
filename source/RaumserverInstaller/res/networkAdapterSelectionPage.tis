@@ -16,4 +16,9 @@ namespace NetworkAdapterSelectionPage
         btn.on("change", function() { NetworkAdapterSelection.selectAdapter($(select#networkadapterSelectionComboBox).value) });          
     }
 
+
+    function pageActivated()
+    {
+    }
+
  }
