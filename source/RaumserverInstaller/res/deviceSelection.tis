@@ -51,8 +51,9 @@ namespace DeviceSelection
     }
 
 
-    function removeDeviceInfo()
+    function removeDeviceInfo(_ip, _deviceInfo)
     {
+         // TODO: @@@
     }
 
 
