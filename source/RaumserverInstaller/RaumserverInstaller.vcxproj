@@ -67,7 +67,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
-    <IncludePath>includes;includes\sciter;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\..\RaumserverInstallerLib\source\includes;includes;includes\sciter;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -76,6 +76,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\..\bin\</OutDir>
+    <IncludePath>includes\sciter;includes;..\..\..\RaumserverInstallerLib\source\includes;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -94,8 +95,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\RaumserverInstaller\libs\windows_x86\VS2013\Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ohNetCore.lib;ohNetProxies.lib;ohNetDevices.lib;Ws2_32.lib;Dbghelp.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\RaumserverInstallerLib\source\Debug\;$(SolutionDir)\RaumserverInstaller\libs\windows_x86\VS2013\Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raumserverInstaller.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>call $(ProjectDir)pack-resources.bat</Command>
@@ -131,8 +132,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)\RaumserverInstaller\\libs\windows_x86\VS2013\Release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ohNetCore.lib;ohNetProxies.lib;ohNetDevices.lib;Ws2_32.lib;Dbghelp.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\RaumserverInstallerLib\source\Release\;$(SolutionDir)\RaumserverInstaller\\libs\windows_x86\VS2013\Release\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raumserverInstaller.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>call $(ProjectDir)pack-resources.bat</Command>
@@ -159,12 +160,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="includes\sciter\sciter-win-main.cpp" />
+    <ClCompile Include="json\jsoncpp.cpp" />
     <ClCompile Include="raumserverInstaller.cpp" />
     <ClCompile Include="raumserverInstallerView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\application.css" />
     <None Include="res\application.tis" />
+    <None Include="res\deviceSelection.tis" />
     <None Include="res\deviceSelectionPage.tis" />
     <None Include="res\global.tis" />
     <None Include="res\installer.htm">
@@ -180,6 +183,8 @@
     <None Include="res\vgrid.css" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\json\json-forwards.h" />
+    <ClInclude Include="includes\json\json.h" />
     <ClInclude Include="includes\raumserverInstallerView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

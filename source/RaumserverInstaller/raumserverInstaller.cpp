@@ -12,12 +12,12 @@ int uimain(std::function<int()> run)
     // bind resources[] (defined in "resources.cpp") with the archive
     sciter::archive::instance().open(aux::elements_of(resources));
 
-    frame *pwin = new frame();
+    ApplicationWindow *appWindow = new ApplicationWindow();
 
+    appWindow->init();
     // note: this:://app URL schema is dedicated to the sciter::archive content associated with the application
-    pwin->load(WSTR("this://app/installer.htm"));
-
-    pwin->expand();
+    appWindow->load(WSTR("this://app/installer.htm"));
+    appWindow->expand();
 
     return run();
 }

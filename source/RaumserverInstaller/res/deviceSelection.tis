@@ -1,0 +1,62 @@
+
+/**
+*
+*/
+var deviceInformationList = new Array(); 
+
+//var vlist = $(table);
+var vlist;
+
+/**
+*
+*/
+namespace DeviceSelection
+{     
+    
+    function init()
+    {                
+        vlist = $(table);
+              
+        vlist.value = deviceInformationList;
+        vlist.tbody.currentIndex = 0;                    
+    }
+
+
+    function pageActivated()
+    {
+        // clear the list
+        deviceInformationList.splice(0, deviceInformationList.length);
+        vlist.tbody.currentIndex = 0;
+    }
+       
+    function addDeviceInfo(_ip, _deviceInfo)
+    {           
+        var deviceInfoJsonsObject = parseData(_deviceInfo.toString());
+        var deviceInfoArray = deviceInfoJsonsObject.propertyAt("deviceInfo");
+         
+        var ip = deviceInfoArray.propertyAt("ip");             
+        var name = deviceInfoArray.propertyAt("name"); 
+        var udn = deviceInfoArray.propertyAt("udn"); 
+        var sshAccess = deviceInfoArray.propertyAt("sshAccess"); 
+        var serverInstalled = deviceInfoArray.propertyAt("raumserverInstalled"); 
+        var serverRuns = deviceInfoArray.propertyAt("raumserverRuns"); 
+        var serverVersion = deviceInfoArray.propertyAt("raumserverVersion"); 
+        //var type = deviceInfoArray.propertyAt("type"); 
+
+        deviceInformationList.push {index: deviceInformationList.length, ip: ip.toString(), name: name.toString(),
+                                    udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
+                                    serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
+                                   };              
+    }
+
+
+    function removeDeviceInfo()
+    {
+    }
+
+
+    function updateDeviceInfo()
+    {
+    }
+
+ }

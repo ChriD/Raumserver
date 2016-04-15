@@ -4,6 +4,9 @@
     <ClCompile Include="includes\sciter\sciter-win-main.cpp" />
     <ClCompile Include="raumserverInstaller.cpp" />
     <ClCompile Include="raumserverInstallerView.cpp" />
+    <ClCompile Include="json\jsoncpp.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\moveable-view.tis">
@@ -45,6 +48,9 @@
     <None Include="res\vgrid.css">
       <Filter>res</Filter>
     </None>
+    <None Include="res\deviceSelection.tis">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -53,10 +59,22 @@
     <Filter Include="includes">
       <UniqueIdentifier>{5affef2e-4150-4be4-871a-3467f34e424c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="includes\json">
+      <UniqueIdentifier>{e6be2b78-11b9-4fef-9532-5378e97497e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{0bdd28dc-3e0b-4245-b4e1-05c2292d367b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\raumserverInstallerView.h">
       <Filter>includes</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\json\json.h">
+      <Filter>includes\json</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\json\json-forwards.h">
+      <Filter>includes\json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

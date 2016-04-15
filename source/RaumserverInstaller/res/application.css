@@ -3,18 +3,38 @@ html {
         }
 
 
-        table {
-            style-set: vgrid;
-            // see vgrid.css width:*;
-            height: *;
-        }
+            table {
+                style-set: vgrid;
+                width: *;
+                height: *;
+            }
 
             table th:nth-child(2) {
+                width: 6em;
+            }
+
+            table th:nth-child(3) {
+                width: 12em;
+            }
+
+            table th:nth-child(4) {
                 width: *;
             }
 
+            table th:nth-child(5) {
+                width: 2em;
+            }
+
+            table th:nth-child(6) {
+                width: 2em;
+            }
+
+            table th:nth-child(7) {
+                width: 2em;
+            }
+
             table th:last-child {
-                width: 8em;
+                width: 4em;
             }
 
 
@@ -30,6 +50,7 @@ html {
             font-size: 10pt;
             font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
             color: white;
+            overflow: hidden; 
         }
 
             body.shown {
@@ -91,10 +112,30 @@ html {
                     height: 50px;
                 }
 
+            body > div.header {               
+                height: 15%;  
+                overflow: hidden;                 
+            }
 
-            body > div.page {
+
+            body > div.pages {
+                color: #FFFFFF;               
+                height: 75%;    
+                overflow: hidden;               
+            }
+
+
+            body > div.footer {                            
+                height: 10%;
+                overflow: hidden;                   
+            }
+
+
+            body > div.pages > div.page {
                 color: #FFFFFF;
                 margin: 10px;
+                height: 100%; 
+                overflow: hidden;                  
             }
 
           

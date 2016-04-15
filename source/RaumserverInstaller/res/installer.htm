@@ -20,67 +20,93 @@
             <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"></div><div class="closeIcon" id="closeIconContainer"></div></div>
         </div>
 
-        <!-- First page -->
-        <div id="page1" class="page">
+        <div id="pages" class="pages">
 
-            <div>
-                This installer helps you to install the RaumfeldServer application onto an raumfeld device
+            <!-- First page -->
+            <div id="page1" class="page hidden">
+
+                <div>
+                    This installer helps you to install the RaumfeldServer application onto an raumfeld device
+                </div>
+
+                <div>
+                    Please select a Network-Adapter where to search for Raumfeld devices:
+                    <select id="networkadapterSelectionComboBox"></select>
+                </div>
+
+                <div>
+                    <button id="page1_viewSelectionPage">Next</button>
+                </div>
+
             </div>
 
-            <div>
-                Please select a Network-Adapter where to search for Raumfeld devices:
-                <select id="networkadapterSelectionComboBox"></select>
+
+            <!-- Second page -->
+            <div id="page2" class="page hidden">
+
+                <div>
+                    Please wait while installer is trying to find proper devices!
+                </div>
+
+                <div style="height: 70%;">
+                    <table resizeable>
+                        <thead>
+                            <tr>
+                                <th(index)>Index</th>
+                                <th(ip)>IP</th>
+                                <th(name)>Name</th>
+                                <th(udn)>Name</th>
+                                <th(sshAccess)>SSH</th>
+                                <th(serverInstalled)>SI</th>
+                                <th(serverRuns)>SR</th>
+                                <th(serverVersion)>Version</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td(index)></td>
+                                <td(ip)></td>
+                                <td(name)></td>
+                                <td(udn)></td>
+                                <td(sshAccess)></td>
+                                <td(serverInstalled)></td>
+                                <td(serverRuns)></td>
+                                <td(serverVersion)></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <button id="page2_viewAdapterSelectionPage">Prev</button>
+                    <button id="page2_viewInstallProgressPage">Next</button>
+                </div>
+
             </div>
 
-            <div>
-                <button id="page1_viewSelectionPage">Next</button>
+
+            <!-- Third page -->
+            <div id="page3" class="page hidden">
+
+                <div>
+                    Please wait while installing on device!
+                </div>
+
+                <div>
+                    Install progress bar
+                </div>
+
+                <div>
+                    <button id="page3_viewSelectionPage">Prev</button>
+                    <button id="page3_close">Close</button>
+                </div>
+
             </div>
-    
+
         </div>
 
-
-        <!-- Second page -->
-        <div id="page2" class="page">
-
-            <div>
-                Please wait while installer is trying to find proper devices!
-            </div>   
-
-            <div>
-                <table resizeable>
-                    <thead>
-                        <tr><th(index)>index</th><th(caption)>caption</th><th(status)>status</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td(index)></td><td(caption)></td><td(status)></td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <button id="page2_viewAdapterSelectionPage">Prev</button>
-                <button id="page2_viewInstallProgressPage">Next</button>
-            </div>
-
-        </div>
-
-
-        <!-- Third page -->
-        <div id="page3" class="page">
-
-            <div>
-                Please wait while installing on device!
-            </div>
-
-            <div>
-                Install progress bar           
-            </div>
-
-            <div>
-                <button id="page3_viewSelectionPage">Prev</button>
-                <button id="page3_close">Close</button>
-            </div>
-
+        <div id="footer" class="footer">
+            <div id="userInfoOutput"></div>
         </div>
 
     </body>

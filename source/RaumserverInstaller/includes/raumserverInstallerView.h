@@ -22,17 +22,21 @@
 //
 
 #pragma once
-#ifndef RAUMKSERVERINSTALLER_H
-#define RAUMKSERVERINSTALLER_H
+#ifndef RAUMSERVERINSTALLER_VIEW_H
+#define RAUMSERVERINSTALLER_VIEW_H
 
+#include <raumserverInstaller.h>
+#include <signals/signals.hpp>
+#include <json/json.h>
 #include "sciter-x-window.hpp"
 
 static RECT wrc = { 100, 100, 600, 400 };
 
-class frame : public sciter::window 
+class ApplicationWindow : public sciter::window
 {
     public:
-        frame();
+        ApplicationWindow();
+        void init();
 
         sciter::value getNetworkAdapterInformation();
         sciter::value selectNetworkAdapter(sciter::value _adapterId);
@@ -44,8 +48,17 @@ class frame : public sciter::window
             FUNCTION_0("startSearchingForDevices", startSearchingForDevices);
         END_FUNCTION_MAP
 
-    protected:        
+    protected:      
 
+        RaumserverInstaller::RaumserverInstaller raumserverInstallerObject;
+
+        void onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation);
+        void onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation);
+        void onDeviceInformationChanged(RaumserverInstaller::DeviceInformation);
+        void onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);
+        void onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);
+
+        sigs::connections connections;
 
 };
 

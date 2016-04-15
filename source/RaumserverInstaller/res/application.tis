@@ -7,6 +7,7 @@ include "moveable-view.tis";
 include "networkAdapterSelection.tis"
 include "networkAdapterSelectionPage.tis"
 // include the scripts for the 'second' page which is the device selection page  
+include "deviceSelection.tis"
 include "deviceSelectionPage.tis"
     // include the scripts for the 'third' page which is the installation progress page  
 include "installProgressPage.tis"        

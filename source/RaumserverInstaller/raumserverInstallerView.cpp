@@ -6,28 +6,38 @@
 //http://www.terrainformatica.com/2012/11/sciter-ui-application-architecture/
 
 
-frame::frame() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc) 
-{
-    //raumfeldDeviceFinder.init();
-    //raumfeldDeviceFinder.loadNetworkAdaptersInformation();
+ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc)
+{    
 }
 
 
-sciter::value frame::getNetworkAdapterInformation()
+void ApplicationWindow::init()
 {
-    /*
-    Json::Value root, networkAdapter;
-    auto adaptersInfo = raumfeldDeviceFinder.getNetworkAdaptersInformation();
+    raumserverInstallerObject.init();
+    raumserverInstallerObject.initDiscover();
 
-    for (auto adapterInfo : adaptersInfo)
+    connections.connect(raumserverInstallerObject.sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
+    connections.connect(raumserverInstallerObject.sigDeviceRemovedForInstall, this, &ApplicationWindow::onDeviceRemovedForInstall);
+    connections.connect(raumserverInstallerObject.sigDeviceInformationChanged, this, &ApplicationWindow::onDeviceInformationChanged);
+    connections.connect(raumserverInstallerObject.sigInstallProgressInformation, this, &ApplicationWindow::onInstallProgressInformation);
+    connections.connect(raumserverInstallerObject.sigInstallCompleted, this, &ApplicationWindow::onInstallCompleted);
+}
+
+
+sciter::value ApplicationWindow::getNetworkAdapterInformation()
+{
+    Json::Value root, networkAdapter;
+    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
+
+    for (auto adapterInfo : adapterInfoList)
     {
         networkAdapter["networkAdapter"]["name"] = adapterInfo.name;
         networkAdapter["networkAdapter"]["address"] = adapterInfo.address;
         networkAdapter["networkAdapter"]["id"] = adapterInfo.id;
         root["networkAdapterInformations"].append(networkAdapter);
     }
-
-    if (!adaptersInfo.size())
+  
+    if (!adapterInfoList.size())
     {
         networkAdapter["networkAdapter"]["name"] = "No network adapter available";
         networkAdapter["networkAdapter"]["address"] = "";
@@ -36,35 +46,66 @@ sciter::value frame::getNetworkAdapterInformation()
     }
     
     return root.toStyledString();    
-    */
-    return "";
 }
 
 
-sciter::value frame::selectNetworkAdapter(sciter::value _adapterId)
-{            
-
-    //raumfeldDeviceFinder.selectAdapterId(_adapterId.get(0));
+sciter::value ApplicationWindow::selectNetworkAdapter(sciter::value _adapterId)
+{                
+    std::uint16_t adapterId = _adapterId.get(0);
+    if (adapterId > 0)
+    {        
+        raumserverInstallerObject.setNetworkAdapter(raumserverInstallerObject.getNetworkAdapterInformation(adapterId));
+    }
+    
     return true;
 }
 
 
-sciter::value frame::startSearchingForDevices()
+sciter::value ApplicationWindow::startSearchingForDevices()
 {
-
-    //raumfeldDeviceFinder.startSearchingForDevices();
+    raumserverInstallerObject.startDiscoverDevicesForInstall();  
+    // TODO: Start a timer which update a progress bar and will run about 20 seconds
+    // if nothing is found in 20 seconds then give some advice to the user
     return true;
 }
 
 
-/*
-sciter::value frame::testCpp(json::value param1, json::value param2)
+void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
-    //window* pw = ...    
-    this->call_function("NetworkAdapterSelection.addNetworkAdapter", "Test1");
-    this->call_function("NetworkAdapterSelection.addNetworkAdapter", "Test2");    
+    Json::Value deviceInfo;
+    
+    // convert deviceInfo to JSON string 
+    deviceInfo["deviceInfo"]["ip"] = _deviceInfo.ip;
+    deviceInfo["deviceInfo"]["name"] = _deviceInfo.name;
+    deviceInfo["deviceInfo"]["udn"] = _deviceInfo.UDN;
+    deviceInfo["deviceInfo"]["sshAccess"] = _deviceInfo.sshAccess;
+    deviceInfo["deviceInfo"]["raumserverInstalled"] = _deviceInfo.raumserverInstalled;
+    deviceInfo["deviceInfo"]["raumserverRuns"] = _deviceInfo.raumserverRuns;
+    deviceInfo["deviceInfo"]["raumserverVersion"] = _deviceInfo.raumserverVersion;
+    deviceInfo["deviceInfo"]["type"] = _deviceInfo.type;
 
-
-    return sciter::value(1);
+    call_function("DeviceSelection.addDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(deviceInfo.toStyledString()));                                                           
 }
-*/
+
+
+void ApplicationWindow::onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
+{
+}
+
+
+void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceInformation _deviceInfo)
+{
+}
+
+
+void ApplicationWindow::onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
+{
+}
+
+
+void ApplicationWindow::onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo __progressInfo)
+{
+}
+
+
+
