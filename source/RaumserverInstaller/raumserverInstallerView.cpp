@@ -74,6 +74,7 @@ void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInfor
 {
     Json::Value deviceInfo;
     
+    // TODO: @@ amke a method for this!
     // convert deviceInfo to JSON string 
     deviceInfo["deviceInfo"]["ip"] = _deviceInfo.ip;
     deviceInfo["deviceInfo"]["name"] = _deviceInfo.name;
@@ -95,6 +96,20 @@ void ApplicationWindow::onDeviceRemovedForInstall(RaumserverInstaller::DeviceInf
 
 void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
+    Json::Value deviceInfo;
+
+    // TODO: @@ amke a method for this!
+    // convert deviceInfo to JSON string 
+    deviceInfo["deviceInfo"]["ip"] = _deviceInfo.ip;
+    deviceInfo["deviceInfo"]["name"] = _deviceInfo.name;
+    deviceInfo["deviceInfo"]["udn"] = _deviceInfo.UDN;
+    deviceInfo["deviceInfo"]["sshAccess"] = _deviceInfo.sshAccess;
+    deviceInfo["deviceInfo"]["raumserverInstalled"] = _deviceInfo.raumserverInstalled;
+    deviceInfo["deviceInfo"]["raumserverRuns"] = _deviceInfo.raumserverRuns;
+    deviceInfo["deviceInfo"]["raumserverVersion"] = _deviceInfo.raumserverVersion;
+    deviceInfo["deviceInfo"]["type"] = _deviceInfo.type;
+
+    call_function("DeviceSelection.updateDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(deviceInfo.toStyledString()));
 }
 
 
