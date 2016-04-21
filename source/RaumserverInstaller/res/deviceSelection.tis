@@ -15,8 +15,7 @@ namespace DeviceSelection
     
     function init()
     {                
-        vlist = $(table);
-              
+        vlist = $(table);              
         vlist.value = deviceInformationList;
         vlist.tbody.currentIndex = 0;                    
     }
@@ -28,10 +27,12 @@ namespace DeviceSelection
         deviceInformationList.splice(0, deviceInformationList.length);
         vlist.tbody.currentIndex = 0;
     }
+
+
+
        
-    function addDeviceInfo(_ip, _deviceInfo)
-    {           
-        // TODO: @@@
+    function addUpdateDeviceInfo(_ip, _deviceInfo, _update)
+    {             
         var deviceInfoJsonsObject = parseData(_deviceInfo.toString());
         var deviceInfoArray = deviceInfoJsonsObject.propertyAt("deviceInfo");
          
@@ -42,12 +43,39 @@ namespace DeviceSelection
         var serverInstalled = deviceInfoArray.propertyAt("raumserverInstalled"); 
         var serverRuns = deviceInfoArray.propertyAt("raumserverRuns"); 
         var serverVersion = deviceInfoArray.propertyAt("raumserverVersion"); 
-        //var type = deviceInfoArray.propertyAt("type"); 
 
-        deviceInformationList.push {index: deviceInformationList.length, ip: ip.toString(), name: name.toString(),
-                                    udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
-                                    serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
-                                   };              
+        if(!_update)
+        {
+            deviceInformationList.push {index: deviceInformationList.length, ip: ip.toString(), name: name.toString(),
+                                        udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
+                                        serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
+                                       };  
+        }
+        else
+        {
+        
+            var idx = -1;
+            var found = false;
+
+            for (var arrayPosition in deviceInformationList)
+            {
+                idx ++;
+                if(arrayPosition.ip == ip.toString())
+                {
+                    found = true;
+                    break;             
+                }.0
+            }
+            
+            if(idx >= 0 && found)
+            {
+                deviceInformationList[idx] = {index: idx, ip: ip.toString(), name: name.toString(),
+                                            udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
+                                            serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
+                                           };
+            }            
+        
+        }                              
     }
 
 
@@ -57,39 +85,15 @@ namespace DeviceSelection
     }
 
 
-    function updateDeviceInfo(_ip, _deviceInfo)
+    function addDeviceInfo(_ip, _deviceInfo)
     {
-         // TODO: @@@
-        var deviceInfoJsonsObject = parseData(_deviceInfo.toString());
-        var deviceInfoArray = deviceInfoJsonsObject.propertyAt("deviceInfo");
-         
-        var ip = deviceInfoArray.propertyAt("ip");             
-        var name = deviceInfoArray.propertyAt("name"); 
-        var udn = deviceInfoArray.propertyAt("udn"); 
-        var sshAccess = deviceInfoArray.propertyAt("sshAccess"); 
-        var serverInstalled = deviceInfoArray.propertyAt("raumserverInstalled"); 
-        var serverRuns = deviceInfoArray.propertyAt("raumserverRuns"); 
-        var serverVersion = deviceInfoArray.propertyAt("raumserverVersion"); 
+        addUpdateDeviceInfo(_ip, _deviceInfo, false);   
+    }
 
-        // TODO: make better!
-        // get id of ip!
-        //var idx = deviceInformationList.indexOf("ip:" + ip.toString());
-        var idx = -1;
-        for (var arrayPosition in deviceInformationList)
-        {
-            idx ++;
-            if(arrayPosition.ip == ip.toString())
-                break;             
-        }
 
-        if(idx >= 0)
-        {
-            deviceInformationList[idx] = {index: idx, ip: ip.toString(), name: name.toString(),
-                                        udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
-                                        serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
-                                       };
-        }
-
+    function updateDeviceInfo(_ip, _deviceInfo)
+    {             
+        addUpdateDeviceInfo(_ip, _deviceInfo, true);        
     }
 
  }

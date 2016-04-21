@@ -10,7 +10,7 @@ namespace DeviceSelectionPage
         DeviceSelection.init();              
     }
 
-    function pageActivated()
+    function pageActivated(_parmObject)
     {
         DeviceSelection.pageActivated();
         // when the page is beeing activated we do start the search for devices we can install the raumserver        

@@ -11,8 +11,30 @@ namespace InstallProgressPage
     }
 
 
-    function pageActivated()
+    function pageActivated(_parmObject)
     {
+        // get selected device
+        $(#userInfoOutput).append("Selected Device Id: " + vlist.tbody.currentIndex.toString());
+
+        // user has clicked "install" or "update"
+    }
+
+
+    function startInstall()
+    {
+        // TODO: check if device is ok for accessing with ssh and sftp
+    }
+
+
+    function startUpdate()
+    {
+        // TODO: check if device is ok for accessing with ssh and sftp
+    }
+
+
+    function startRemove()
+    {
+        // TODO: check if device is ok for accessing with ssh and sftp
     }
 
  }

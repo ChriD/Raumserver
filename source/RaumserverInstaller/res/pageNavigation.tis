@@ -12,18 +12,18 @@ namespace PageNavigation
         navigateTo(1);  
 
         // we do have a "next" and a "back" button and if one of them are clicked we have to update the viewing page
-        // we'll do this with key identifiers on each view
-        $(#page1_viewSelectionPage).on("click", function() { PageNavigation.navigateTo(2); });
-        $(#page2_viewAdapterSelectionPage).on("click", function() { PageNavigation.navigateTo(1); });
-        $(#page2_viewInstallProgressPage).on("click", function() { PageNavigation.navigateTo(3); });
-        $(#page3_viewSelectionPage).on("click", function() { PageNavigation.navigateTo(2); });             
+        // we'll do this with key identifiers on each view. This is not very sophisticated but its ok for the installer app
+        $(#page1_viewSelectionPage).on("click", function()          { PageNavigation.navigateTo(2, {forward:1}); });
+        $(#page2_viewAdapterSelectionPage).on("click", function()   { PageNavigation.navigateTo(1, {forward:0}); });
+        $(#page2_viewInstallProgressPage).on("click", function()    { PageNavigation.navigateTo(3, {forward:1}); });
+        $(#page3_viewSelectionPage).on("click", function()          { PageNavigation.navigateTo(2, {forward:0}); });             
     }
 
 
     /**
     * use this function to navigate between the 'DIV' pages
     */
-    function navigateTo(_pageIdx)
+    function navigateTo(_pageIdx, _parmObject = {})
     {
         for(var i=1; i<=pageCount; i++)
         {
@@ -31,9 +31,9 @@ namespace PageNavigation
         }
          eval("$(#page" + _pageIdx + ").show()");
 
-         if(_pageIdx == 1) NetworkAdapterSelectionPage.pageActivated();
-         if(_pageIdx == 2) DeviceSelectionPage.pageActivated();
-         if(_pageIdx == 3) InstallProgressPage.pageActivated();
+         if(_pageIdx == 1) NetworkAdapterSelectionPage.pageActivated(_parmObject);
+         if(_pageIdx == 2) DeviceSelectionPage.pageActivated(_parmObject);
+         if(_pageIdx == 3) InstallProgressPage.pageActivated(_parmObject);
     }
 
   

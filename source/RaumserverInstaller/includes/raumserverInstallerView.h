@@ -58,6 +58,8 @@ class ApplicationWindow : public sciter::window
         void onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);
         void onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);
 
+        std::mutex  lockDeviceAction;
+
         sigs::connections connections;
 
 };

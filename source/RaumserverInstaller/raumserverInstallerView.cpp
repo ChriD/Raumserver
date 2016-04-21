@@ -73,6 +73,10 @@ sciter::value ApplicationWindow::startSearchingForDevices()
 void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
     Json::Value deviceInfo;
+
+    std::unique_lock<std::mutex> lock(lockDeviceAction);
+
+    
     
     // TODO: @@ amke a method for this!
     // convert deviceInfo to JSON string 
@@ -91,12 +95,15 @@ void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInfor
 
 void ApplicationWindow::onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
+    std::unique_lock<std::mutex> lock(lockDeviceAction);
 }
 
 
 void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
     Json::Value deviceInfo;
+
+    std::unique_lock<std::mutex> lock(lockDeviceAction);
 
     // TODO: @@ amke a method for this!
     // convert deviceInfo to JSON string 

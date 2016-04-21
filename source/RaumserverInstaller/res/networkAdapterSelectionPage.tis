@@ -17,7 +17,7 @@ namespace NetworkAdapterSelectionPage
     }
 
 
-    function pageActivated()
+    function pageActivated(_parmObject)
     {
     }
 
