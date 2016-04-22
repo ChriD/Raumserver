@@ -70,6 +70,23 @@ sciter::value ApplicationWindow::startSearchingForDevices()
 }
 
 
+sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
+{        
+    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(Converter::wstring2string(_ip.to_string()));
+    if (deviceInfo.ip.empty())
+        return false;    
+    raumserverInstallerObject.startInstallToDevice(deviceInfo);
+    return true;
+}
+
+
+sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
+{    
+    // TODO: 
+    return true;
+}
+
+
 void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
     Json::Value deviceInfo;
@@ -122,11 +139,15 @@ void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceIn
 
 void ApplicationWindow::onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {
+    // TODO: add error, warning or info type!
+    // TODO: add progress percentage
+    call_function("InstallProgressPage.addProgressInfo", sciter::value(_progressInfo.info));
 }
 
 
-void ApplicationWindow::onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo __progressInfo)
+void ApplicationWindow::onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {
+    call_function("InstallProgressPage.installationDone", sciter::value(_progressInfo.error));
 }
 
 

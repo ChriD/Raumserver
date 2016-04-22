@@ -120,7 +120,7 @@ html {
 
             body > div.pages {
                 color: #FFFFFF;               
-                height: 75%;    
+                height: *;    
                 overflow: hidden;               
             }
 

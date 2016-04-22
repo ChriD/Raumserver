@@ -14,27 +14,61 @@ namespace InstallProgressPage
     function pageActivated(_parmObject)
     {
         // get selected device
-        $(#userInfoOutput).append("Selected Device Id: " + vlist.tbody.currentIndex.toString());
+        $(#userInfoOutput).content("Selected Device Id: " + vlist.tbody.currentIndex.toString());
+        $(#installProgressInfoOutputContainer).content("");  
 
         // user has clicked "install" or "update"
+        startInstall() // TODO: test!!!
+    }
+
+
+    function checkDevice(_index)
+    {
+        if(_index < 0)
+        {
+            $(#userInfoOutput).content("No device selected");
+            // TODO: Error output
+            return false;
+        }
+
+        //deviceInformationList[vlist.tbody.currentIndex].ip
+        return true;
     }
 
 
     function startInstall()
     {
         // TODO: check if device is ok for accessing with ssh and sftp
+        if(checkDevice(vlist.tbody.currentIndex))
+            view.startInstallOnDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
     }
 
 
     function startUpdate()
     {
         // TODO: check if device is ok for accessing with ssh and sftp
+        if(checkDevice(vlist.tbody.currentIndex))
+            view.startInstallOnDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
     }
 
 
     function startRemove()
     {
         // TODO: check if device is ok for accessing with ssh and sftp
+        if(checkDevice(vlist.tbody.currentIndex))
+            view.startRemoveFromDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
+    }
+
+
+    function addProgressInfo(_progressInfo)
+    {
+        $(#installProgressInfoOutputContainer).append(_progressInfo.toString() + "<br>");    
+    }
+
+
+    function installationDone(_error)
+    {
+        $(#userInfoOutput).content("Installation done: " + _error.toString());
     }
 
  }

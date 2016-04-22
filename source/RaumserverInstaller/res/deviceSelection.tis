@@ -3,8 +3,6 @@
 *
 */
 var deviceInformationList = new Array(); 
-
-//var vlist = $(table);
 var vlist;
 
 /**
@@ -17,22 +15,29 @@ namespace DeviceSelection
     {                
         vlist = $(table);              
         vlist.value = deviceInformationList;
-        vlist.tbody.currentIndex = 0;                    
+        vlist.tbody.currentIndex = 0;         
+        vlist.on("change", function() { deviceSelectionChanged(vlist.tbody.currentIndex); });     
+                            
     }
 
 
     function pageActivated()
     {
         // clear the list
-        deviceInformationList.splice(0, deviceInformationList.length);
+        if(deviceInformationList.length > 0)
+            deviceInformationList.splice(0, deviceInformationList.length);
         vlist.tbody.currentIndex = 0;
     }
 
 
+    function deviceSelectionChanged(_index)
+    {
+        $(#selectedDeviceInfoContainer).content("Selected Device Id: " + _index.toString());
+    }
 
        
     function addUpdateDeviceInfo(_ip, _deviceInfo, _update)
-    {             
+    {                 
         var deviceInfoJsonsObject = parseData(_deviceInfo.toString());
         var deviceInfoArray = deviceInfoJsonsObject.propertyAt("deviceInfo");
          
@@ -64,15 +69,15 @@ namespace DeviceSelection
                 {
                     found = true;
                     break;             
-                }.0
+                }
             }
             
             if(idx >= 0 && found)
             {
                 deviceInformationList[idx] = {index: idx, ip: ip.toString(), name: name.toString(),
-                                            udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
-                                            serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
-                                           };
+                                              udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
+                                              serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
+                                             };
             }            
         
         }                              

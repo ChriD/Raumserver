@@ -28,6 +28,7 @@
 #include <raumserverInstaller.h>
 #include <signals/signals.hpp>
 #include <json/json.h>
+#include <tools/converter.h>
 #include "sciter-x-window.hpp"
 
 static RECT wrc = { 100, 100, 600, 400 };
@@ -41,11 +42,15 @@ class ApplicationWindow : public sciter::window
         sciter::value getNetworkAdapterInformation();
         sciter::value selectNetworkAdapter(sciter::value _adapterId);
         sciter::value startSearchingForDevices();
+        sciter::value startInstallOnDevice(sciter::value _deviceIp);
+        sciter::value startRemoveFromDevice(sciter::value _deviceIp);
 
         BEGIN_FUNCTION_MAP
             FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
             FUNCTION_1("selectNetworkAdapter", selectNetworkAdapter);              
             FUNCTION_0("startSearchingForDevices", startSearchingForDevices);
+            FUNCTION_1("startInstallOnDevice", startInstallOnDevice);
+            FUNCTION_1("startRemoveFromDevice", startRemoveFromDevice);
         END_FUNCTION_MAP
 
     protected:      

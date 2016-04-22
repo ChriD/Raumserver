@@ -181,11 +181,13 @@
     <None Include="res\resizeable.css" />
     <None Include="res\resizeable.tis" />
     <None Include="res\vgrid.css" />
+    <None Include="res\vlist.tis" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\json\json-forwards.h" />
     <ClInclude Include="includes\json\json.h" />
     <ClInclude Include="includes\raumserverInstallerView.h" />
+    <ClInclude Include="includes\tools\converter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

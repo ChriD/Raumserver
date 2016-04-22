@@ -14,6 +14,10 @@ include "installProgressPage.tis"
 // add simple page navigation
 include "pageNavigation.tis"
 
+// debug mode
+if( view.connectToInspector ) // the view is in debug mode
+  view.connectToInspector();
+
 /**
 *
 */

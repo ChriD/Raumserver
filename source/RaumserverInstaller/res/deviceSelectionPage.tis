@@ -7,8 +7,9 @@ namespace DeviceSelectionPage
   
     function init() 
     { 
-        DeviceSelection.init();              
+        DeviceSelection.init();                
     }
+
 
     function pageActivated(_parmObject)
     {

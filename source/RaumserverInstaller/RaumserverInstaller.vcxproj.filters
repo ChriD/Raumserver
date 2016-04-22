@@ -51,6 +51,9 @@
     <None Include="res\deviceSelection.tis">
       <Filter>res</Filter>
     </None>
+    <None Include="res\vlist.tis">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -65,6 +68,9 @@
     <Filter Include="json">
       <UniqueIdentifier>{0bdd28dc-3e0b-4245-b4e1-05c2292d367b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="includes\tools">
+      <UniqueIdentifier>{a2384224-670e-4153-a732-fe4fdbf10dff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\raumserverInstallerView.h">
@@ -75,6 +81,9 @@
     </ClInclude>
     <ClInclude Include="includes\json\json-forwards.h">
       <Filter>includes\json</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\tools\converter.h">
+      <Filter>includes\tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
