@@ -16,6 +16,9 @@ source/RaumserverLib.sdf
 *.user
 *.sln.docstates
 
+*.o
+*.d
+
 # Build results
 
 [Dd]ebug/
