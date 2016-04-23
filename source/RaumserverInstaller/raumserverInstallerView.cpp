@@ -118,37 +118,20 @@ void ApplicationWindow::onDeviceRemovedForInstall(RaumserverInstaller::DeviceInf
 
 void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
-    Json::Value deviceInfo;
-
     std::unique_lock<std::mutex> lock(lockDeviceAction);
-
-    // TODO: @@ amke a method for this!
-    // convert deviceInfo to JSON string 
-    deviceInfo["deviceInfo"]["ip"] = _deviceInfo.ip;
-    deviceInfo["deviceInfo"]["name"] = _deviceInfo.name;
-    deviceInfo["deviceInfo"]["udn"] = _deviceInfo.UDN;
-    deviceInfo["deviceInfo"]["sshAccess"] = _deviceInfo.sshAccess;
-    deviceInfo["deviceInfo"]["raumserverInstalled"] = _deviceInfo.raumserverInstalled;
-    deviceInfo["deviceInfo"]["raumserverRuns"] = _deviceInfo.raumserverRuns;
-    deviceInfo["deviceInfo"]["raumserverVersion"] = _deviceInfo.raumserverVersion;
-    deviceInfo["deviceInfo"]["type"] = _deviceInfo.type;
-
-    call_function("DeviceSelection.updateDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(deviceInfo.toStyledString()));
+    call_function("DeviceSelection.updateDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
 }
 
 
 void ApplicationWindow::onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {
-    // TODO: add error, warning or info type!
-    // TODO: add progress percentage
-    call_function("InstallProgressPage.addProgressInfo", sciter::value(_progressInfo.info));
+    call_function("InstallProgressPage.addProgressInfo", sciter::value(_progressInfo.getJsonValue().toStyledString()));
 }
 
 
 void ApplicationWindow::onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {
-    call_function("InstallProgressPage.installationDone", sciter::value(_progressInfo.error));
+    call_function("InstallProgressPage.installationDone", sciter::value(_progressInfo.getJsonValue().toStyledString()));
 }
-
 
 

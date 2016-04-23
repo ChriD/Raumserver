@@ -62,13 +62,20 @@ namespace InstallProgressPage
 
     function addProgressInfo(_progressInfo)
     {
-        $(#installProgressInfoOutputContainer).append(_progressInfo.toString() + "<br>");    
+        var progressInfoJsonsObject = parseData(_progressInfo.toString());
+        var progressInfoArray = progressInfoJsonsObject.propertyAt("progressInfo");
+         
+        var info = progressInfoArray.propertyAt("info");             
+        var percentage = progressInfoArray.propertyAt("percentage"); 
+        var error = progressInfoArray.propertyAt("error");       
+
+        $(#installProgressInfoOutputContainer).append(info.toString() + "<br>");    
     }
 
 
-    function installationDone(_error)
+    function installationDone(_progressInfo)
     {
-        $(#userInfoOutput).content("Installation done: " + _error.toString());
+        $(#userInfoOutput).content("Installation done: " + _progressInfo.toString());
     }
 
  }
