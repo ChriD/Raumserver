@@ -1,12 +1,13 @@
 # Makefile template for shared library
  
 INCPATH = -I includes/ -I includes/sciter/ -I ../../../RaumserverInstallerLib/source/includes/ 
+#-I /usr/include/gtk-2.0/ -I /usr/include/glib-2.0/ 
 
 CC = g++-4.9
 CXX = g++-4.9
-CFLAGS = -std=c++11 -fPIC -Wall -Wextra -O2 -c -pthread $(INCPATH)
-CXXFLAGS = -std=c++11 -fPIC -Wall -Wextra -O2 -c -pthread $(INCPATH)
-LDFLAGS = -pthread -static-libgcc -static-libstdc++
+CFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-value -Wextra -O2 -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-2.0`
+CXXFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-value -Wextra -O2 -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-2.0`
+LDFLAGS = -pthread -static-libgcc -static-libstdc++ 
 
 LIBSDEF = libs/linux_x86/raumserverInstaller.so libs/linux_x86/libssh.so libs/linux_x86/libssh_threads.so libs/linux_x86/libsciter-gtk-64.so
 
