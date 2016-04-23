@@ -1,0 +1,36 @@
+# Makefile template for shared library
+ 
+INCPATH = -I includes/ -I includes/sciter/
+
+CC = g++-4.9
+CXX = g++-4.9
+CFLAGS = -std=c++11 -fPIC -Wall -Wextra -O2 -c -g -pthread $(INCPATH)
+CXXFLAGS = -std=c++11 -fPIC -Wall -Wextra -O2 -c -g -pthread $(INCPATH)
+LDFLAGS = -pthread -static-libgcc -static-libstdc++
+
+LIBSDEF = libs/linux_x86/raumserverInstaller.so libs/linux_x86/libssh.so libs/linux_x86/libssh_threads.so libs/linux_x86/libsciter-gtk-64.so
+
+RM = rm -f 
+TARGET_EXEC = raumserverInstallerApp
+
+SRCS = $(wildcard *.cpp)
+SRCS += $(wildcard json/*.cpp)
+
+OBJS = $(SRCS:.cpp=.o)
+
+
+.PHONY: all
+all: ${TARGET_EXEC}
+
+$(TARGET_EXEC): $(OBJS)
+	$(CC) ${LDFLAGS} -o $@ $^ $(LIBSDEF)
+
+$(SRCS:.cpp=.d):%.d:%.cpp
+	$(CC) $(CFLAGS) -MM $< >$@
+
+include $(SRCS:.cpp=.d)
+
+
+.PHONY: clean
+clean:
+	-${RM} ${TARGET_EXEC} ${OBJS} $(SRCS:.cpp=.d) 
