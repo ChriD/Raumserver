@@ -76,9 +76,15 @@ int main(int argc, char *argv[])
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
 
-    // create raumserver object adn do init init
+    // set the log adapters we want to use (because we do not want to use the standard ones which includes console output)
+    std::vector<std::shared_ptr<Raumkernel::Log::LogAdapter>> adapters;
+    auto logAdapterFile = std::shared_ptr<Raumkernel::Log::LogAdapter_File>(new Raumkernel::Log::LogAdapter_File());
+    logAdapterFile->setLogFilePath(workingDirectory + "logs/");
+    adapters.push_back(logAdapterFile);
+
+    // create raumserver object and do init init
     raumserverObject.setSettingsFile(workingDirectory + "raumserver.xml");
-    raumserverObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_ERROR, workingDirectory + "logs/");
+    raumserverObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_ERROR, workingDirectory + "logs/", adapters);
     raumserverObject.init();
 
     // go into an endless loop and wait until daemon is killed by the syste,
