@@ -32,13 +32,13 @@
 #include <functional>
 #include <iostream>
 
-/*
+
 #ifdef _WIN32
     #include <codecvt>
-#elif 
-    #include <locale>
+//#elif 
+//    #include <locale>
 #endif
-    */
+ //   */
 
 
 // Put this class in your personal toolbox...
@@ -84,25 +84,48 @@ public:
 
 // http://www.codeproject.com/Articles/17573/Convert-Between-std-string-and-std-wstring-UTF-a
 
+// https://github.com/JuliaLang/utf8proc
+//https://github.com/udp/json-parser/issues/13
+
+//http://stackoverflow.com/questions/3019977/convert-wchar-t-to-char
+//https://bytes.com/topic/c/answers/688683-how-convert-wchar_t-char
+
+// http://forums.codeguru.com/showthread.php?336106-WCHAR*-to-CHAR*
+
+
 class Converter
 {
     public:
         Converter();
         ~Converter();
 
+        
         static std::wstring string2wstring(const std::string& _str)
         {
-            //Widen<wchar_t> to_wstring;
-            //return to_wstring(_str);
-            return utf8_decode(_str);
+            Widen<wchar_t> to_wstring;
+            return to_wstring(_str);
+            //return utf8_decode(_str);
         }
 
 
         static std::string wstring2string(const std::wstring& _wstr)
         {
             //return ""; // TOO:@@@
-            return utf8_encode(_wstr);
+            //return utf8_encode(_wstr);
+            std::string dest;
+            dest.resize(_wstr.length());
+            std::transform(_wstr.begin(), _wstr.end(), dest.begin(), wide_to_narrow);
+            return dest;
         }
+
+        static CHAR wide_to_narrow(WCHAR w)
+        {
+            // simple typecast
+            // works because UNICODE incorporates ASCII into itself
+            return CHAR(w);
+        }
+       
+        /*
 
         // Convert a wide Unicode string to an UTF8 string
         static std::string utf8_encode(const std::wstring &wstr)
@@ -139,6 +162,9 @@ class Converter
             MultiByteToWideChar(CP_ACP, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
             return wstrTo;
         }
+        */
+
+        //http://www.cplusplus.com/reference/cstdlib/wcstombs/
 
         /*
         static std::wstring string2wstring(const std::string& str)
@@ -147,10 +173,11 @@ class Converter
                 typedef std::codecvt_utf8<wchar_t> convert_typeX;
                 std::wstring_convert<convert_typeX, wchar_t> converterX;
                 return converterX.from_bytes(str);                
-            #elif            
+            #elif     
+                // not noce but...
                 std::wstring wsTmp(s.begin(), s.end());
                 return wsTmp;
-            #endif                    
+            #endif                   
         }
 
 
@@ -163,6 +190,7 @@ class Converter
             #elif
                 return "" // TODO: @@@
             #endif   
+            
         }  
         */
 
