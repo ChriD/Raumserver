@@ -107,7 +107,7 @@ class Converter
             //return utf8_decode(_str);
         }
 
-        static CHAR wide_to_narrow(WCHAR w)
+        static char wide_to_narrow(wchar_t w)
         {
             // simple typecast
             // works because UNICODE incorporates ASCII into itself
