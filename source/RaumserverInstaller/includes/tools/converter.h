@@ -107,6 +107,12 @@ class Converter
             //return utf8_decode(_str);
         }
 
+        static CHAR wide_to_narrow(WCHAR w)
+        {
+            // simple typecast
+            // works because UNICODE incorporates ASCII into itself
+            return CHAR(w);
+        }
 
         static std::string wstring2string(const std::wstring& _wstr)
         {
@@ -118,12 +124,7 @@ class Converter
             return dest;
         }
 
-        static CHAR wide_to_narrow(WCHAR w)
-        {
-            // simple typecast
-            // works because UNICODE incorporates ASCII into itself
-            return CHAR(w);
-        }
+       
        
         /*
 
