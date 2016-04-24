@@ -114,7 +114,7 @@ class Converter
             //return utf8_encode(_wstr);
             std::string dest;
             dest.resize(_wstr.length());
-            std::transform(_wstr.begin(), _wstr.end(), dest.begin(), wide_to_narrow);
+            std::transform(_wstr.begin(), _wstr.end(), dest.begin(), Converter::wide_to_narrow);
             return dest;
         }
 
