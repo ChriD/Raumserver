@@ -5,8 +5,8 @@ INCPATH = -I includes/ -I includes/sciter/ -I ../../../RaumserverInstallerLib/so
 
 CC = g++-4.9
 CXX = g++-4.9
-CFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-value -Wextra -O2 -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-2.0`
-CXXFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-value -Wextra -O2 -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-2.0`
+CFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-value -Wno-ignored-qualifiers -Wno-reorder -Wextra -O2 -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-2.0`
+CXXFLAGS = -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-value -Wno-ignored-qualifiers Wno-reorder -Wextra -O2 -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-2.0`
 LDFLAGS = -pthread -static-libgcc -static-libstdc++ 
 
 LIBSDEF = libs/linux_x86/raumserverInstaller.so libs/linux_x86/libssh.so libs/linux_x86/libssh_threads.so libs/linux_x86/libsciter-gtk-64.so
