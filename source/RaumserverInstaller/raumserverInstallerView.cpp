@@ -72,11 +72,14 @@ sciter::value ApplicationWindow::startSearchingForDevices()
 
 sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
 {        
+    // TODO: @@@
+    /*
     std::wstring ip = std::wstring(_ip.to_string().c_str());
     auto deviceInfo = raumserverInstallerObject.getDeviceInformation(Converter::wstring2string(ip));
     if (deviceInfo.ip.empty())
         return false;    
     raumserverInstallerObject.startInstallToDevice(deviceInfo);
+    */
     return true;
 }
 
