@@ -111,7 +111,7 @@ class Converter
         {
             // simple typecast
             // works because UNICODE incorporates ASCII into itself
-            return CHAR(w);
+            return char(w);
         }
 
         static std::string wstring2string(const std::wstring& _wstr)
