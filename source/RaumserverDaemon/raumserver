@@ -7,13 +7,14 @@
 
 
 NAME="raumsrvDaemon"
-DAEMON="/usr/development/raumfeld/git/Raumserver/source/RaumserverDaemon/$NAME"
+DAEMONPATH="/usr/develop/git/Raumserver/source/RaumserverDaemon/bin/linux_x86/" 
+DAEMON=$DAEMONPATH$NAME
 
 start() { 
   
     
     # Check if executable binary is there
-    [ -x /usr/development/raumfeld/git/Raumserver/source/RaumserverDaemon/$prog ] || exit 5
+    [ -x $DAEMONPATH$prog ] || exit 5    
 
     # wait until network gets available
     # there might be better ways to check this
@@ -27,6 +28,9 @@ start() {
 	
 	ONLINE=$( ifconfig -s | grep wlan0 )
 	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\nwlan0 online\n"; break; fi
+
+	ONLINE=$( ifconfig -s | grep enp0s3 )
+	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\nenp0s3 online\n"; break; fi
         
         sleep 1
     done
