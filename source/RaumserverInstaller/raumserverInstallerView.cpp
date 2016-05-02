@@ -7,7 +7,7 @@
 
 
 ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc)
-{    
+{
 }
 
 
@@ -36,7 +36,7 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
         networkAdapter["networkAdapter"]["id"] = adapterInfo.id;
         root["networkAdapterInformations"].append(networkAdapter);
     }
-  
+
     if (!adapterInfoList.size())
     {
         networkAdapter["networkAdapter"]["name"] = "No network adapter available";
@@ -44,26 +44,26 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
         networkAdapter["networkAdapter"]["id"] = 0;
         root["networkAdapterInformations"].append(networkAdapter);
     }
-    
-    return root.toStyledString();    
+
+    return root.toStyledString();
 }
 
 
 sciter::value ApplicationWindow::selectNetworkAdapter(sciter::value _adapterId)
-{                
+{
     std::uint16_t adapterId = _adapterId.get(0);
     if (adapterId > 0)
-    {        
+    {
         raumserverInstallerObject.setNetworkAdapter(raumserverInstallerObject.getNetworkAdapterInformation(adapterId));
     }
-    
+
     return true;
 }
 
 
 sciter::value ApplicationWindow::startSearchingForDevices()
 {
-    raumserverInstallerObject.startDiscoverDevicesForInstall();  
+    raumserverInstallerObject.startDiscoverDevicesForInstall();
     // TODO: Start a timer which update a progress bar and will run about 20 seconds
     // if nothing is found in 20 seconds then give some advice to the user
     return true;
@@ -71,13 +71,13 @@ sciter::value ApplicationWindow::startSearchingForDevices()
 
 
 sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
-{        
+{
     // TODO: @@@
     /*
     std::wstring ip = std::wstring(_ip.to_string().c_str());
     auto deviceInfo = raumserverInstallerObject.getDeviceInformation(Converter::wstring2string(ip));
     if (deviceInfo.ip.empty())
-        return false;    
+        return false;
     raumserverInstallerObject.startInstallToDevice(deviceInfo);
     */
     return true;
@@ -85,8 +85,8 @@ sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
 
 
 sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
-{    
-    // TODO: 
+{
+    // TODO:
     return true;
 }
 
@@ -97,10 +97,10 @@ void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInfor
 
     std::unique_lock<std::mutex> lock(lockDeviceAction);
 
-    
-    
+
+
     // TODO: @@ amke a method for this!
-    // convert deviceInfo to JSON string 
+    // convert deviceInfo to JSON string
     deviceInfo["deviceInfo"]["ip"] = _deviceInfo.ip;
     deviceInfo["deviceInfo"]["name"] = _deviceInfo.name;
     deviceInfo["deviceInfo"]["udn"] = _deviceInfo.UDN;
@@ -110,7 +110,7 @@ void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInfor
     deviceInfo["deviceInfo"]["raumserverVersion"] = _deviceInfo.raumserverVersion;
     deviceInfo["deviceInfo"]["type"] = _deviceInfo.type;
 
-    call_function("DeviceSelection.addDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(deviceInfo.toStyledString()));                                                           
+    call_function("DeviceSelection.addDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(deviceInfo.toStyledString()));
 }
 
 
