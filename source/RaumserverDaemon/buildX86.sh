@@ -1,4 +1,5 @@
 #!/bin/bash
+./getActualLibs.sh
 make arch=X86 clean
 make arch=X86
 /bin/cp -rf libs/linux_x86/raumserver.so bin/linux_x86/libs/linux_x86/raumserver.so
