@@ -27,7 +27,8 @@ void ApplicationWindow::init()
 sciter::value ApplicationWindow::getNetworkAdapterInformation()
 {
     Json::Value root, networkAdapter;
-    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
+   /* auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
+
 
     for (auto adapterInfo : adapterInfoList)
     {
@@ -36,8 +37,9 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
         networkAdapter["networkAdapter"]["id"] = adapterInfo.id;
         root["networkAdapterInformations"].append(networkAdapter);
     }
+*/
 
-    if (!adapterInfoList.size())
+    //if (!adapterInfoList.size())
     {
         networkAdapter["networkAdapter"]["name"] = "No network adapter available";
         networkAdapter["networkAdapter"]["address"] = "";
