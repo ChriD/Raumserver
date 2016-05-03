@@ -15,8 +15,8 @@ include "installProgressPage.tis"
 include "pageNavigation.tis"
 
 // debug mode
-if( view.connectToInspector ) // the view is in debug mode
-  view.connectToInspector();
+//if( view.connectToInspector ) // the view is in debug mode
+//  view.connectToInspector();
 
 /**
 *
