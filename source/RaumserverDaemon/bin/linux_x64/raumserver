@@ -1,0 +1,86 @@
+#!/bin/bash
+#
+# Daemon Name: raumsrvDaemon
+#  
+# chkconfig: - 58 74
+# description: Raumserver Daemon start/stop/restart script
+
+
+NAME="raumsrvDaemon"
+DAEMONPATH="/usr/develop/git/Raumserver/source/RaumserverDaemon/bin/linux_x64/" 
+DAEMON=$DAEMONPATH$NAME
+
+start() { 
+  
+    
+    # Check if executable binary is there
+    [ -x $DAEMONPATH$prog ] || exit 5    
+
+    # wait until network gets available
+    # there might be better ways to check this
+    printf $"Waiting for network to become available"    
+    while true
+    do
+        printf "."
+		
+	ONLINE=$( ifconfig -s | grep eth0 )
+	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\neth0 online\n"; break; fi
+	
+	ONLINE=$( ifconfig -s | grep wlan0 )
+	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\nwlan0 online\n"; break; fi
+
+	ONLINE=$( ifconfig -s | grep enp0s3 )
+	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\nenp0s3 online\n"; break; fi
+        
+        sleep 1
+    done
+  
+    # wait a little bit
+    printf $"Please be patient. Daemon will start in 3 seconds!"
+    sleep 3  
+    
+
+    # Check if the daemon is already running. If so write an info to the console and do nothing
+    if [ "$(pidof $NAME)" ] 
+    then
+        printf $"Raumserver Daemon is already running!\n"
+	RETVAL=-1
+    else     
+        # Start the raumserver daemon
+        printf $"Starting $prog: \n"
+        $DAEMON
+        RETVAL=$?
+        printf $"\n"
+    fi     
+
+    return $RETVAL
+}
+
+stop() {
+    printf $"Shutting down $NAME: "
+    pkill $NAME
+    RETVAL=$?
+    printf "$RETVAL \n"
+
+    return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status $prog
+        ;;
+  restart)
+        stop
+        start
+        ;;
+   *)
+        printf $"Usage: $0 {start|stop|status|restart}\n"
+        exit 2
+esac
