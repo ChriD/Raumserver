@@ -7,7 +7,7 @@
 
 
 NAME="raumsrvDaemon"
-DAEMONPATH="/usr/develop/git/Raumserver/source/RaumserverDaemon/bin/linux_x86/" 
+DAEMONPATH="/usr/develop/git/Raumserver/source/RaumserverDaemon/bin/linux_x64/" 
 DAEMON=$DAEMONPATH$NAME
 
 start() { 

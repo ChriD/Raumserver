@@ -1,0 +1,8 @@
+2016.05.04 10:27:14.543 DEBUG:    Refreshing UPNP device list [refreshDeviceListThread]
+2016.05.04 10:27:44.546 DEBUG:    Refreshing UPNP device list [refreshDeviceListThread]
+2016.05.04 10:27:49.204 DEBUG:    Processing Request: PLAY / :  [requestProcessingWorkerThread]
+2016.05.04 10:27:49.204 DEBUG:    Calling 'play' on renderer 'uuid:1644ca3e-65db-4716-ba9b-70fbb0dc3993' [callAvTransportProxyAction]
+2016.05.04 10:27:49.213 DEBUG:    Request duration: 9ms: PLAY / :  [execute]
+2016.05.04 10:27:49.213 DEBUG:    Popping Request: PLAY / :  [requestProcessingWorkerThread]
+2016.05.04 10:28:14.546 DEBUG:    Refreshing UPNP device list [refreshDeviceListThread]
+2016.05.04 10:28:44.547 DEBUG:    Refreshing UPNP device list [refreshDeviceListThread]
