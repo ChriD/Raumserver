@@ -53,7 +53,7 @@ ifeq ($(dbg),1)
   DEBUG = -g
 endif
 
-INCPATH = -I includes/ -I includes/sciter/ -I ../../../RaumserverInstallerLib/source/includes/
+INCPATH = -I includes/ -I includes/sciter/ -I ../../../RaumserverInstallerLib/source/includes/ 
 
 CFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-3.0`
 CXXFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-3.0`

@@ -14,6 +14,7 @@ ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | 
 void ApplicationWindow::init()
 {
     raumserverInstallerObject.init();
+    //raumserverInstallerObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_INFO);
     raumserverInstallerObject.initDiscover();
 
     connections.connect(raumserverInstallerObject.sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
@@ -27,9 +28,10 @@ void ApplicationWindow::init()
 sciter::value ApplicationWindow::getNetworkAdapterInformation()
 {
     Json::Value root, networkAdapter;
-   /* auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
 
+    std::vector<RaumserverInstaller::NetworkAdaperInformation> adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
 
+    /*
     for (auto adapterInfo : adapterInfoList)
     {
         networkAdapter["networkAdapter"]["name"] = adapterInfo.name;
@@ -37,7 +39,7 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
         networkAdapter["networkAdapter"]["id"] = adapterInfo.id;
         root["networkAdapterInformations"].append(networkAdapter);
     }
-*/
+    */
 
     //if (!adapterInfoList.size())
     {
