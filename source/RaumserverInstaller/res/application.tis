@@ -55,7 +55,9 @@ namespace Application
     
         view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
 
-        body.timer(40, function() { body.attributes.addClass("shown") });
+        body.show()
+        //body.attributes.addClass("shown")
+        //body.timer(40, function() { body.attributes.addClass("shown") });
     }
 
 
@@ -67,8 +69,8 @@ namespace Application
 
     function close()
     {
-        body.onAnimationEnd = function() { view.close(); };
-        body.attributes.removeClass("shown");
+        //body.onAnimationEnd = function() { view.close(); };
+       // body.attributes.removeClass("shown");
     }
 
  }

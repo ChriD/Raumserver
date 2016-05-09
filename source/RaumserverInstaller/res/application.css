@@ -1,9 +1,10 @@
 html {
             background: transparent;
+            //background:white;
         }
 
 
-            table {
+             table {
                 style-set: vgrid;
                 width: *;
                 height: *;
@@ -38,22 +39,27 @@ html {
             }
 
 
+               body {
+                    border: 1px solid black;
+                   background: #1585b5;
+        }
+
+            /*
+
+     
+
         body {
-            // will draw clock in between background and content layers border-radius:50%;
             border: 1px solid black;
-            background: #1585b5;
-            //margin: *;
-            // flex margins will move the body in the mddle of the root //size: 500dip;
+            background: #1585b5;        
             flow: vertical;
-            transform: scale(0.1);
-            // initially it is collapsed to center overflow:hidden;
             font-size: 10pt;
             font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
             color: white;
+            //transform: scale(1.0); 
             overflow: hidden; 
         }
 
-            body.shown {
+        body.shown {
                 transform: scale(1);
                 transition: transform(linear,300ms);
             }
@@ -62,6 +68,7 @@ html {
                 transform: scale(0.1);
                 transition: transform(linear,300ms);
             }
+                */
 
             body > header {
                 text-align: center;
@@ -92,9 +99,9 @@ html {
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: 24dip;
-                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
-                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
-                    fill: blue; /* defining default fill color of used SVG image */
+                    //background-image: url(svg/close.svg); 
+                    background-image: url(png/close.png); 
+                    fill: blue; 
                     float: left;
                     width: 50px;
                     height: 50px;
@@ -104,9 +111,9 @@ html {
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: 24dip;
-                    //background-image: url(svg/close.svg); /* svg that has no intrinsic styles */
-                    background-image: url(png/close.png); /* svg that has no intrinsic styles */
-                    fill: blue; /* defining default fill color of used SVG image */
+                    //background-image: url(svg/close.svg); 
+                    background-image: url(png/close.png); 
+                    fill: blue; 
                     float: left;
                     width: 50px;
                     height: 50px;

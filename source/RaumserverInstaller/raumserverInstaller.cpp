@@ -17,6 +17,7 @@ int uimain(std::function<int()> run)
     appWindow->init();
     // note: this:://app URL schema is dedicated to the sciter::archive content associated with the application
     appWindow->load(WSTR("this://app/installer.htm"));
+    //appWindow->load(WSTR("res/installer.htm"));
     appWindow->expand();
 
     return run();
