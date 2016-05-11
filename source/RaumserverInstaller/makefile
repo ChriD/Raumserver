@@ -1,9 +1,9 @@
 # Makefile template for shared library
 
 ifeq ($(arch),X64) 
-  ARCHITECTURE = -m64
+  ARCHITECTURE = -m64 -D_GLIBCXX_USE_CXX11_ABI=0
   CC = g++-5
-  CXX = g++-5
+  CXX = g++-5 
   LIBSPATH = libs/linux_x64/
   LIBSDEFADD = $(LIBSPATH)libsciter-gtk-64.so
   TARGET = raumsrvInstaller
@@ -11,8 +11,8 @@ endif
 	
 ifeq ($(arch),X86) 
   ARCHITECTURE = -m32 
-  CC = g++-5
-  CXX = g++-5
+  CC = g++-4.9
+  CXX = g++-4.9
   LIBSPATH = libs/linux_x86/
   LIBSDEFADD =
   TARGET = raumsrvInstaller
@@ -57,7 +57,8 @@ INCPATH = -I includes/ -I includes/sciter/ -I ../../../RaumserverInstallerLib/so
 
 CFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-3.0`
 CXXFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH) `pkg-config --cflags --libs gtk+-3.0`
-LDFLAGS = $(ARCHITECTURE) -pthread -static-libgcc -static-libstdc++
+#LDFLAGS = $(ARCHITECTURE) -pthread -static-libgcc -static-libstdc++
+LDFLAGS = $(ARCHITECTURE) -pthread
 
 RM = rm -f 
 

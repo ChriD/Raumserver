@@ -29,7 +29,8 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
 {
     Json::Value root, networkAdapter;
 
-    std::vector<RaumserverInstaller::NetworkAdaperInformation> adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
+    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterListTEST();
+    //auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterInformation(0);
 
     /*
     for (auto adapterInfo : adapterInfoList)

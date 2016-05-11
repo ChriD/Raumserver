@@ -26,7 +26,6 @@
 #define RAUMSERVERINSTALLER_CONVERTER_H
 
 #include <string>
-#include <string>
 #include <vector>
 #include <locale>
 #include <functional>
