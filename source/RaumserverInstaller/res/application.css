@@ -1,153 +1,87 @@
+/**
+* Application main
+*/
 html {
-            background: transparent;
-            //background:white;
-        }
+    background: transparent;
+}
+
+body {
+    background: white;
+}
+
+.appContainer {
+    width: 100%%;
+    height: 100%%;
+    border: 1px solid black;
+}
 
 
-             table {
-                style-set: vgrid;
-                width: *;
-                height: *;
-            }
+/**
+* Application layout grid
+*/
+.appLayoutGrid {
+    width: 100%;
+    height: 100%;    
+    flow: grid( 1  1,
+                2  3); 
+}
 
-            table th:nth-child(2) {
-                width: 6em;
-            }
+.appLayoutGrid > div { 
+    width: *;
+    height: *;      
+}
 
-            table th:nth-child(3) {
-                width: 12em;
-            }
+.appLayoutGrid > div.header { 
+    height: 110px;
+    background: orange;     
+}
 
-            table th:nth-child(4) {
-                width: *;
-            }
+.appLayoutGrid > div.header > div.left {
+    float: left;    
+    height: 100%;
+    width: 90%;
+    border: 1px solid black;
+}
 
-            table th:nth-child(5) {
-                width: 2em;
-            }
+.appLayoutGrid > div.header > div.left > div.logo {
+    float: left;   
+    height: 100%;
+    padding: 10px 20px 10px 20px;
+     border: 1px solid yellow;
+}
 
-            table th:nth-child(6) {
-                width: 2em;
-            }
+.appLayoutGrid > div.header > div.left > div.caption { 
+    float: left;
+    width: 100px;
+    height: 100%;
+    font-size: 32pt; 
+    
+    border: 1px solid black;
+}
 
-            table th:nth-child(7) {
-                width: 2em;
-            }
+.appLayoutGrid > div.header > div.right {
+    float: right;  
+    height: 100% ;
 
-            table th:last-child {
-                width: 4em;
-            }
+    background: green;
 
-
-               body {
-                    border: 1px solid black;
-                   background: #1585b5;
-        }
-
-            /*
-
-     
-
-        body {
-            border: 1px solid black;
-            background: #1585b5;        
-            flow: vertical;
-            font-size: 10pt;
-            font-family: "Segoe UI", Tahoma, Helvetica, sans-serif;
-            color: white;
-            //transform: scale(1.0); 
-            overflow: hidden; 
-        }
-
-        body.shown {
-                transform: scale(1);
-                transition: transform(linear,300ms);
-            }
-
-            body.hidden {
-                transform: scale(0.1);
-                transition: transform(linear,300ms);
-            }
-                */
-
-            body > header {
-                text-align: center;
-                color: brown;
-                margin-top: 36dip;
-                font-weight: bold;
-            }
-
-            body > div.header {
-                background: white;
-                color: #808080;
-            }
-
-                body > div.header > div.left {
-                    float: left;
-                }
-
-                body > div.header > div.right {
-                    float: right;
-                    width: 105px;
-                }
-
-                body > div.header > div.left > h1.caption {
-                    margin: 10px;
-                }
-
-                body > div.header > div.right > div.closeIcon {
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-size: 24dip;
-                    //background-image: url(svg/close.svg); 
-                    background-image: url(png/close.png); 
-                    fill: blue; 
-                    float: left;
-                    width: 50px;
-                    height: 50px;
-                }
-
-                body > div.header > div.right > div.minimizeIcon {
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-size: 24dip;
-                    //background-image: url(svg/close.svg); 
-                    background-image: url(png/close.png); 
-                    fill: blue; 
-                    float: left;
-                    width: 50px;
-                    height: 50px;
-                }
-
-            body > div.header {               
-                height: 15%;  
-                overflow: hidden;                 
-            }
+}
 
 
-            body > div.pages {
-                color: #FFFFFF;               
-                height: *;    
-                overflow: hidden;               
-            }
+.appLayoutGrid > div.leftsideboard { 
+    width: 220px;
+    background: lightgrey;     
+}
 
+.appLayoutGrid > div.pageContainer {
+    background: white;
+}
 
-            body > div.footer {                            
-                height: 10%;
-                overflow: hidden;                   
-            }
+.appLogo {  
+    display: block;
+    max-width:230px;
+    max-height:90px;
+    width: auto;
+    height: auto;   
+}
 
-
-            body > div.pages > div.page {
-                color: #FFFFFF;
-                margin: 10px;
-                height: 100%; 
-                overflow: hidden;                  
-            }
-
-          
-
-
-        div {
-            border: 1px solid lightgray;
-        }

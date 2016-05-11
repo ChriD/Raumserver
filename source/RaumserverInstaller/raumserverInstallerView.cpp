@@ -29,20 +29,17 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
 {
     Json::Value root, networkAdapter;
 
-    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterListTEST();
-    //auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterInformation(0);
+    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
 
-    /*
     for (auto adapterInfo : adapterInfoList)
     {
         networkAdapter["networkAdapter"]["name"] = adapterInfo.name;
         networkAdapter["networkAdapter"]["address"] = adapterInfo.address;
         networkAdapter["networkAdapter"]["id"] = adapterInfo.id;
         root["networkAdapterInformations"].append(networkAdapter);
-    }
-    */
+    }    
 
-    //if (!adapterInfoList.size())
+    if (!adapterInfoList.size())
     {
         networkAdapter["networkAdapter"]["name"] = "No network adapter available";
         networkAdapter["networkAdapter"]["address"] = "";

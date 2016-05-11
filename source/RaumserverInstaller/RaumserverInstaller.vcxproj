@@ -166,22 +166,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\application.css" />
-    <None Include="res\application.tis" />
-    <None Include="res\deviceSelection.tis" />
-    <None Include="res\deviceSelectionPage.tis" />
-    <None Include="res\global.tis" />
     <None Include="res\installer.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="res\installProgressPage.tis" />
-    <None Include="res\moveable-view.tis" />
-    <None Include="res\networkAdapterSelection.tis" />
-    <None Include="res\networkAdapterSelectionPage.tis" />
-    <None Include="res\pageNavigation.tis" />
     <None Include="res\resizeable.css" />
-    <None Include="res\resizeable.tis" />
+    <None Include="res\tis\application.tis" />
+    <None Include="res\tis\deviceSelection.tis" />
+    <None Include="res\tis\deviceSelectionPage.tis" />
+    <None Include="res\tis\global.tis" />
+    <None Include="res\tis\installProgressPage.tis" />
+    <None Include="res\tis\moveable-view.tis" />
+    <None Include="res\tis\networkAdapterSelection.tis" />
+    <None Include="res\tis\networkAdapterSelectionPage.tis" />
+    <None Include="res\tis\pageNavigation.tis" />
+    <None Include="res\tis\resizeable.tis" />
+    <None Include="res\tis\vlist.tis" />
     <None Include="res\vgrid.css" />
-    <None Include="res\vlist.tis" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\json\json-forwards.h" />

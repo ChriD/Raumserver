@@ -1,0 +1,122 @@
+<html custom-frame="layered">
+    <head>
+        <title></title>
+        <style>
+            @import url(vgrid.css);
+            @import url(application.css);
+        </style>
+
+        <script type="text/tiscript">
+            // include main script for this application
+            // this script will include all other scripts used to keep the html file clear
+            include "tis/application.tis"
+        </script>
+    </head>
+    <body>
+      
+
+        <!-- Header of installer -->
+        <div class="header">
+            <div class="left"><h1 class=" caption">Raumserver Installer</h1></div>
+            <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"><button role="window-minimize">_</button></div><div class="closeIcon" id="closeIconContainer"><button role="window-close">X</button></div></div>
+        </div>
+
+        <div id="pages" class="pages">
+
+            <!-- First page -->
+            <div id="page1" class="page hidden">
+
+                <div>
+                    This installer helps you to install the RaumfeldServer application onto an raumfeld device
+                </div>
+
+                <div style ="height: *;">
+                    Please select a Network-Adapter where to search for Raumfeld devices:
+                    <select id="networkadapterSelectionComboBox"></select>
+                </div>
+
+                <div>
+                    <button id="page1_viewSelectionPage">Next</button>
+                </div>
+
+            </div>
+
+
+            <!-- Second page -->
+            <div id="page2" class="page hidden">
+
+                <div>
+                    Please wait while installer is trying to find proper devices!
+                </div>
+
+                <div style="height: *;">
+                    <table resizeable>
+                        <thead>
+                            <tr>
+                                <th(index)>Index</th>
+                                <th(ip)>IP</th>
+                                <th(name)>Name</th>
+                                <th(udn)>UDN</th>
+                                <th(sshAccess)>SSH</th>
+                                <th(serverInstalled)>SI</th>
+                                <th(serverRuns)>SR</th>
+                                <th(serverVersion)>Version</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td(index)></td>
+                                <td(ip)></td>
+                                <td(name)></td>
+                                <td(udn)></td>
+                                <td(sshAccess)></td>
+                                <td(serverInstalled)></td>
+                                <td(serverRuns)></td>
+                                <td(serverVersion)></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="selectedDeviceInfoContainer"></div>
+                 
+                <div>
+                    <button id="page2_viewAdapterSelectionPage">Prev</button>
+                    <button id="page2_viewInstallProgressPage">Next</button>
+                </div>
+
+            </div>
+
+
+            <!-- Third page -->
+            <div id="page3" class="page hidden">
+
+                <div>
+                    Please wait while installing on device!
+                </div>
+
+                <div>
+                    Install progress bar
+                </div>
+
+                <div style="height: *;" id="installProgressInfoOutputContainer">                  
+                </div>
+
+                <div>
+                    <button id="page3_viewSelectionPage">Prev</button>
+                    <button id="page3_close">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="footer" class="footer">
+            <div id="userInfoOutput"></div>
+        </div>
+
+    </body>
+</html>
+
+
+

@@ -9,34 +9,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\moveable-view.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\resizeable.tis">
-      <Filter>res</Filter>
-    </None>
     <None Include="res\installer.htm">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\networkAdapterSelection.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\networkAdapterSelectionPage.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\deviceSelectionPage.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\global.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\installProgressPage.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\pageNavigation.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\application.tis">
       <Filter>res</Filter>
     </None>
     <None Include="res\application.css">
@@ -48,11 +21,38 @@
     <None Include="res\vgrid.css">
       <Filter>res</Filter>
     </None>
-    <None Include="res\deviceSelection.tis">
-      <Filter>res</Filter>
+    <None Include="res\tis\application.tis">
+      <Filter>res\tis</Filter>
     </None>
-    <None Include="res\vlist.tis">
-      <Filter>res</Filter>
+    <None Include="res\tis\deviceSelection.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\deviceSelectionPage.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\global.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\installProgressPage.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\moveable-view.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\networkAdapterSelection.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\networkAdapterSelectionPage.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\pageNavigation.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\resizeable.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\vlist.tis">
+      <Filter>res\tis</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +70,12 @@
     </Filter>
     <Filter Include="includes\tools">
       <UniqueIdentifier>{a2384224-670e-4153-a732-fe4fdbf10dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\tis">
+      <UniqueIdentifier>{527ba6b5-c9a3-479b-b77b-017ef8950c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\images">
+      <UniqueIdentifier>{d7ea001f-a06d-42e0-ac8d-2314678ba389}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
