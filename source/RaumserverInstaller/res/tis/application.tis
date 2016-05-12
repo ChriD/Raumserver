@@ -12,7 +12,7 @@ include "moveable-view.tis";
 // include the scripts for the 'third' page which is the installation progress page  
 //include "installProgressPage.tis"        
 // add simple page navigation
-//include "pageNavigation.tis"
+include "pageNavigation.tis"
 
 // debug mode
 //if( view.connectToInspector ) // the view is in debug mode
@@ -31,7 +31,7 @@ namespace Application
         Application.initAppWindow();
            
         // init the simple  page navigation
-        //PageNavigation.init();
+        PageNavigation.init();
         // initialize the networkAdapter Selection Page
         //NetworkAdapterSelectionPage.init();
         // initialize the deviceSelection Page

@@ -70,6 +70,15 @@ body {
 
 .appLayoutGrid > div.pageContainer {
     background: white;
+    overflow: hidden;
+    height: *;
+}
+
+
+.appLayoutGrid > div.pageContainer > div.page {   
+    overflow: hidden;
+    margin: 10px;
+    height: 100%%; 
 }
 
 
