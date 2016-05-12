@@ -166,6 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\css\application.css" />
+    <None Include="res\css\button.css" />
+    <None Include="res\css\list.css" />
     <None Include="res\css\resizeable.css" />
     <None Include="res\css\vgrid.css" />
     <None Include="res\installer.htm">

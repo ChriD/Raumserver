@@ -5,23 +5,16 @@ html {
     background: transparent;
 }
 
+@import url(button.css);
+@import url(list.css);
+
+
 body {
     background: white;
 }
 
 .alignRight {
     text-align:right;
-}
-
-
-.flatButton{
-    background: transparent;
-    border: 1px solid white;
-}
-
-.flatButton:hover{
-    background: white;
-    border: 1px solid black;
 }
 
 

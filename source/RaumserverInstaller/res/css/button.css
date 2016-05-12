@@ -1,0 +1,9 @@
+.flatButton{
+    background: transparent;
+    border: 1px solid white;
+}
+
+.flatButton:hover{
+    background: white;
+    border: 1px solid black;
+}

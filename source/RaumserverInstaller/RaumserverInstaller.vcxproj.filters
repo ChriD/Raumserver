@@ -54,6 +54,12 @@
     <None Include="res\css\vgrid.css">
       <Filter>res\css</Filter>
     </None>
+    <None Include="res\css\button.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\css\list.css">
+      <Filter>res\css</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
