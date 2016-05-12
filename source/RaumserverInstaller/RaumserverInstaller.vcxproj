@@ -165,11 +165,12 @@
     <ClCompile Include="raumserverInstallerView.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\application.css" />
+    <None Include="res\css\application.css" />
+    <None Include="res\css\resizeable.css" />
+    <None Include="res\css\vgrid.css" />
     <None Include="res\installer.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="res\resizeable.css" />
     <None Include="res\tis\application.tis" />
     <None Include="res\tis\deviceSelection.tis" />
     <None Include="res\tis\deviceSelectionPage.tis" />
@@ -181,13 +182,15 @@
     <None Include="res\tis\pageNavigation.tis" />
     <None Include="res\tis\resizeable.tis" />
     <None Include="res\tis\vlist.tis" />
-    <None Include="res\vgrid.css" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\json\json-forwards.h" />
     <ClInclude Include="includes\json\json.h" />
     <ClInclude Include="includes\raumserverInstallerView.h" />
     <ClInclude Include="includes\tools\converter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\raumserverInstallerLogo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

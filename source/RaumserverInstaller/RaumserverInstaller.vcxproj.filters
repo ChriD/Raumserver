@@ -12,15 +12,6 @@
     <None Include="res\installer.htm">
       <Filter>res</Filter>
     </None>
-    <None Include="res\application.css">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\resizeable.css">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\vgrid.css">
-      <Filter>res</Filter>
-    </None>
     <None Include="res\tis\application.tis">
       <Filter>res\tis</Filter>
     </None>
@@ -54,6 +45,15 @@
     <None Include="res\tis\vlist.tis">
       <Filter>res\tis</Filter>
     </None>
+    <None Include="res\css\application.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\css\resizeable.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\css\vgrid.css">
+      <Filter>res\css</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -77,6 +77,9 @@
     <Filter Include="res\images">
       <UniqueIdentifier>{d7ea001f-a06d-42e0-ac8d-2314678ba389}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res\css">
+      <UniqueIdentifier>{4bc0863d-c2c7-4a3f-b891-a1876a05e7a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\raumserverInstallerView.h">
@@ -91,5 +94,10 @@
     <ClInclude Include="includes\tools\converter.h">
       <Filter>includes\tools</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\raumserverInstallerLogo.png">
+      <Filter>res\images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

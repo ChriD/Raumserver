@@ -3,8 +3,8 @@
     <head>
         <title></title>
         <style>
-            @import url(vgrid.css);
-            @import url(application.css);
+            @import url(css/vgrid.css);
+            @import url(css/application.css);
         </style>
         <script type="text/tiscript">
             // Include main script for this application
@@ -19,10 +19,16 @@
 	        <div class="appLayoutGrid">
 		        <div class="header">
                     <div class="left">
-                        <div class="logo"><img src="images/logo.png" class="appLogo"></div>
-                        <div class="caption">Installer</div>
+                        <div class="logo"><img src="images/raumserverInstallerLogo.png" class="appLogo"></div>                        
                     </div>
-                    <div class="right"><div class="minimizeIcon" id="minimizeIconContainer"><button role="window-minimize">_</button></div><div class="closeIcon" id="closeIconContainer"><button role="window-close">X</button></div></div>
+                    <div class="right">                                   
+                        <table>
+                            <tr><td colspan="2" class="alignRight"><span><button class="flatButton" role="window-minimize">_</button>&nbsp;<button class="flatButton" role="window-close">X</button></span></td></tr>
+                            <tr><td>&nbsp;</td><td></td></tr>
+                            <tr><td>Installer Version:</td><td class="alignRight">1.0.0</td></tr>
+                            <tr><td>Server Version:</td><td class="alignRight">1.0.0</td></tr>
+                        </table>
+                    </div>
                 </div>
 		        <div class="leftsideboard"></div>
 		        <div class="pageContainer"></div>				        

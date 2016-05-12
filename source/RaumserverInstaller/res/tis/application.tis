@@ -4,15 +4,15 @@ include "global.tis";
 // include script for moveable window
 include "moveable-view.tis";
 // include the scripts for the 'first' page which is the network adapter selection page
-include "networkAdapterSelection.tis"
-include "networkAdapterSelectionPage.tis"
+//include "networkAdapterSelection.tis"
+//include "networkAdapterSelectionPage.tis"
 // include the scripts for the 'second' page which is the device selection page  
-include "deviceSelection.tis"
-include "deviceSelectionPage.tis"
+//include "deviceSelection.tis"
+//include "deviceSelectionPage.tis"
 // include the scripts for the 'third' page which is the installation progress page  
-include "installProgressPage.tis"        
+//include "installProgressPage.tis"        
 // add simple page navigation
-include "pageNavigation.tis"
+//include "pageNavigation.tis"
 
 // debug mode
 //if( view.connectToInspector ) // the view is in debug mode
@@ -31,15 +31,15 @@ namespace Application
         Application.initAppWindow();
            
         // init the simple  page navigation
-        PageNavigation.init();
+        //PageNavigation.init();
         // initialize the networkAdapter Selection Page
-        NetworkAdapterSelectionPage.init();
+        //NetworkAdapterSelectionPage.init();
         // initialize the deviceSelection Page
-        DeviceSelectionPage.init()
+        //DeviceSelectionPage.init()
         // initialize the install progress Page
-        InstallProgressPage.init();     
+        //InstallProgressPage.init();     
       
-        $(#page3_close).on("click",function(){ Application.close(); });
+        //$(#page3_close).on("click",function(){ Application.close(); });
 
         movableView();
               
@@ -56,8 +56,6 @@ namespace Application
         view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
 
         body.show()
-        //body.attributes.addClass("shown")
-        //body.timer(40, function() { body.attributes.addClass("shown") });
     }
 
 
@@ -69,8 +67,6 @@ namespace Application
 
     function close()
     {
-        //body.onAnimationEnd = function() { view.close(); };
-       // body.attributes.removeClass("shown");
     }
 
  }
@@ -79,7 +75,7 @@ namespace Application
 // when ths document is loaded ad the DO is ready we can do our stuff 
 self.ready = function()
 {
-    view.caption = "Raumfeld Installer";          
+    view.caption = "Raumserver Installer";          
     Application.init();          
 }
 

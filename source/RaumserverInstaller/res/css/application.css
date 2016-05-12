@@ -9,6 +9,22 @@ body {
     background: white;
 }
 
+.alignRight {
+    text-align:right;
+}
+
+
+.flatButton{
+    background: transparent;
+    border: 1px solid white;
+}
+
+.flatButton:hover{
+    background: white;
+    border: 1px solid black;
+}
+
+
 .appContainer {
     width: 100%%;
     height: 100%%;
@@ -33,38 +49,24 @@ body {
 
 .appLayoutGrid > div.header { 
     height: 110px;
-    background: orange;     
+    background: lightgrey;     
 }
 
 .appLayoutGrid > div.header > div.left {
     float: left;    
     height: 100%;
-    width: 90%;
-    border: 1px solid black;
 }
 
 .appLayoutGrid > div.header > div.left > div.logo {
     float: left;   
     height: 100%;
-    padding: 10px 20px 10px 20px;
-     border: 1px solid yellow;
-}
-
-.appLayoutGrid > div.header > div.left > div.caption { 
-    float: left;
-    width: 100px;
-    height: 100%;
-    font-size: 32pt; 
-    
-    border: 1px solid black;
+    margin: 10px 20px 10px 20px;
 }
 
 .appLayoutGrid > div.header > div.right {
     float: right;  
     height: 100% ;
-
-    background: green;
-
+    padding: 10px 20px 10px 20px;    
 }
 
 
@@ -77,11 +79,5 @@ body {
     background: white;
 }
 
-.appLogo {  
-    display: block;
-    max-width:230px;
-    max-height:90px;
-    width: auto;
-    height: auto;   
-}
+
 
