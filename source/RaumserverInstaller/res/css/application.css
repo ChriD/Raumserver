@@ -13,8 +13,16 @@ body {
     background: white;
 }
 
+h3 {
+    margin-top: 0px;
+}
+
 .alignRight {
     text-align:right;
+}
+
+.floatRight {
+    float: right;
 }
 
 
@@ -77,9 +85,15 @@ body {
 
 .appLayoutGrid > div.pageContainer > div.page {   
     overflow: hidden;
-    margin: 10px;
+    margin: 25px;
     height: 100%%; 
 }
+
+
+div.page > div.navigation {
+    width: 100%;
+}
+
 
 
 

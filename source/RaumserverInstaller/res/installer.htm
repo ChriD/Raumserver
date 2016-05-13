@@ -24,7 +24,7 @@
                     </div>
                     <div class="right">                                   
                         <table>
-                            <tr><td colspan="2" class="alignRight"><span><button class="flatButton" role="window-minimize">_</button>&nbsp;<button class="flatButton" role="window-close">X</button></span></td></tr>
+                            <tr><td colspan="2" class="alignRight"><span><button class="flatButton_header" role="window-minimize">_</button>&nbsp;<button class="flatButton_header" role="window-close">X</button></span></td></tr>
                             <tr><td>&nbsp;</td><td></td></tr>
                             <tr><td>Installer Version:</td><td class="alignRight">1.0.0</td></tr>
                             <tr><td>Server Version:</td><td class="alignRight">1.0.0</td></tr>
@@ -35,37 +35,32 @@
 		        <div class="leftsideboard">
                     <ul class="progressList">
                         <li class="selected">Welcome</li>
-                        <li>Select Network</li>
-                        <li>Choose Device</li>
+                        <li>Choose Network</li>
+                        <li>Select Device</li>
                         <li>Install</li>                              
                     </ul>
                 </div>
 
 		        <div class="pageContainer">
                     
-                     <!-- Weclome page -->
+                     <!-- Weclome page -->                    
                     <div id="page1" class="page">
-                        <div style="height: *;">
-                            This installer helps you to install the RaumfeldServer application onto an raumfeld device
-                        <div>              
-                        <div>
-                            <button id="page1_next">Next</button>
-                        </div>
+                        <include src="page_welcome.htm">Page is not available!</include>
                     </div>
 
-                    <!-- Select Network page -->
+                    <!-- Choose Network page -->
                     <div id="page2" class="page">
-                        Select Network
+                        <include src="page_chooseNetwork.htm">Page is not available!</include>
                     </div>
 
-                    <!-- Choose Device page -->
+                    <!-- Select Device page -->
                     <div id="page3" class="page">
-                        Choose Device
+                        <include src="page_selectDevice.htm">Page is not available!</include>
                     </div>
 
                     <!-- Install page -->
                     <div id="page4" class="page">
-                        Install progress
+                        <include src="page_install.htm">Page is not available!</include>
                     </div>
 
                 </div>				        

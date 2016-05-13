@@ -60,6 +60,18 @@
     <None Include="res\css\list.css">
       <Filter>res\css</Filter>
     </None>
+    <None Include="res\page_chooseNetwork.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\page_install.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\page_selectDevice.htm">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\page_welcome.htm">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">

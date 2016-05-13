@@ -19,11 +19,19 @@ ul.progressList > li::before {
   background: grey;
 }
 
-
 ul.progressList > li.selected {
   font-weight: bold; 
 }
 
 ul.progressList > li.selected::before {
   background: #1585b5;
+}
+
+
+
+ol.infoList {  
+}
+
+ol.infoList > li {
+  height: 1.5em; 
 }

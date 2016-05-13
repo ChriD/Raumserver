@@ -1,9 +1,22 @@
-.flatButton{
+.flatButton {
+    background: transparent;
+    border: 1px solid black;
+    width: 8em;
+    color: black;
+    font-weight: bold;
+}
+
+.flatButton:hover {
+    color: #1585b5;    
+    border: 1px solid #1585b5;
+}
+
+.flatButton_header {
     background: transparent;
     border: 1px solid white;
 }
 
-.flatButton:hover{
+.flatButton_header:hover {
     background: white;
     border: 1px solid black;
 }
