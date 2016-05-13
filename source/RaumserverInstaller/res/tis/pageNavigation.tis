@@ -13,12 +13,12 @@ namespace PageNavigation
 
         // we do have a "next" and a "back" button and if one of them are clicked we have to update the viewing page
         // we'll do this with key identifiers on each view. This is not very sophisticated but its ok for the installer app
-        $(#page1_next).on("click", function()          { PageNavigation.navigateTo(2, {forward:1}); });
-        $(#page2_next).on("click", function()          { PageNavigation.navigateTo(3, {forward:1}); });
-        $(#page2_back).on("click", function()          { PageNavigation.navigateTo(1, {forward:0}); }); 
-        $(#page3_next).on("click", function()          { PageNavigation.navigateTo(4, {forward:1}); });
-        $(#page3_back).on("click", function()          { PageNavigation.navigateTo(2, {forward:0}); });          
-        $(#page4_back).on("click", function()          { PageNavigation.navigateTo(3, {forward:0}); });
+        $(#page1_next).on("click", function()          { PageNavigation.navigateTo(2, 1, {forward:1}); });
+        $(#page2_next).on("click", function()          { PageNavigation.navigateTo(3, 2, {forward:1}); });
+        $(#page2_back).on("click", function()          { PageNavigation.navigateTo(1, 2, {forward:0}); }); 
+        $(#page3_next).on("click", function()          { PageNavigation.navigateTo(4, 3, {forward:1}); });
+        $(#page3_back).on("click", function()          { PageNavigation.navigateTo(2, 3, {forward:0}); });          
+        $(#page4_back).on("click", function()          { PageNavigation.navigateTo(3, 4, {forward:0}); });
         $(#page4_next).on("click", function()          { view.close() });
     }
 
@@ -26,17 +26,30 @@ namespace PageNavigation
     /**
     * use this function to navigate between the 'DIV' pages
     */
-    function navigateTo(_pageIdx, _parmObject = {})
+    function navigateTo(_pageIdx, _currentPageIdx, _parmObject = {})
     {    
+        var allowPageChange = true;
+
+        if(_currentPageIdx == 3) allowPageChange = DeviceSelectionPage.pageLeave(_parmObject); 
+
+        if(!allowPageChange)
+            return;
+
         for(var i=1; i<=pageCount; i++)
         {
             eval("$(#page" + i + ").hide()");
         }
-        eval("$(#page" + _pageIdx + ").show()");        
-
-        //if(_pageIdx == 1) NetworkAdapterSelectionPage.pageActivated(_parmObject);
-        //if(_pageIdx == 2) DeviceSelectionPage.pageActivated(_parmObject);
-        //if(_pageIdx == 3) InstallProgressPage.pageActivated(_parmObject);
+        eval("$(#page" + _pageIdx + ").show()"); 
+                                
+        for(var i=1; i<=pageCount; i++)
+        {
+            eval("$(#li_page" + i + ")").attributes.removeClass("selected");            
+        }
+        eval("$(#li_page" + _pageIdx + ")").attributes.addClass("selected");                     
+        
+        if(_pageIdx == 2) NetworkAdapterSelectionPage.pageActivated(_parmObject);
+        if(_pageIdx == 3) DeviceSelectionPage.pageActivated(_parmObject);
+        //if(_pageIdx == 4) InstallProgressPage.pageActivated(_parmObject);
     }
       
 

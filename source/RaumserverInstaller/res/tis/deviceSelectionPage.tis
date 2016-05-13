@@ -18,4 +18,11 @@ namespace DeviceSelectionPage
         view.startSearchingForDevices();
     }
 
+    function pageLeave(parmObject)
+    {
+        // if forward then check if a device is selected and the device has ssh access       
+        // TODO: @@@
+        return true;
+    }
+
  }

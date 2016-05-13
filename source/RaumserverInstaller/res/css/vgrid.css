@@ -3,7 +3,7 @@
 @set vgrid {
 
   table:root {
-    prototype: VGrid url(tis/vlist.tis);  
+    prototype: VGrid url(../tis/vlist.tis);  
     font:system;
     border:1px solid threedlightshadow; 
     flow:table-fixed; /* enforce fixed layout on the table 

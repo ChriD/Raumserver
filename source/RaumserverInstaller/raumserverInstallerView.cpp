@@ -14,7 +14,7 @@ ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | 
 void ApplicationWindow::init()
 {
     raumserverInstallerObject.init();
-    //raumserverInstallerObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_INFO);
+    raumserverInstallerObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_INFO);
     raumserverInstallerObject.initDiscover();
 
     connections.connect(raumserverInstallerObject.sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
@@ -98,8 +98,6 @@ void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInfor
     Json::Value deviceInfo;
 
     std::unique_lock<std::mutex> lock(lockDeviceAction);
-
-
 
     // TODO: @@ amke a method for this!
     // convert deviceInfo to JSON string

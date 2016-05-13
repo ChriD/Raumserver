@@ -13,10 +13,11 @@ namespace DeviceSelection
     
     function init()
     {                
-        vlist = $(table);              
+        vlist = $(table#devicegrid);              
         vlist.value = deviceInformationList;
-        vlist.tbody.currentIndex = 0;         
+        vlist.tbody.currentIndex = 0;      
         vlist.on("change", function() { deviceSelectionChanged(vlist.tbody.currentIndex); });     
+        deviceSelectionChanged(-1);
                             
     }
 
@@ -32,7 +33,10 @@ namespace DeviceSelection
 
     function deviceSelectionChanged(_index)
     {
-        $(#selectedDeviceInfoContainer).content("Selected Device Id: " + _index.toString());
+        if(_index >= 0)
+            $(#chosenDeviceInfo).content(deviceInformationList[_index].name + "(" + deviceInformationList[_index].ip + ")");
+        else
+            $(#chosenDeviceInfo).content("No device selected!");
     }
 
        

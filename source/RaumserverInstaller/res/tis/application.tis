@@ -4,11 +4,11 @@ include "global.tis";
 // include script for moveable window
 include "moveable-view.tis";
 // include the scripts for the 'first' page which is the network adapter selection page
-//include "networkAdapterSelection.tis"
-//include "networkAdapterSelectionPage.tis"
+include "networkAdapterSelection.tis"
+include "networkAdapterSelectionPage.tis"
 // include the scripts for the 'second' page which is the device selection page  
-//include "deviceSelection.tis"
-//include "deviceSelectionPage.tis"
+include "deviceSelection.tis"
+include "deviceSelectionPage.tis"
 // include the scripts for the 'third' page which is the installation progress page  
 //include "installProgressPage.tis"        
 // add simple page navigation
@@ -26,20 +26,24 @@ namespace Application
     const body = $(body); 
 
     function init() 
-    {              
+    {    
+        // open <a> references into the default browser of the system
+        self.on("click", "a[href^=http]", function(evt) {
+          var href = this.attributes["href"];
+          Sciter.launch(href); 
+          return true;
+        });
+              
         // do position of window (center application window)
-        Application.initAppWindow();
-           
+        Application.initAppWindow();                 
         // init the simple  page navigation
         PageNavigation.init();
         // initialize the networkAdapter Selection Page
-        //NetworkAdapterSelectionPage.init();
+        NetworkAdapterSelectionPage.init();
         // initialize the deviceSelection Page
-        //DeviceSelectionPage.init()
+        DeviceSelectionPage.init()
         // initialize the install progress Page
         //InstallProgressPage.init();     
-      
-        //$(#page3_close).on("click",function(){ Application.close(); });
 
         movableView();
               

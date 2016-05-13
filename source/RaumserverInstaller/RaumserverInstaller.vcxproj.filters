@@ -72,6 +72,9 @@
     <None Include="res\page_welcome.htm">
       <Filter>res</Filter>
     </None>
+    <None Include="res\css\devicetable.css">
+      <Filter>res\css</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">

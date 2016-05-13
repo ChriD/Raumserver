@@ -31,7 +31,7 @@
 #include <tools/converter.h>
 #include "sciter-x-window.hpp"
 
-static RECT wrc = { 100, 100, 700, 400 };
+static RECT wrc = { 100, 100, 700, 450 };
 
 class ApplicationWindow : public sciter::window
 {
