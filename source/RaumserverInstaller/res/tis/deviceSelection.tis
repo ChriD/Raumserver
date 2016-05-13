@@ -28,13 +28,14 @@ namespace DeviceSelection
         if(deviceInformationList.length > 0)
             deviceInformationList.splice(0, deviceInformationList.length);
         vlist.tbody.currentIndex = 0;
+        deviceSelectionChanged(-1);
     }
 
 
     function deviceSelectionChanged(_index)
     {
         if(_index >= 0)
-            $(#chosenDeviceInfo).content(deviceInformationList[_index].name + "(" + deviceInformationList[_index].ip + ")");
+            $(#chosenDeviceInfo).content(deviceInformationList[_index].name + " (" + deviceInformationList[_index].ip + ")");
         else
             $(#chosenDeviceInfo).content("No device selected!");
     }

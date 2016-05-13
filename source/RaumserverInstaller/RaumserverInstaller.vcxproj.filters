@@ -75,6 +75,9 @@
     <None Include="res\css\devicetable.css">
       <Filter>res\css</Filter>
     </None>
+    <None Include="res\dialog_info.htm">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">

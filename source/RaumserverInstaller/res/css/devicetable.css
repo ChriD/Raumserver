@@ -4,7 +4,7 @@ table.devices {
     style-set: vgrid;
     width: *;
     height: *;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 table.devices th:nth-child(2) {

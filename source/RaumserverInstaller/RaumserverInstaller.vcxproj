@@ -171,6 +171,9 @@
     <None Include="res\css\list.css" />
     <None Include="res\css\resizeable.css" />
     <None Include="res\css\vgrid.css" />
+    <None Include="res\dialog_info.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="res\installer.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>

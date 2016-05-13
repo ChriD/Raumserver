@@ -18,10 +18,33 @@ namespace DeviceSelectionPage
         view.startSearchingForDevices();
     }
 
-    function pageLeave(parmObject)
+    function pageLeave(_parmObject)
     {
-        // if forward then check if a device is selected and the device has ssh access       
-        // TODO: @@@
+        var userInfo = "";
+
+        // if forward then check if a device is selected and the device has ssh access     
+        if(_parmObject.forward == 1)
+        {
+            if(vlist.tbody.currentIndex < 0)
+            {           
+                userInfo = "You have to choose a device for install!";       
+            }
+            else
+            {
+                if(deviceInformationList[vlist.tbody.currentIndex].sshAccess == 0)
+                {
+                    userInfo = "Selected device has no SSH access!\nPlease enable SSH access!";                    
+                }
+            }
+
+            if(userInfo != "")
+            {
+                view.dialog(self.url("dialog_info.htm"));
+                //view.msgbox(#alert, userInfo);
+                return false;
+            }
+        }
+
         return true;
     }
 
