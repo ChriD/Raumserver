@@ -39,7 +39,7 @@ namespace DeviceSelectionPage
 
             if(userInfo != "")
             {
-                view.dialog(self.url("dialog_info.htm"));
+                //view.dialog(self.url("dialog_info.htm"));
                 //view.msgbox(#alert, userInfo);
                 return false;
             }
