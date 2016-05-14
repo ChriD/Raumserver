@@ -80,19 +80,19 @@ namespace DeviceSelection
                 
         var sshAccessIcon = "&fa-question-circle;"
         if(sshAccess == 0)
-            sshAccessIcon = "&fa-exclamation-circle;"
+            sshAccessIcon = "&fa-close;"
         if(sshAccess == 1)
             sshAccessIcon = "&fa-check-circle;"
 
         var serverInstalledIcon = "&fa-question-circle;"
         if(serverInstalled == 0)
-            serverInstalledIcon = "&fa-exclamation-circle;"
+            serverInstalledIcon = "&fa-close;"
         if(serverInstalled == 1)
             serverInstalledIcon = "&fa-check-circle;"
 
         var serverRunsIcon = "&fa-question-circle;"
         if(serverRuns == 0)
-            serverRunsIcon = "&fa-exclamation-circle;"
+            serverRunsIcon = "&fa-close;"
         if(serverRuns == 1)
             serverRunsIcon = "&fa-check-circle;"
             
@@ -124,10 +124,12 @@ namespace DeviceSelection
             if(idx >= 0 && found)
             {
                 var recordObject = deviceInformationList[idx];
-                recordObject.sshAccess = sshAccess.toString();
-                recordObject.serverInstalled = serverInstalled.toString();
-                recordObject.serverRuns = serverRuns.toString();
-                recordObject.sshAccessIcon = sshAccessIcon.toString();            
+                recordObject.sshAccess = sshAccess;
+                recordObject.serverInstalled = serverInstalled;
+                recordObject.serverRuns = serverRuns;
+                recordObject.sshAccessIcon = sshAccessIcon;            
+                recordObject.serverInstalledIcon = serverInstalledIcon;
+                recordObject.serverRunsIcon = serverRunsIcon;
             }
         }     
         

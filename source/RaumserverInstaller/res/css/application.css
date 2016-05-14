@@ -25,7 +25,11 @@ h3 {
 }
 
 .alignRight {
-    text-align:right;
+    text-align: right;
+}
+
+.alignCenter {
+    text-align: center;
 }
 
 .floatRight {
