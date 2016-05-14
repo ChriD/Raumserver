@@ -107,12 +107,12 @@ namespace DeviceSelection
             
             if(idx >= 0 && found)
             {
-                deviceInformationList[idx] = {index: idx, ip: ip.toString(), name: displayName,
-                                              udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
-                                              serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString(),
-                                              sshAccessIcon: sshAccessIcon                                            
-                                             };
-            }                    
+                var recordObject = deviceInformationList[idx];
+                recordObject.sshAccess = sshAccess.toString();
+                recordObject.serverInstalled = serverInstalled.toString();
+                recordObject.serverRuns = serverRuns.toString();
+                recordObject.sshAccessIcon = sshAccessIcon.toString();            
+            }
         }     
         
         vlist.tbody.currentIndex = listIndex;                   
