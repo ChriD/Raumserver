@@ -1,0 +1,36 @@
+ @import url(vgrid.css); 
+
+table.devices {
+    style-set: vgrid;
+    width: *;
+    height: *;
+    margin-bottom: 5px;
+}
+
+table.devices th:nth-child(2) {
+    width: 6em;
+}
+
+table.devices th:nth-child(3) {
+    width: 12em;
+}
+
+table.devices th:nth-child(4) {
+    width: *;
+}
+
+table.devices th:nth-child(5) {
+    width: 2em;
+}
+
+table.devices th:nth-child(6) {
+    width: 2em;
+}
+
+table.devices th:nth-child(7) {
+    width: 2em;
+}
+
+table.devices th:last-child {
+    width: 4em;
+}

@@ -1,0 +1,101 @@
+
+/**
+*
+*/
+namespace InstallProgressPage
+{        
+  
+    function init() 
+    {         
+       // TODO          
+    }
+
+
+    function pageActivated(_parmObject)
+    {                
+        $(button#page4_next).state.disabled = 1;
+        $(button#page4_back).state.disabled = 1;
+
+        $(#installationResult).attributes.removeClass("installationSucceeded");
+        $(#installationResult).attributes.removeClass("installationError");
+        $(#installationResult).content("Installation in progress...");
+        
+        $(#installProgressInfo).content("");  
+   
+        if(_parmObject.uninstall == 1)
+            startRemove();
+        else
+            startInstall()
+    }
+
+
+    function checkDevice(_index)
+    {
+        if(_index < 0)
+        {
+            addProgress("No device selected!");         
+            return false;
+        }                   
+        return true;
+    }
+
+
+    function startInstall()
+    {        
+        addProgress("Installing/Updateing on device " + deviceInformationList[vlist.tbody.currentIndex].name + " (" + deviceInformationList[vlist.tbody.currentIndex].ip + ")");         
+        if(checkDevice(vlist.tbody.currentIndex))
+            view.startInstallOnDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
+    }
+
+
+    function startRemove()
+    {     
+        addProgress("Remove on device " + deviceInformationList[vlist.tbody.currentIndex].name + " (" + deviceInformationList[vlist.tbody.currentIndex].ip + ")");                 
+        if(checkDevice(vlist.tbody.currentIndex))
+            view.startRemoveFromDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
+    }
+
+
+    function addProgressInfo(_progressInfo)
+    {
+        var progressInfoJsonsObject = parseData(_progressInfo.toString());
+        var progressInfoArray = progressInfoJsonsObject.propertyAt("progressInfo");
+         
+        var info = progressInfoArray.propertyAt("info");             
+        var percentage = progressInfoArray.propertyAt("percentage"); 
+        var error = progressInfoArray.propertyAt("error");       
+
+        addProgress(info.toString())       
+    }
+
+    function addProgress(_info)
+    {
+        $(#installProgressInfo).append(_info.toString() + "<br>");    
+    }
+
+
+    function installationDone(_progressInfo)
+    {
+        var progressInfoJsonsObject = parseData(_progressInfo.toString());
+        var progressInfoArray = progressInfoJsonsObject.propertyAt("progressInfo");
+
+        $(button#page4_next).state.disabled = 0;
+        $(button#page4_back).state.disabled = 0;  
+        
+        var error = progressInfoArray.propertyAt("error");        
+
+        if(error.toString() == "false")  
+        {
+            $(#installationResult).attributes.addClass("installationSucceeded");
+            $(#installationResult).content("Installation successful!");  
+        }
+        else
+        {
+            $(#installationResult).attributes.addClass("installationError");
+            $(#installationResult).content("There were errors on installation!");  
+        }
+        
+              
+    }
+
+ }

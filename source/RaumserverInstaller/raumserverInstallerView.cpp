@@ -14,7 +14,7 @@ ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | 
 void ApplicationWindow::init()
 {
     raumserverInstallerObject.init();
-    //raumserverInstallerObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_INFO);
+    raumserverInstallerObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_INFO);
     raumserverInstallerObject.initDiscover();
 
     connections.connect(raumserverInstallerObject.sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
@@ -29,20 +29,17 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
 {
     Json::Value root, networkAdapter;
 
-    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterListTEST();
-    //auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterInformation(0);
+    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
 
-    /*
     for (auto adapterInfo : adapterInfoList)
     {
         networkAdapter["networkAdapter"]["name"] = adapterInfo.name;
         networkAdapter["networkAdapter"]["address"] = adapterInfo.address;
         networkAdapter["networkAdapter"]["id"] = adapterInfo.id;
         root["networkAdapterInformations"].append(networkAdapter);
-    }
-    */
+    }    
 
-    //if (!adapterInfoList.size())
+    if (!adapterInfoList.size())
     {
         networkAdapter["networkAdapter"]["name"] = "No network adapter available";
         networkAdapter["networkAdapter"]["address"] = "";
@@ -78,13 +75,13 @@ sciter::value ApplicationWindow::startSearchingForDevices()
 sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
 {
     // TODO: @@@
-    /*
+    
     std::wstring ip = std::wstring(_ip.to_string().c_str());
     auto deviceInfo = raumserverInstallerObject.getDeviceInformation(Converter::wstring2string(ip));
     if (deviceInfo.ip.empty())
         return false;
     raumserverInstallerObject.startInstallToDevice(deviceInfo);
-    */
+    
     return true;
 }
 
@@ -98,24 +95,8 @@ sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
 
 void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
-    Json::Value deviceInfo;
-
     std::unique_lock<std::mutex> lock(lockDeviceAction);
-
-
-
-    // TODO: @@ amke a method for this!
-    // convert deviceInfo to JSON string
-    deviceInfo["deviceInfo"]["ip"] = _deviceInfo.ip;
-    deviceInfo["deviceInfo"]["name"] = _deviceInfo.name;
-    deviceInfo["deviceInfo"]["udn"] = _deviceInfo.UDN;
-    deviceInfo["deviceInfo"]["sshAccess"] = _deviceInfo.sshAccess;
-    deviceInfo["deviceInfo"]["raumserverInstalled"] = _deviceInfo.raumserverInstalled;
-    deviceInfo["deviceInfo"]["raumserverRuns"] = _deviceInfo.raumserverRuns;
-    deviceInfo["deviceInfo"]["raumserverVersion"] = _deviceInfo.raumserverVersion;
-    deviceInfo["deviceInfo"]["type"] = _deviceInfo.type;
-
-    call_function("DeviceSelection.addDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(deviceInfo.toStyledString()));
+    call_function("DeviceSelection.addDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
 }
 
 

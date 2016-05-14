@@ -1,0 +1,156 @@
+/**
+* Application main
+*/
+html {
+    background: transparent;
+}
+
+@import url(button.css);
+@import url(list.css);
+@import url(devicetable.css);
+
+@font-face {
+    font-family: MyAwesome;
+    src: url(fontawesome-webfont.ttf);
+}
+
+
+body {
+    background: white;
+}
+
+h3 {
+    margin-top: 0px;
+}
+
+.alignRight {
+    text-align:right;
+}
+
+.floatRight {
+    float: right;
+}
+
+
+.appContainer {
+    width: 100%%;
+    height: 100%%;
+    border: 1px solid black;
+}
+
+
+/**
+* Application layout grid
+*/
+.appLayoutGrid {
+    width: 100%;
+    height: 100%;    
+    flow: grid( 1  1,
+                2  3); 
+}
+
+.appLayoutGrid > div { 
+    width: *;
+    height: *;      
+}
+
+.appLayoutGrid > div.header { 
+    height: 110px;
+    background: lightgrey;     
+}
+
+.appLayoutGrid > div.header > div.left {
+    float: left;    
+    height: 100%;
+}
+
+.appLayoutGrid > div.header > div.left > div.logo {
+    float: left;   
+    height: 100%;
+    margin: 10px 20px 10px 20px;
+}
+
+.appLayoutGrid > div.header > div.right {
+    float: right;  
+    height: 100% ;
+    padding: 10px 20px 10px 20px;    
+}
+
+
+.appLayoutGrid > div.leftsideboard { 
+    width: 220px;
+    background: lightgrey;     
+}
+
+.appLayoutGrid > div.leftsideboard> div.bottomInfo { 
+    width: 100%;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;   
+    font: system; 
+}
+
+
+.appLayoutGrid > div.pageContainer {
+    background: white;
+    overflow: hidden;
+    height: *;
+}
+
+
+.appLayoutGrid > div.pageContainer > div.page {   
+    overflow: hidden;
+    margin: 25px;
+    height: 100%%; 
+}
+
+div.page > div.navigation {
+    width: 100%;
+}
+
+
+
+#networkadapterSelectionComboBox {
+    width: 30em;
+}
+
+#chosenDeviceInfo {
+}
+
+#installProgressInfo {
+    height: 100%%;
+    padding: 5px;
+    border:1px solid threedlightshadow;
+    font:system;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+.installationSucceeded {
+    color: green;
+}
+
+.installationError {
+    color: red;
+}
+
+.fontAwesome {
+    font: 19dip MyAwesome;
+}
+
+
+.donate { 
+    width: 50px;
+    height: 64px;    
+    background-image: url('../images/donateBlue.png');       
+}
+
+.donate:hover {    
+    background-image: url('../images/donateWhite.png');
+}
+
+
+
+
+

@@ -9,49 +9,79 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\moveable-view.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\resizeable.tis">
-      <Filter>res</Filter>
-    </None>
     <None Include="res\installer.htm">
       <Filter>res</Filter>
     </None>
-    <None Include="res\networkAdapterSelection.tis">
+    <None Include="res\tis\application.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\deviceSelection.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\deviceSelectionPage.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\global.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\installProgressPage.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\moveable-view.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\networkAdapterSelection.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\networkAdapterSelectionPage.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\pageNavigation.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\resizeable.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\tis\vlist.tis">
+      <Filter>res\tis</Filter>
+    </None>
+    <None Include="res\css\application.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\css\resizeable.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\css\vgrid.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\css\button.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\css\list.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\page_chooseNetwork.htm">
       <Filter>res</Filter>
     </None>
-    <None Include="res\networkAdapterSelectionPage.tis">
+    <None Include="res\page_install.htm">
       <Filter>res</Filter>
     </None>
-    <None Include="res\deviceSelectionPage.tis">
+    <None Include="res\page_selectDevice.htm">
       <Filter>res</Filter>
     </None>
-    <None Include="res\global.tis">
+    <None Include="res\page_welcome.htm">
       <Filter>res</Filter>
     </None>
-    <None Include="res\installProgressPage.tis">
+    <None Include="res\css\devicetable.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\dialog_info.htm">
       <Filter>res</Filter>
     </None>
-    <None Include="res\pageNavigation.tis">
-      <Filter>res</Filter>
+    <None Include="res\css\scrollIndicator.css">
+      <Filter>res\css</Filter>
     </None>
-    <None Include="res\application.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\application.css">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\resizeable.css">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\vgrid.css">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\deviceSelection.tis">
-      <Filter>res</Filter>
-    </None>
-    <None Include="res\vlist.tis">
+    <None Include="res\font-awesome.inc.htm">
       <Filter>res</Filter>
     </None>
   </ItemGroup>
@@ -71,6 +101,15 @@
     <Filter Include="includes\tools">
       <UniqueIdentifier>{a2384224-670e-4153-a732-fe4fdbf10dff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res\tis">
+      <UniqueIdentifier>{527ba6b5-c9a3-479b-b77b-017ef8950c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\images">
+      <UniqueIdentifier>{d7ea001f-a06d-42e0-ac8d-2314678ba389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\css">
+      <UniqueIdentifier>{4bc0863d-c2c7-4a3f-b891-a1876a05e7a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\raumserverInstallerView.h">
@@ -85,5 +124,24 @@
     <ClInclude Include="includes\tools\converter.h">
       <Filter>includes\tools</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\raumserverInstallerLogo.png">
+      <Filter>res\images</Filter>
+    </Image>
+    <Image Include="res\images\donateBlue.png">
+      <Filter>res\images</Filter>
+    </Image>
+    <Image Include="res\images\donateGrey.png">
+      <Filter>res\images</Filter>
+    </Image>
+    <Image Include="res\images\donateWhite.png">
+      <Filter>res\images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\css\fontawesome-webfont.ttf">
+      <Filter>res\css</Filter>
+    </Font>
   </ItemGroup>
 </Project>

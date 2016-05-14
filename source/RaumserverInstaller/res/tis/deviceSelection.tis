@@ -13,10 +13,11 @@ namespace DeviceSelection
     
     function init()
     {                
-        vlist = $(table);              
+        vlist = $(table#devicegrid);              
         vlist.value = deviceInformationList;
-        vlist.tbody.currentIndex = 0;         
+        vlist.tbody.currentIndex = 0;      
         vlist.on("change", function() { deviceSelectionChanged(vlist.tbody.currentIndex); });     
+        deviceSelectionChanged(-1);
                             
     }
 
@@ -27,31 +28,60 @@ namespace DeviceSelection
         if(deviceInformationList.length > 0)
             deviceInformationList.splice(0, deviceInformationList.length);
         vlist.tbody.currentIndex = 0;
+        deviceSelectionChanged(-1);
     }
 
 
     function deviceSelectionChanged(_index)
     {
-        $(#selectedDeviceInfoContainer).content("Selected Device Id: " + _index.toString());
+        if(_index >= 0)
+        {
+            var serverInstalled = deviceInformationList[_index].serverInstalled; 
+
+            $(button#page3_install).state.disabled = 0;
+            if(serverInstalled == 1)
+            {        
+                $(button#page3_uninstall).state.disabled = 0;
+                $(button#page3_install).content("Update");
+            }
+            else
+            {
+                $(button#page3_uninstall).state.disabled = 1;
+                $(button#page3_install).content("Install");
+            }
+
+            $(#chosenDeviceInfo).content(deviceInformationList[_index].name + " (" + deviceInformationList[_index].ip + ")");
+        }
+        else
+        {
+            $(#chosenDeviceInfo).content("No device selected!");
+            $(button#page3_uninstall).state.disabled = 1;
+            $(button#page3_install).state.disabled = 1;
+        }
     }
 
        
     function addUpdateDeviceInfo(_ip, _deviceInfo, _update)
     {                 
+        var listIndex = vlist.tbody.currentIndex;
+
         var deviceInfoJsonsObject = parseData(_deviceInfo.toString());
         var deviceInfoArray = deviceInfoJsonsObject.propertyAt("deviceInfo");
          
         var ip = deviceInfoArray.propertyAt("ip");             
         var name = deviceInfoArray.propertyAt("name"); 
+        var friendlyName = deviceInfoArray.propertyAt("friendlyName"); 
         var udn = deviceInfoArray.propertyAt("udn"); 
         var sshAccess = deviceInfoArray.propertyAt("sshAccess"); 
         var serverInstalled = deviceInfoArray.propertyAt("raumserverInstalled"); 
         var serverRuns = deviceInfoArray.propertyAt("raumserverRuns"); 
         var serverVersion = deviceInfoArray.propertyAt("raumserverVersion"); 
 
+        var displayName = friendlyName.toString() + " (" + name.toString() + ")";      
+
         if(!_update)
         {
-            deviceInformationList.push {index: deviceInformationList.length, ip: ip.toString(), name: name.toString(),
+            deviceInformationList.push {index: deviceInformationList.length, ip: ip.toString(), name: displayName,
                                         udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
                                         serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
                                        };  
@@ -74,13 +104,15 @@ namespace DeviceSelection
             
             if(idx >= 0 && found)
             {
-                deviceInformationList[idx] = {index: idx, ip: ip.toString(), name: name.toString(),
+                deviceInformationList[idx] = {index: idx, ip: ip.toString(), name: displayName,
                                               udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
                                               serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
                                              };
-            }            
+            }                    
+        }     
         
-        }                              
+        vlist.tbody.currentIndex = listIndex;                   
+        
     }
 
 

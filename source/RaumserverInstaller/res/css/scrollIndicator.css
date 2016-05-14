@@ -1,0 +1,11 @@
+@set v-scroll-indicator {  
+      
+    .slider {
+        background: lightgrey;
+        margin: 0; 
+    }    
+}
+    
+div {
+    vertical-scrollbar: "v-scroll-indicator";
+}

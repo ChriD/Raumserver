@@ -1,0 +1,37 @@
+
+ul.progressList {
+    list-style: none;
+    margin-left: 10px;
+    margin-top:50px;
+}
+
+ul.progressList > li {
+  height: 2em; 
+}
+
+ul.progressList > li::before {
+  content: "";   
+  display: block;
+  position: relative;
+  left: -1em;
+  display: inline-block;  
+  width: 1.3em;
+  background: grey;
+}
+
+ul.progressList > li.selected {
+  font-weight: bold; 
+}
+
+ul.progressList > li.selected::before {
+  background: #1585b5;
+}
+
+
+
+ol.infoList {  
+}
+
+ol.infoList > li {
+  height: 1.5em; 
+}

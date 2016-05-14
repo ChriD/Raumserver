@@ -165,29 +165,60 @@
     <ClCompile Include="raumserverInstallerView.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\application.css" />
-    <None Include="res\application.tis" />
-    <None Include="res\deviceSelection.tis" />
-    <None Include="res\deviceSelectionPage.tis" />
-    <None Include="res\global.tis" />
+    <None Include="res\css\application.css" />
+    <None Include="res\css\button.css" />
+    <None Include="res\css\devicetable.css" />
+    <None Include="res\css\list.css" />
+    <None Include="res\css\resizeable.css" />
+    <None Include="res\css\scrollIndicator.css" />
+    <None Include="res\css\vgrid.css" />
+    <None Include="res\dialog_info.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\font-awesome.inc.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="res\installer.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="res\installProgressPage.tis" />
-    <None Include="res\moveable-view.tis" />
-    <None Include="res\networkAdapterSelection.tis" />
-    <None Include="res\networkAdapterSelectionPage.tis" />
-    <None Include="res\pageNavigation.tis" />
-    <None Include="res\resizeable.css" />
-    <None Include="res\resizeable.tis" />
-    <None Include="res\vgrid.css" />
-    <None Include="res\vlist.tis" />
+    <None Include="res\page_chooseNetwork.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\page_install.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\page_selectDevice.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\page_welcome.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\tis\application.tis" />
+    <None Include="res\tis\deviceSelection.tis" />
+    <None Include="res\tis\deviceSelectionPage.tis" />
+    <None Include="res\tis\global.tis" />
+    <None Include="res\tis\installProgressPage.tis" />
+    <None Include="res\tis\moveable-view.tis" />
+    <None Include="res\tis\networkAdapterSelection.tis" />
+    <None Include="res\tis\networkAdapterSelectionPage.tis" />
+    <None Include="res\tis\pageNavigation.tis" />
+    <None Include="res\tis\resizeable.tis" />
+    <None Include="res\tis\vlist.tis" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\json\json-forwards.h" />
     <ClInclude Include="includes\json\json.h" />
     <ClInclude Include="includes\raumserverInstallerView.h" />
     <ClInclude Include="includes\tools\converter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\donateBlue.png" />
+    <Image Include="res\images\donateGrey.png" />
+    <Image Include="res\images\donateWhite.png" />
+    <Image Include="res\images\raumserverInstallerLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\css\fontawesome-webfont.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

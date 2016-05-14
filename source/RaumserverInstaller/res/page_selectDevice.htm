@@ -1,0 +1,44 @@
+<div style="height: *;">
+    <h3>Select a device</h3>
+    <p>
+        Please wait while searching for devices. This should only take a view seconds
+        <br/>If there a no devices listed, please be sure that the raumfeld devices are online and that you have selected the correct network adapter
+    </p>  
+    <table id="devicegrid" class="devices" resizable>
+        <thead>
+            <tr>
+                <th(index)>Index</th>
+                <th(ip)>IP</th>
+                <th(name)>Name</th>
+                <th(udn)>UDN</th>
+                <th(sshAccess)>SSH</th>
+                <th(serverInstalled)>SI</th>
+                <th(serverRuns)>SR</th>
+                <th(serverVersion)>Version</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td(index)></td>
+                <td(ip)></td>
+                <td(name)></td>
+                <td(udn)></td>
+                <td(sshAccess)></td>
+                <td(serverInstalled)></td>
+                <td(serverRuns)></td>
+                <td(serverVersion)></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        Choosen device: <span id="chosenDeviceInfo"></span>
+    </p>
+</div>  
+ 
+<div class="navigation alignRight">
+    <span>
+        <button id="page3_back" class="flatButton">Back</button>
+        <button id="page3_uninstall" class="flatButton">Uninstall</button>
+        <button id="page3_install" class="flatButton">Install</button>
+    </span>
+</div>

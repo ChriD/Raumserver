@@ -1,0 +1,51 @@
+
+/**
+*
+*/
+namespace DeviceSelectionPage
+{        
+  
+    function init() 
+    { 
+        DeviceSelection.init();                
+    }
+
+
+    function pageActivated(_parmObject)
+    {
+        DeviceSelection.pageActivated();
+        // when the page is beeing activated we do start the search for devices we can install the raumserver        
+        view.startSearchingForDevices();
+    }
+
+    function pageLeave(_parmObject)
+    {
+        var userInfo = "";
+
+        // if forward then check if a device is selected and the device has ssh access     
+        if(_parmObject.forward == 1)
+        {
+            if(vlist.tbody.currentIndex < 0)
+            {           
+                userInfo = "You have to choose a device for install!";       
+            }
+            else
+            {
+                if(deviceInformationList[vlist.tbody.currentIndex].sshAccess == 0)
+                {
+                    userInfo = "Selected device has no SSH access!\nPlease enable SSH access!";                    
+                }
+            }
+
+            if(userInfo != "")
+            {
+                //view.dialog(self.url("dialog_info.htm"));
+                //view.msgbox(#alert, userInfo);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+ }

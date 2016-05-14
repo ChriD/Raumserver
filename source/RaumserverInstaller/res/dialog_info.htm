@@ -1,0 +1,53 @@
+<html custom-frame="layered">
+    <head>
+        <title>Info-dialog</title>
+        <style>
+            @import url(css/button.css);
+
+            html {
+                background: transparent; 
+            }     
+        
+            body { 
+                background: white;
+                border: 1px solid black;    
+            }
+
+            html > body > section {
+                height: *;
+            }
+
+            html > body > section > div#content {
+                height: *;
+                text-align: center;
+                width: 100%%;
+                display: flex;
+                justify-content: center; /* align horizontal */
+                align-items: center; /* align vertical */
+            }   
+               
+        </style>
+
+        <script type="text/tiscript">        
+            include "tis/moveable-view.tis";
+            $(#cancel-dialog).on("click", function() { view.close(null); });
+            movableView();
+        </script>
+
+    </head>
+
+    <body> 
+      <section>
+        <div #header style="text-align: center; width: 100%%; background: lightgrey; height: 2em; padding-top: 0.5em;">    
+            Information
+        </div>
+        <div #content>    
+            BlaBla
+        </div>
+        <p style="text-align: center; width: 100%%;">      
+          <button id="cancel-dialog" class="flatButton" tabindex=1 >Ok</button>
+        </p>
+      </section>  
+    </body>
+
+</html>
