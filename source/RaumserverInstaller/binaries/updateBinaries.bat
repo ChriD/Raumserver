@@ -1,0 +1,1 @@
+xcopy ..\..\RaumserverDaemon\bin\linux_ARMV7  raumserverDaemon /SY

@@ -88,7 +88,7 @@ sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
 
 sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
 {
-    // TODO:
+    // TODO: @@@
     return true;
 }
 
@@ -103,6 +103,7 @@ void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInfor
 void ApplicationWindow::onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
 {
     std::unique_lock<std::mutex> lock(lockDeviceAction);
+    call_function("DeviceSelection.removeDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
 }
 
 

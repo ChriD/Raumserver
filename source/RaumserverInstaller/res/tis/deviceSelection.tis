@@ -77,13 +77,17 @@ namespace DeviceSelection
         var serverRuns = deviceInfoArray.propertyAt("raumserverRuns"); 
         var serverVersion = deviceInfoArray.propertyAt("raumserverVersion"); 
 
-        var displayName = friendlyName.toString() + " (" + name.toString() + ")";      
+        var displayName = friendlyName.toString() + " (" + name.toString() + ")";   
+        
+        // TODO : @@@ remove / smile /thumbs up / thumbs down / times circle / Chec / check circle
+        var sshAccessIcon = "&fa-question-circle;"
 
         if(!_update)
         {
             deviceInformationList.push {index: deviceInformationList.length, ip: ip.toString(), name: displayName,
                                         udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
-                                        serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
+                                        serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString(),
+                                        sshAccessIcon: sshAccessIcon  
                                        };  
         }
         else
@@ -106,7 +110,8 @@ namespace DeviceSelection
             {
                 deviceInformationList[idx] = {index: idx, ip: ip.toString(), name: displayName,
                                               udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
-                                              serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString()
+                                              serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString(),
+                                              sshAccessIcon: sshAccessIcon                                            
                                              };
             }                    
         }     
@@ -119,6 +124,27 @@ namespace DeviceSelection
     function removeDeviceInfo(_ip, _deviceInfo)
     {
          // TODO: @@@
+        var deviceInfoJsonsObject = parseData(_deviceInfo.toString());
+        var deviceInfoArray = deviceInfoJsonsObject.propertyAt("deviceInfo");         
+        var ip = deviceInfoArray.propertyAt("ip"); 
+
+        var idx = -1;
+        var found = false;
+
+        for (var arrayPosition in deviceInformationList)
+        {
+            idx ++;
+            if(arrayPosition.ip == ip.toString())
+            {
+                found = true;
+                break;             
+            }
+        }
+            
+        if(idx >= 0 && found)
+        {            
+            deviceInformationList.splice(idx,1);
+        }   
     }
 
 
