@@ -70,6 +70,9 @@ namespace InstallProgressPage
 
     function addProgress(_info)
     {
+        var sx = $(#installProgressInfo).scroll(#left);  
+        if( !$(#installProgressInfo).state.focus )
+            $(#installProgressInfo).post( :: this.scrollTo(sx, 99999)); 
         $(#installProgressInfo).append(_info.toString() + "<br>");    
     }
 

@@ -3,6 +3,7 @@
 */
 html {
     background: transparent;
+    font: 14dip system;
 }
 
 @import url(button.css);

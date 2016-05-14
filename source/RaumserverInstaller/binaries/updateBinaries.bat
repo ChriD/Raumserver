@@ -1,1 +1,1 @@
-xcopy ..\..\RaumserverDaemon\bin\linux_ARMV7  raumserverDaemon /SY
+xcopy ..\..\RaumserverDaemon\bin\linux_ARMV6  raumserverDaemon /SY
