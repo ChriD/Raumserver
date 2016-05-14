@@ -489,18 +489,23 @@ class VList : Behavior
 }
 
 
-/*
-function set_class(recordNo, record, itemEl) {
-  itemEl.$(td).attributes.addClass("fontAwesome");
-  // dont think the above line is right for class but it'll give you a pointer till Andrew appears. 
+
+function setupItemView(recordNo, record, rowEL) { 
+    rowEL[4].html = record.sshAccessIcon;
+    rowEL[5].html = record.serverInstalledIcon;
+    rowEL[6].html = record.serverRunsIcon;
 }
-*/
+
 
 class VGrid : Behavior 
 {
   function attached() { 
     this.tbody = this.$(tbody);
-    VirtualList { container: this.tbody, /*setupItemView : set_class*/ };
+    VirtualList { 
+        container: this.tbody, 
+        bufferSize    : 30,
+        setupItemView : setupItemView 
+    };
   }
   
   property value(v) {

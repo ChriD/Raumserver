@@ -77,16 +77,32 @@ namespace DeviceSelection
         var serverVersion = deviceInfoArray.propertyAt("raumserverVersion"); 
 
         var displayName = friendlyName.toString() + " (" + name.toString() + ")";   
-        
-        // TODO : @@@ remove / smile /thumbs up / thumbs down / times circle / Chec / check circle
+                
         var sshAccessIcon = "&fa-question-circle;"
+        if(sshAccess == 0)
+            sshAccessIcon = "&fa-exclamation-circle;"
+        if(sshAccess == 1)
+            sshAccessIcon = "&fa-check-circle;"
+
+        var serverInstalledIcon = "&fa-question-circle;"
+        if(serverInstalled == 0)
+            serverInstalledIcon = "&fa-exclamation-circle;"
+        if(serverInstalled == 1)
+            serverInstalledIcon = "&fa-check-circle;"
+
+        var serverRunsIcon = "&fa-question-circle;"
+        if(serverRuns == 0)
+            serverRunsIcon = "&fa-exclamation-circle;"
+        if(serverRuns == 1)
+            serverRunsIcon = "&fa-check-circle;"
+            
 
         if(!_update)
         {
             deviceInformationList.push {index: deviceInformationList.length, ip: ip.toString(), name: displayName,
                                         udn: udn.toString(), sshAccess: sshAccess.toString(), serverInstalled: serverInstalled.toString(),
                                         serverRuns: serverRuns.toString(), serverVersion: serverVersion.toString(),
-                                        sshAccessIcon: sshAccessIcon  
+                                        sshAccessIcon: sshAccessIcon, serverInstalledIcon: serverInstalledIcon, serverRunsIcon: serverRunsIcon
                                        };  
         }
         else
