@@ -25,7 +25,7 @@ ifeq ($(arch),ARMA53)
 endif
 
 ifeq ($(arch),ARMV7HF)
-  ARCHITECTURE = 
+  ARCHITECTURE = -march=armv7-a
   CC = arm-linux-gnueabihf-g++-4.9 
   CXX = arm-linux-gnueabihf-g++-4.9
   LIBSPATH = libs/linux_ARMV7/
