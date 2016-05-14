@@ -78,6 +78,12 @@
     <None Include="res\dialog_info.htm">
       <Filter>res</Filter>
     </None>
+    <None Include="res\css\scrollIndicator.css">
+      <Filter>res\css</Filter>
+    </None>
+    <None Include="res\font-awesome.inc.htm">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -123,5 +129,19 @@
     <Image Include="res\images\raumserverInstallerLogo.png">
       <Filter>res\images</Filter>
     </Image>
+    <Image Include="res\images\donateBlue.png">
+      <Filter>res\images</Filter>
+    </Image>
+    <Image Include="res\images\donateGrey.png">
+      <Filter>res\images</Filter>
+    </Image>
+    <Image Include="res\images\donateWhite.png">
+      <Filter>res\images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\css\fontawesome-webfont.ttf">
+      <Filter>res\css</Filter>
+    </Font>
   </ItemGroup>
 </Project>

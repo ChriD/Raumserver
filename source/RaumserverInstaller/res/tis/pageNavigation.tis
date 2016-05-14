@@ -16,7 +16,8 @@ namespace PageNavigation
         $(#page1_next).on("click", function()          { PageNavigation.navigateTo(2, 1, {forward:1}); });
         $(#page2_next).on("click", function()          { PageNavigation.navigateTo(3, 2, {forward:1}); });
         $(#page2_back).on("click", function()          { PageNavigation.navigateTo(1, 2, {forward:0}); }); 
-        $(#page3_next).on("click", function()          { PageNavigation.navigateTo(4, 3, {forward:1}); });
+        $(#page3_install).on("click", function()       { PageNavigation.navigateTo(4, 3, {forward:1, uninstall:0}); });
+        $(#page3_uninstall).on("click", function()     { PageNavigation.navigateTo(4, 3, {forward:1, uninstall:1}); });
         $(#page3_back).on("click", function()          { PageNavigation.navigateTo(2, 3, {forward:0}); });          
         $(#page4_back).on("click", function()          { PageNavigation.navigateTo(3, 4, {forward:0}); });
         $(#page4_next).on("click", function()          { view.close() });
@@ -49,7 +50,7 @@ namespace PageNavigation
         
         if(_pageIdx == 2) NetworkAdapterSelectionPage.pageActivated(_parmObject);
         if(_pageIdx == 3) DeviceSelectionPage.pageActivated(_parmObject);
-        //if(_pageIdx == 4) InstallProgressPage.pageActivated(_parmObject);
+        if(_pageIdx == 4) InstallProgressPage.pageActivated(_parmObject);
     }
       
 

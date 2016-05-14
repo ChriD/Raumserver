@@ -10,7 +10,7 @@ include "networkAdapterSelectionPage.tis"
 include "deviceSelection.tis"
 include "deviceSelectionPage.tis"
 // include the scripts for the 'third' page which is the installation progress page  
-//include "installProgressPage.tis"        
+include "installProgressPage.tis"        
 // add simple page navigation
 include "pageNavigation.tis"
 
@@ -32,7 +32,8 @@ namespace Application
           var href = this.attributes["href"];
           Sciter.launch(href); 
           return true;
-        });
+        });        
+        
               
         // do position of window (center application window)
         Application.initAppWindow();                 
@@ -43,7 +44,7 @@ namespace Application
         // initialize the deviceSelection Page
         DeviceSelectionPage.init()
         // initialize the install progress Page
-        //InstallProgressPage.init();     
+        InstallProgressPage.init();     
 
         movableView();
               

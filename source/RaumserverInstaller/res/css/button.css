@@ -11,6 +11,11 @@
     border: 1px solid #1585b5;
 }
 
+.flatButton:disabled {
+    color: lightgrey;    
+    border: 1px solid lightgrey;
+}
+
 .flatButton_header {
     background: transparent;
     border: 1px solid white;

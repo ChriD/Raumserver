@@ -170,8 +170,12 @@
     <None Include="res\css\devicetable.css" />
     <None Include="res\css\list.css" />
     <None Include="res\css\resizeable.css" />
+    <None Include="res\css\scrollIndicator.css" />
     <None Include="res\css\vgrid.css" />
     <None Include="res\dialog_info.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="res\font-awesome.inc.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="res\installer.htm">
@@ -208,7 +212,13 @@
     <ClInclude Include="includes\tools\converter.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\images\donateBlue.png" />
+    <Image Include="res\images\donateGrey.png" />
+    <Image Include="res\images\donateWhite.png" />
     <Image Include="res\images\raumserverInstallerLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\css\fontawesome-webfont.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

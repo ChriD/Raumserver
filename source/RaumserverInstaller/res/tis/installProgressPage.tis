@@ -12,13 +12,20 @@ namespace InstallProgressPage
 
 
     function pageActivated(_parmObject)
-    {
-        // get selected device
-        $(#userInfoOutput).content("Selected Device Id: " + vlist.tbody.currentIndex.toString());
-        $(#installProgressInfoOutputContainer).content("");  
+    {                
+        $(button#page4_next).state.disabled = 1;
+        $(button#page4_back).state.disabled = 1;
 
-        // user has clicked "install" or "update"
-        startInstall() // TODO: test!!!
+        $(#installationResult).attributes.removeClass("installationSucceeded");
+        $(#installationResult).attributes.removeClass("installationError");
+        $(#installationResult).content("Installation in progress...");
+        
+        $(#installProgressInfo).content("");  
+   
+        if(_parmObject.uninstall == 1)
+            startRemove();
+        else
+            startInstall()
     }
 
 
@@ -26,35 +33,24 @@ namespace InstallProgressPage
     {
         if(_index < 0)
         {
-            $(#userInfoOutput).content("No device selected");
-            // TODO: Error output
+            addProgress("No device selected!");         
             return false;
-        }
-
-        //deviceInformationList[vlist.tbody.currentIndex].ip
+        }                   
         return true;
     }
 
 
     function startInstall()
-    {
-        // TODO: check if device is ok for accessing with ssh and sftp
-        if(checkDevice(vlist.tbody.currentIndex))
-            view.startInstallOnDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
-    }
-
-
-    function startUpdate()
-    {
-        // TODO: check if device is ok for accessing with ssh and sftp
+    {        
+        addProgress("Installing/Updateing on device " + deviceInformationList[vlist.tbody.currentIndex].name + " (" + deviceInformationList[vlist.tbody.currentIndex].ip + ")");         
         if(checkDevice(vlist.tbody.currentIndex))
             view.startInstallOnDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
     }
 
 
     function startRemove()
-    {
-        // TODO: check if device is ok for accessing with ssh and sftp
+    {     
+        addProgress("Remove on device " + deviceInformationList[vlist.tbody.currentIndex].name + " (" + deviceInformationList[vlist.tbody.currentIndex].ip + ")");                 
         if(checkDevice(vlist.tbody.currentIndex))
             view.startRemoveFromDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
     }
@@ -69,13 +65,37 @@ namespace InstallProgressPage
         var percentage = progressInfoArray.propertyAt("percentage"); 
         var error = progressInfoArray.propertyAt("error");       
 
-        $(#installProgressInfoOutputContainer).append(info.toString() + "<br>");    
+        addProgress(info.toString())       
+    }
+
+    function addProgress(_info)
+    {
+        $(#installProgressInfo).append(_info.toString() + "<br>");    
     }
 
 
     function installationDone(_progressInfo)
     {
-        $(#userInfoOutput).content("Installation done: " + _progressInfo.toString());
+        var progressInfoJsonsObject = parseData(_progressInfo.toString());
+        var progressInfoArray = progressInfoJsonsObject.propertyAt("progressInfo");
+
+        $(button#page4_next).state.disabled = 0;
+        $(button#page4_back).state.disabled = 0;  
+        
+        var error = progressInfoArray.propertyAt("error");        
+
+        if(error.toString() == "false")  
+        {
+            $(#installationResult).attributes.addClass("installationSucceeded");
+            $(#installationResult).content("Installation successful!");  
+        }
+        else
+        {
+            $(#installationResult).attributes.addClass("installationError");
+            $(#installationResult).content("There were errors on installation!");  
+        }
+        
+              
     }
 
  }
