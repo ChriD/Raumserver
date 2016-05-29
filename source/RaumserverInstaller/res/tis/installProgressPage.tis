@@ -17,15 +17,20 @@ namespace InstallProgressPage
         $(button#page4_back).state.disabled = 1;
 
         $(#installationResult).attributes.removeClass("installationSucceeded");
-        $(#installationResult).attributes.removeClass("installationError");
-        $(#installationResult).content("Installation in progress...");
+        $(#installationResult).attributes.removeClass("installationError");       
         
         $(#installProgressInfo).content("");  
    
         if(_parmObject.uninstall == 1)
+        {
+            $(#installationResult).content("Uninstall in progress...");
             startRemove();
+        }
         else
-            startInstall()
+        {
+            $(#installationResult).content("Installation in progress...");
+            startInstall();
+        }
     }
 
 
@@ -86,16 +91,23 @@ namespace InstallProgressPage
         $(button#page4_back).state.disabled = 0;  
         
         var error = progressInfoArray.propertyAt("error");        
+        var actionType = progressInfoArray.propertyAt("actionType"); 
 
         if(error.toString() == "false")  
         {
             $(#installationResult).attributes.addClass("installationSucceeded");
-            $(#installationResult).content("Installation successful!");  
+            if(actionType == 2)
+                $(#installationResult).content("Uninstall successful!");  
+            else
+                $(#installationResult).content("Installation successful!");  
         }
         else
         {
             $(#installationResult).attributes.addClass("installationError");
-            $(#installationResult).content("There were errors on installation!");  
+            if(actionType == 2)
+                $(#installationResult).content("There were errors on uninstall!");  
+            else
+                $(#installationResult).content("There were errors on installation!");  
         }
         
               

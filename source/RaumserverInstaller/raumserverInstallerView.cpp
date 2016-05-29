@@ -14,7 +14,7 @@ ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | 
 void ApplicationWindow::init()
 {
     raumserverInstallerObject.init();
-    raumserverInstallerObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_INFO);
+    raumserverInstallerObject.initLogObject(Log::LogType::LOGTYPE_INFO);
     raumserverInstallerObject.initDiscover();
 
     connections.connect(raumserverInstallerObject.sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
@@ -66,8 +66,6 @@ sciter::value ApplicationWindow::selectNetworkAdapter(sciter::value _adapterId)
 sciter::value ApplicationWindow::startSearchingForDevices()
 {
     raumserverInstallerObject.startDiscoverDevicesForInstall();
-    // TODO: Start a timer which update a progress bar and will run about 20 seconds
-    // if nothing is found in 20 seconds then give some advice to the user
     return true;
 }
 
@@ -89,6 +87,13 @@ sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
 sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
 {
     // TODO: @@@
+
+    std::wstring ip = std::wstring(_ip.to_string().c_str());
+    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(Converter::wstring2string(ip));
+    if (deviceInfo.ip.empty())
+        return false;
+    raumserverInstallerObject.startRemoveFromDevice(deviceInfo);
+
     return true;
 }
 

@@ -1,3 +1,4 @@
+
 #include <vector>
 
 #include "sciter-x-window.hpp"
@@ -21,15 +22,14 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
   OleInitialize(0); // for system drag-n-drop
 
   // comment this out if you need system theming
-  ::SciterSetOption(NULL, SCITER_SET_UX_THEMING,TRUE);
+  ::SciterSetOption(NULL,SCITER_SET_UX_THEMING,TRUE);
   // due a problem rendering D2D on nvidia cards (tranparency)  we will use the GFX_LAYER_WARP instead
   /*    GFX_LAYER_GDI
-        GFX_LAYER_WARP
-        GFX_LAYER_D2D
-        GFX_LAYER_AUTO
+  GFX_LAYER_WARP
+  GFX_LAYER_D2D
+  GFX_LAYER_AUTO
   */
   ::SciterSetOption(NULL, SCITER_SET_GFX_LAYER, GFX_LAYER_WARP);
-  
 
   auto message_pump = []() -> int {
     MSG msg;
