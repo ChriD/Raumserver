@@ -3,11 +3,13 @@
 *
 */
 namespace InstallProgressPage
-{        
+{       
+
+    var progressSpanArray; 
   
     function init() 
-    {         
-       // TODO          
+    {                
+       progressSpanArray = [];       
     }
 
 
@@ -68,19 +70,36 @@ namespace InstallProgressPage
          
         var info = progressInfoArray.propertyAt("info");             
         var percentage = progressInfoArray.propertyAt("percentage"); 
-        var error = progressInfoArray.propertyAt("error");       
+        var error = progressInfoArray.propertyAt("error");     
+        var id = progressInfoArray.propertyAt("id");   
 
-        addProgress(info.toString())       
+        addProgress(info.toString(), id.toString());    
     }
 
-    function addProgress(_info)
-    {
-        var sx = $(#installProgressInfo).scroll(#left);  
-        if( !$(#installProgressInfo).state.focus )
-            $(#installProgressInfo).post( :: this.scrollTo(sx, 99999)); 
-        $(#installProgressInfo).append(_info.toString() + "<br>");    
+    function addProgress(_info, _id = "")
+    {        
+        if(_id == "")
+        {
+            var sx = $(#installProgressInfo).scroll(#left);  
+            if( !$(#installProgressInfo).state.focus )
+                $(#installProgressInfo).post( :: this.scrollTo(sx, 99999));           
+            $(#installProgressInfo).append(_info.toString() + "<br>");  
+        }
+        else
+        {
+            // TODO: get index for id (second array?)
+            if(progressSpanArray.length == 0)
+            {                                         
+                var attachedElement = $(#installProgressInfo).append(new Element("span"));                                 
+                progressSpanArray[progressSpanArray.length] = attachedElement;                
+            }
+            else
+            {
+                progressSpanArray[0].content(_info.toString());                                                
+            }
+        }
     }
-
+   
 
     function installationDone(_progressInfo)
     {
@@ -91,7 +110,7 @@ namespace InstallProgressPage
         $(button#page4_back).state.disabled = 0;  
         
         var error = progressInfoArray.propertyAt("error");        
-        var actionType = progressInfoArray.propertyAt("actionType"); 
+        var actionType = progressInfoArray.propertyAt("actionType");         
 
         if(error.toString() == "false")  
         {

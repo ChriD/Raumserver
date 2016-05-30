@@ -29,7 +29,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
   GFX_LAYER_D2D
   GFX_LAYER_AUTO
   */
-  ::SciterSetOption(NULL, SCITER_SET_GFX_LAYER, GFX_LAYER_WARP);
+  //::SciterSetOption(NULL, SCITER_SET_GFX_LAYER, GFX_LAYER_WARP);
 
   auto message_pump = []() -> int {
     MSG msg;
