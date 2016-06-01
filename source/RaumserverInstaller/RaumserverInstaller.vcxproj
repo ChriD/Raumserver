@@ -215,6 +215,7 @@
     <Image Include="res\images\donateBlue.png" />
     <Image Include="res\images\donateGrey.png" />
     <Image Include="res\images\donateWhite.png" />
+    <Image Include="res\images\loading_16.png" />
     <Image Include="res\images\raumserverInstallerLogo.png" />
   </ItemGroup>
   <ItemGroup>

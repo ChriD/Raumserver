@@ -138,6 +138,9 @@
     <Image Include="res\images\donateWhite.png">
       <Filter>res\images</Filter>
     </Image>
+    <Image Include="res\images\loading_16.png">
+      <Filter>res\images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\css\fontawesome-webfont.ttf">

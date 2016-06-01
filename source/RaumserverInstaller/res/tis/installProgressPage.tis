@@ -48,7 +48,8 @@ namespace InstallProgressPage
 
 
     function startInstall()
-    {        
+    {       
+        $(#installationResultProgressImage).show(); 
         addProgress("Installing/Updateing on device " + deviceInformationList[vlist.tbody.currentIndex].name + " (" + deviceInformationList[vlist.tbody.currentIndex].ip + ")");         
         if(checkDevice(vlist.tbody.currentIndex))
             view.startInstallOnDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
@@ -57,6 +58,7 @@ namespace InstallProgressPage
 
     function startRemove()
     {     
+        $(#installationResultProgressImage).show(); 
         addProgress("Remove on device " + deviceInformationList[vlist.tbody.currentIndex].name + " (" + deviceInformationList[vlist.tbody.currentIndex].ip + ")");                 
         if(checkDevice(vlist.tbody.currentIndex))
             view.startRemoveFromDevice(deviceInformationList[vlist.tbody.currentIndex].ip);
@@ -111,6 +113,8 @@ namespace InstallProgressPage
         
         var error = progressInfoArray.propertyAt("error");        
         var actionType = progressInfoArray.propertyAt("actionType");         
+        
+        $(#installationResultProgressImage).hide();
 
         if(error.toString() == "false")  
         {
