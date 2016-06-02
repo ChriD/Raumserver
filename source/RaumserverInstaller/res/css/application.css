@@ -140,6 +140,15 @@ div.page > div.navigation {
     color: red;
 }
 
+
+.succeedText {
+    color: green;
+}
+
+.errorText {
+    color: red;
+}
+
 .fontAwesome {
     font: 14dip MyAwesome;
 }

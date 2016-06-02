@@ -1,5 +1,6 @@
 
 #include "raumserverInstallerView.h"
+#include "includes\versionNumber.h"
 
 
 //http://sciter.com/developers/embedding-principles/
@@ -8,20 +9,94 @@
 
 ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc)
 {
+    settingsFileName = "settings.xml";
+
+    versionInfoApp.appName = AppNameInstaller;
+    versionInfoApp.appVersion = AppVersionNumberInstaller;
+    versionInfoApp.appVersionBuild = AppVersionBuildInstaller;
+    versionInfoApp.appVersionName = AppVersionNameInstaller;    
 }
 
 
 void ApplicationWindow::init()
-{
+{       
     raumserverInstallerObject.init();
-    raumserverInstallerObject.initLogObject(Log::LogType::LOGTYPE_INFO);
+    raumserverInstallerObject.initLogObject(Log::LogType::LOGTYPE_INFO);    
     raumserverInstallerObject.initDiscover();
+
+    settingsManager.setFileName(settingsFileName);
+    settingsManager.setLogObject(raumserverInstallerObject.getLogObject());       
+    settingsManager.loadSettings();
+    
+    currentVersionInfoWebUrl = settingsManager.getValue("/RaumserverInstaller/currentVersion");
+    currentVersionBinarySource = settingsManager.getValue("/RaumserverInstaller/binarySource");
+
+    versionInfoLib = raumserverInstallerObject.getVersionInfo();
 
     connections.connect(raumserverInstallerObject.sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
     connections.connect(raumserverInstallerObject.sigDeviceRemovedForInstall, this, &ApplicationWindow::onDeviceRemovedForInstall);
     connections.connect(raumserverInstallerObject.sigDeviceInformationChanged, this, &ApplicationWindow::onDeviceInformationChanged);
     connections.connect(raumserverInstallerObject.sigInstallProgressInformation, this, &ApplicationWindow::onInstallProgressInformation);
     connections.connect(raumserverInstallerObject.sigInstallCompleted, this, &ApplicationWindow::onInstallCompleted);
+
+    checkForNewVersion();
+}
+
+
+void ApplicationWindow::checkForNewVersion()
+{      
+    checkForNewVersionThreadObject = std::thread(&ApplicationWindow::checkForNewVersionThread, this);
+}
+
+
+void ApplicationWindow::checkForNewVersionThread()
+{
+    VersionInfo::VersionInfo newestVersion, noVersion;
+    try
+    {        
+        noVersion.clear();
+        newestVersion.loadFromUrl(currentVersionInfoWebUrl);
+        onCheckForNewVersionResult(newestVersion);
+    }
+    catch (...)
+    {
+        onCheckForNewVersionResult(noVersion);
+    }
+}
+
+
+void ApplicationWindow::onCheckForNewVersionResult(VersionInfo::VersionInfo _versioninfo)
+{    
+    if (_versioninfo.appVersionBuild == 0)
+    {
+        // no connect to update server...
+        call_function("Application.newVersionCheckFailed");
+    }
+    else if (_versioninfo.appVersionBuild > versionInfoApp.appVersionBuild)
+    {        
+        // new version is ready for download
+        call_function("Application.newVersionAvailable", sciter::value(currentVersionBinarySource));
+    }
+}
+
+
+sciter::value ApplicationWindow::getInstallerVersionInfo()
+{    
+    Json::Value root, versionInfoLibNode, versionInfoAppNode;
+
+    versionInfoAppNode["app"]["name"] = versionInfoApp.appName;
+    versionInfoAppNode["app"]["version"] = versionInfoApp.appVersion;
+    versionInfoAppNode["app"]["versionName"] = versionInfoApp.appVersionName;
+    versionInfoAppNode["app"]["build"] = versionInfoApp.appVersionBuild;
+    root["version"].append(versionInfoAppNode);
+
+    versionInfoLibNode["lib"]["name"] = versionInfoLib.appName;
+    versionInfoLibNode["lib"]["version"] = versionInfoLib.appVersion;
+    versionInfoLibNode["lib"]["versionName"] = versionInfoLib.appVersionName;
+    versionInfoLibNode["lib"]["build"] = versionInfoLib.appVersionBuild;
+    root["version"].append(versionInfoLibNode);
+
+    return root.toStyledString();      
 }
 
 

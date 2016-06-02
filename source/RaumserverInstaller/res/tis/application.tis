@@ -46,8 +46,7 @@ namespace Application
         // initialize the install progress Page
         InstallProgressPage.init();     
 
-        movableView();
-              
+        movableView();              
     }
 
 
@@ -60,7 +59,39 @@ namespace Application
     
         view.move( sx + (sw - w) / 2, sy + (sh - h) / 2, w, h);
 
-        body.show()
+        body.show();
+
+        Application.showVersionInfo();
+    }
+
+
+    function showVersionInfo()
+    {        
+        var versionInfoJsonString = view.getInstallerVersionInfo().toString();         
+        var versionInfoJsonObject = parseData(versionInfoJsonString);
+        var versionInfoArray = versionInfoJsonObject.propertyAt("version");
+
+        var versionNumberApp = versionInfoArray[0].propertyAt("app").propertyAt("version").toString();
+        var versionBuildApp = versionInfoArray[0].propertyAt("app").propertyAt("build").toString();
+        var versionNumberLib = versionInfoArray[1].propertyAt("lib").propertyAt("version").toString();        
+        var versionBuildLib = versionInfoArray[1].propertyAt("lib").propertyAt("build").toString();
+
+        $(#installerVersionInfo).text = versionNumberApp + " (Build " + versionBuildApp + ")";        
+    }
+
+
+    function newVersionCheckFailed()
+    {        
+        $(#installerUpdateInfo).text = "Check for new version failed!";          
+        $(#installerUpdateInfo).attributes.addClass("errorText");      
+    }
+
+
+    function newVersionAvailable(_binaryUrl)
+    {
+        // TODO: @@@
+        $(#installerUpdateInfo).text = _binaryUrl.toString(); 
+        $(#installerUpdateInfo).attributes.addClass("succeedText");        
     }
 
 

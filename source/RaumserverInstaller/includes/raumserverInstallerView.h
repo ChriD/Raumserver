@@ -29,6 +29,7 @@
 #include <signals/signals.hpp>
 #include <json/json.h>
 #include <tools/converter.h>
+#include <settings/settings.h>
 #include "sciter-x-window.hpp"
 
 static RECT wrc = { 100, 100, 700, 450 };
@@ -37,9 +38,10 @@ class ApplicationWindow : public sciter::window
 {
     public:
         ApplicationWindow();
-        void init();
+        void init();        
 
         sciter::value getNetworkAdapterInformation();
+        sciter::value getInstallerVersionInfo();
         sciter::value selectNetworkAdapter(sciter::value _adapterId);
         sciter::value startSearchingForDevices();
         sciter::value startInstallOnDevice(sciter::value _deviceIp);
@@ -47,6 +49,7 @@ class ApplicationWindow : public sciter::window
 
         BEGIN_FUNCTION_MAP
             FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
+            FUNCTION_0("getInstallerVersionInfo", getInstallerVersionInfo);
             FUNCTION_1("selectNetworkAdapter", selectNetworkAdapter);              
             FUNCTION_0("startSearchingForDevices", startSearchingForDevices);
             FUNCTION_1("startInstallOnDevice", startInstallOnDevice);
@@ -57,13 +60,27 @@ class ApplicationWindow : public sciter::window
 
         RaumserverInstaller::RaumserverInstaller raumserverInstallerObject;
 
+        VersionInfo::VersionInfo versionInfoApp;     
+        VersionInfo::VersionInfo versionInfoLib;
+
+        void checkForNewVersion();
+        void checkForNewVersionThread();
+        void onCheckForNewVersionResult(VersionInfo::VersionInfo _versioninfo);
+
         void onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation);
         void onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation);
         void onDeviceInformationChanged(RaumserverInstaller::DeviceInformation);
         void onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);
-        void onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);
+        void onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);               
 
-        std::mutex  lockDeviceAction;
+        std::mutex  lockDeviceAction;        
+        std::string settingsFileName;
+        std::string currentVersionInfoWebUrl;
+        std::string currentVersionBinarySource;
+
+        Settings::SettingsManager settingsManager;
+
+        std::thread checkForNewVersionThreadObject;
 
         sigs::connections connections;
 

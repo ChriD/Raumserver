@@ -18,8 +18,8 @@ namespace InstallProgressPage
         $(button#page4_next).state.disabled = 1;
         $(button#page4_back).state.disabled = 1;
 
-        $(#installationResult).attributes.removeClass("installationSucceeded");
-        $(#installationResult).attributes.removeClass("installationError");       
+        $(#installationResult).attributes.removeClass("succeedText");
+        $(#installationResult).attributes.removeClass("errorText");       
         
         $(#installProgressInfo).content("");  
    
@@ -92,7 +92,7 @@ namespace InstallProgressPage
             // TODO: get index for id (second array?)
             if(progressSpanArray.length == 0)
             {                                         
-                var attachedElement = $(#installProgressInfo).append(new Element("span"));                                 
+                var attachedElement = $(#installProgressInfo).append(new Element("span") + "<br>");                                 
                 progressSpanArray[progressSpanArray.length] = attachedElement;                
             }
             else
@@ -118,7 +118,7 @@ namespace InstallProgressPage
 
         if(error.toString() == "false")  
         {
-            $(#installationResult).attributes.addClass("installationSucceeded");
+            $(#installationResult).attributes.addClass("succeedText");
             if(actionType == 2)
                 $(#installationResult).content("Uninstall successful!");  
             else
@@ -126,7 +126,7 @@ namespace InstallProgressPage
         }
         else
         {
-            $(#installationResult).attributes.addClass("installationError");
+            $(#installationResult).attributes.addClass("errorText");
             if(actionType == 2)
                 $(#installationResult).content("There were errors on uninstall!");  
             else
@@ -134,6 +134,5 @@ namespace InstallProgressPage
         }
         
               
-    }
-
+    }  
  }

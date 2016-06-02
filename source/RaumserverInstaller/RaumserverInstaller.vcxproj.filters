@@ -124,6 +124,9 @@
     <ClInclude Include="includes\tools\converter.h">
       <Filter>includes\tools</Filter>
     </ClInclude>
+    <ClInclude Include="includes\versionNumber.h">
+      <Filter>includes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\images\raumserverInstallerLogo.png">

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<build>
+    <appName>Raumserver Installer</appName>
+    <appVersionNumber>1.0.0</appVersionNumber>   
+	<appVersionName></appVersionName>
+	<appVersionBuild>1000</appVersionBuild>
+</build>
