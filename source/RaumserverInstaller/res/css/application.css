@@ -3,7 +3,8 @@
 */
 html {
     background: transparent;
-    font: 14dip system;
+    font-size: 13dip;
+    font-family: 'Verdana', system;
 }
 
 @import url(button.css);
@@ -95,8 +96,7 @@ h3 {
     width: 100%;
     margin-left: 25px;
     margin-right: 25px;
-    margin-bottom: 20px;   
-    font: system; 
+    margin-bottom: 20px;       
 }
 
 
@@ -129,8 +129,7 @@ div.page > div.navigation {
 #installProgressInfo {
     height: 100%%;
     padding: 5px;
-    border:1px solid threedlightshadow;
-    font:system;
+    border:1px solid threedlightshadow;    
     overflow-y: scroll;
     overflow-x: hidden;
 }
