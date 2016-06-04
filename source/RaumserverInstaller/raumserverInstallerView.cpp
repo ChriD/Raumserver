@@ -26,10 +26,18 @@ void ApplicationWindow::init()
 
     settingsManager.setFileName(settingsFileName);
     settingsManager.setLogObject(raumserverInstallerObject.getLogObject());       
-    settingsManager.loadSettings();
+    settingsManager.initSettings();
     
-    currentVersionInfoWebUrl = settingsManager.getValue("/RaumserverInstaller/currentVersion");
-    currentVersionBinarySource = settingsManager.getValue("/RaumserverInstaller/binarySource");
+    currentVersionInfoWebUrl = settingsManager.getValue(".//RaumserverInstaller//currentVersion");
+    #ifdef __linux__ 
+        currentVersionBinarySource = settingsManager.getValue("/RaumserverInstaller/binarySource[@type='linux']");
+    #elif _WIN32
+        currentVersionBinarySource = settingsManager.getValue(".//RaumserverInstaller//binarySource[@type='windows']");
+    #else
+        std::runtime_error("");
+    #endif    
+
+    // /Profile/Tools/Tool[@AllowRemote='true' and @DeriveCaptionFrom='lastparam']"
 
     versionInfoLib = raumserverInstallerObject.getVersionInfo();
 

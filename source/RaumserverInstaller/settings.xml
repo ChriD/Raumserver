@@ -3,8 +3,8 @@
   <RaumserverInstaller>
    
     <!-- Urls where to check and to download new version -->
-    <binarySource type="windows">http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/raumserver_windows.zip</binarySource>
-	<binarySource type="linux">http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/raumserver_linuxX64.zip</binarySource>
+    <binarySource type="windows">http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/raumserverInstaller_windows.zip</binarySource>
+	<binarySource type="linux">http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/raumserverInstaller_linuxX64.zip</binarySource>
     <currentVersion>http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/version.xml</currentVersion>
     
   </RaumserverInstaller> 

@@ -88,10 +88,13 @@ namespace Application
 
 
     function newVersionAvailable(_binaryUrl)
-    {
-        // TODO: @@@
-        $(#installerUpdateInfo).text = _binaryUrl.toString(); 
-        $(#installerUpdateInfo).attributes.addClass("succeedText");        
+    {                           
+        $(#installerUpdateInfo).$content(New Installer Version available!);                
+        $(#installerUpdateInfo).attributes.addClass("newInstallerVersionOnline");            
+        $(#installerUpdateInfo).on("click", function(evt) {        
+          Sciter.launch(_binaryUrl.toString()); 
+          return true;
+        });       
     }
 
 

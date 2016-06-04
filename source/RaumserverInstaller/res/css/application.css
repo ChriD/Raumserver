@@ -36,6 +36,10 @@ h3 {
     float: right;
 }
 
+.clickable {
+    behavior: clickable;
+}
+
 
 .appContainer {
     width: 100%%;
@@ -164,6 +168,17 @@ div.page > div.navigation {
     background-image: url('../images/donateWhite.png');
 }
 
+
+.newInstallerVersionOnline {
+    color: green;
+    text-decoration: underline;
+}
+
+
+.newInstallerVersionOnline:hover {
+    color: red;
+    cursor: pointer; 
+}
 
 
 
