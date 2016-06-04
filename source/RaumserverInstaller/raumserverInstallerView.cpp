@@ -154,16 +154,14 @@ sciter::value ApplicationWindow::startSearchingForDevices()
 
 
 sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
-{
-    // TODO: @@@
-    
-/*
-    std::wstring ip = std::wstring(_ip.to_string().c_str());
-    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(Converter::wstring2string(ip));
+{    
+    sciter::string ip = _ip.to_string();
+    std::string ipUni = w2u(ip);     
+
+    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(ipUni);
     if (deviceInfo.ip.empty())
         return false;
     raumserverInstallerObject.startInstallToDevice(deviceInfo);
-*/
     
     return true;
 }
@@ -171,15 +169,13 @@ sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
 
 sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
 {
-    // TODO: @@@
-
-/*
-    std::wstring ip = std::wstring(_ip.to_string().c_str());
-    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(Converter::wstring2string(ip));
+    sciter::string ip = _ip.to_string();
+    std::string ipUni = w2u(ip);
+    
+    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(ipUni);
     if (deviceInfo.ip.empty())
         return false;
     raumserverInstallerObject.startRemoveFromDevice(deviceInfo);
-*/
 
     return true;
 }
