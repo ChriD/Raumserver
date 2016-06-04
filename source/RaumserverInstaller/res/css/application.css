@@ -132,6 +132,9 @@ div.page > div.navigation {
     border:1px solid threedlightshadow;    
     overflow-y: scroll;
     overflow-x: hidden;
+
+    font-size: 12dip;
+    font-family: 'Courier New', system;
 }
 
 
