@@ -9,6 +9,8 @@
 
 ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc)
 {
+    raumserverInstallerObject = nullptr;
+
     settingsFileName = "settings.xml";
 
     versionInfoApp.appName = AppNameInstaller;
@@ -20,12 +22,14 @@ ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | 
 
 void ApplicationWindow::init()
 {       
-    raumserverInstallerObject.init();
-    raumserverInstallerObject.initLogObject(Log::LogType::LOGTYPE_INFO);    
-    raumserverInstallerObject.initDiscover();
+    raumserverInstallerObject = new RaumserverInstaller::RaumserverInstaller();
+
+    raumserverInstallerObject->init();
+    raumserverInstallerObject->initLogObject(Log::LogType::LOGTYPE_INFO);    
+    raumserverInstallerObject->initDiscover();
 
     settingsManager.setFileName(settingsFileName);
-    settingsManager.setLogObject(raumserverInstallerObject.getLogObject());       
+    settingsManager.setLogObject(raumserverInstallerObject->getLogObject());       
     settingsManager.initSettings();
     
     currentVersionInfoWebUrl = settingsManager.getValue(".//RaumserverInstaller//currentVersion");
@@ -37,15 +41,13 @@ void ApplicationWindow::init()
         std::runtime_error("");
     #endif    
 
-    // /Profile/Tools/Tool[@AllowRemote='true' and @DeriveCaptionFrom='lastparam']"
+    versionInfoLib = raumserverInstallerObject->getVersionInfo();
 
-    versionInfoLib = raumserverInstallerObject.getVersionInfo();
-
-    connections.connect(raumserverInstallerObject.sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
-    connections.connect(raumserverInstallerObject.sigDeviceRemovedForInstall, this, &ApplicationWindow::onDeviceRemovedForInstall);
-    connections.connect(raumserverInstallerObject.sigDeviceInformationChanged, this, &ApplicationWindow::onDeviceInformationChanged);
-    connections.connect(raumserverInstallerObject.sigInstallProgressInformation, this, &ApplicationWindow::onInstallProgressInformation);
-    connections.connect(raumserverInstallerObject.sigInstallCompleted, this, &ApplicationWindow::onInstallCompleted);
+    connections.connect(raumserverInstallerObject->sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
+    connections.connect(raumserverInstallerObject->sigDeviceRemovedForInstall, this, &ApplicationWindow::onDeviceRemovedForInstall);
+    connections.connect(raumserverInstallerObject->sigDeviceInformationChanged, this, &ApplicationWindow::onDeviceInformationChanged);
+    connections.connect(raumserverInstallerObject->sigInstallProgressInformation, this, &ApplicationWindow::onInstallProgressInformation);
+    connections.connect(raumserverInstallerObject->sigInstallCompleted, this, &ApplicationWindow::onInstallCompleted);
 
     checkForNewVersion();
 }
@@ -87,6 +89,13 @@ void ApplicationWindow::onCheckForNewVersionResult(VersionInfo::VersionInfo _ver
     }
 }
 
+sciter::value ApplicationWindow::appClosing()
+{
+    if (raumserverInstallerObject)
+        delete raumserverInstallerObject;
+    return true;
+}
+
 
 sciter::value ApplicationWindow::getInstallerVersionInfo()
 {    
@@ -112,7 +121,7 @@ sciter::value ApplicationWindow::getNetworkAdapterInformation()
 {
     Json::Value root, networkAdapter;
 
-    auto adapterInfoList = raumserverInstallerObject.getNetworkAdapterList();
+    auto adapterInfoList = raumserverInstallerObject->getNetworkAdapterList();
 
     for (auto adapterInfo : adapterInfoList)
     {
@@ -139,7 +148,7 @@ sciter::value ApplicationWindow::selectNetworkAdapter(sciter::value _adapterId)
     std::uint16_t adapterId = _adapterId.get(0);
     if (adapterId > 0)
     {
-        raumserverInstallerObject.setNetworkAdapter(raumserverInstallerObject.getNetworkAdapterInformation(adapterId));
+        raumserverInstallerObject->setNetworkAdapter(raumserverInstallerObject->getNetworkAdapterInformation(adapterId));
     }
 
     return true;
@@ -148,7 +157,7 @@ sciter::value ApplicationWindow::selectNetworkAdapter(sciter::value _adapterId)
 
 sciter::value ApplicationWindow::startSearchingForDevices()
 {
-    raumserverInstallerObject.startDiscoverDevicesForInstall();
+    raumserverInstallerObject->startDiscoverDevicesForInstall();
     return true;
 }
 
@@ -158,10 +167,10 @@ sciter::value ApplicationWindow::startInstallOnDevice(sciter::value _ip)
     sciter::string ip = _ip.to_string();
     std::string ipUni = w2u(ip);     
 
-    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(ipUni);
+    auto deviceInfo = raumserverInstallerObject->getDeviceInformation(ipUni);
     if (deviceInfo.ip.empty())
         return false;
-    raumserverInstallerObject.startInstallToDevice(deviceInfo);
+    raumserverInstallerObject->startInstallToDevice(deviceInfo);
     
     return true;
 }
@@ -172,10 +181,10 @@ sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
     sciter::string ip = _ip.to_string();
     std::string ipUni = w2u(ip);
     
-    auto deviceInfo = raumserverInstallerObject.getDeviceInformation(ipUni);
+    auto deviceInfo = raumserverInstallerObject->getDeviceInformation(ipUni);
     if (deviceInfo.ip.empty())
         return false;
-    raumserverInstallerObject.startRemoveFromDevice(deviceInfo);
+    raumserverInstallerObject->startRemoveFromDevice(deviceInfo);
 
     return true;
 }

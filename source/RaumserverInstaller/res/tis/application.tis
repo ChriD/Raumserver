@@ -106,6 +106,7 @@ namespace Application
 
     function close()
     {
+        view.appClosing();
     }
 
  }
@@ -116,6 +117,13 @@ self.ready = function()
 {
     view.caption = "Raumserver Installer";          
     Application.init();          
+}
+
+
+// when we close the document then close the app
+self.closing = function()
+{
+    Application.close();
 }
 
        

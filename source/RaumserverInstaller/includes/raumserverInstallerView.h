@@ -46,6 +46,7 @@ class ApplicationWindow : public sciter::window
         sciter::value startSearchingForDevices();
         sciter::value startInstallOnDevice(sciter::value _deviceIp);
         sciter::value startRemoveFromDevice(sciter::value _deviceIp);
+        sciter::value appClosing();
 
         BEGIN_FUNCTION_MAP
             FUNCTION_0("getNetworkAdapterInformation", getNetworkAdapterInformation);
@@ -54,11 +55,12 @@ class ApplicationWindow : public sciter::window
             FUNCTION_0("startSearchingForDevices", startSearchingForDevices);
             FUNCTION_1("startInstallOnDevice", startInstallOnDevice);
             FUNCTION_1("startRemoveFromDevice", startRemoveFromDevice);
+            FUNCTION_0("appClosing", appClosing);
         END_FUNCTION_MAP
 
     protected:      
 
-        RaumserverInstaller::RaumserverInstaller raumserverInstallerObject;
+        RaumserverInstaller::RaumserverInstaller* raumserverInstallerObject;
 
         VersionInfo::VersionInfo versionInfoApp;     
         VersionInfo::VersionInfo versionInfoLib;

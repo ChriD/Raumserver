@@ -92,7 +92,8 @@ namespace InstallProgressPage
             // TODO: get index for id (second array?)
             if(progressSpanArray.length == 0)
             {                                         
-                var attachedElement = $(#installProgressInfo).append(new Element("span") + "<br>");                                 
+                var attachedElement = $(#installProgressInfo).append(new Element("span"));   
+                $(#installProgressInfo).append("<br>");
                 progressSpanArray[progressSpanArray.length] = attachedElement;                
             }
             else
