@@ -88,12 +88,7 @@ namespace InstallProgressPage
             $(#installProgressInfo).append(_info.toString() + "<br>");  
         }
         else
-        {
-            var sx = $(#installProgressInfo).scroll(#left);  
-            if( !$(#installProgressInfo).state.focus )
-                $(#installProgressInfo).post( :: this.scrollTo(sx, 99999));           
-            $(#installProgressInfo).append(_info.toString() + "<br>"); 
-            /*
+        {                     
             // TODO: get index for id (second array?)
             if(progressSpanArray.length == 0)
             {                                         
@@ -104,8 +99,7 @@ namespace InstallProgressPage
             else
             {
                 progressSpanArray[0].content(_info.toString());                                                
-            }
-            */
+            }            
         }
     }
    
