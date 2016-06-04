@@ -1,10 +1,5 @@
-
 #include "raumserverInstallerView.h"
 #include "versionNumberInstaller.h"
-
-
-//http://sciter.com/developers/embedding-principles/
-//http://www.terrainformatica.com/2012/11/sciter-ui-application-architecture/
 
 
 ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | SW_ENABLE_DEBUG, wrc)
@@ -77,6 +72,7 @@ void ApplicationWindow::checkForNewVersionThread()
 
 void ApplicationWindow::onCheckForNewVersionResult(VersionInfo::VersionInfo _versioninfo)
 {    
+    std::unique_lock<std::mutex> lock(lockLogOutput);
     if (_versioninfo.appVersionBuild == 0)
     {
         // no connect to update server...
@@ -213,12 +209,14 @@ void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceIn
 
 void ApplicationWindow::onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {
+    std::unique_lock<std::mutex> lock(lockLogOutput);    
     call_function("InstallProgressPage.addProgressInfo", sciter::value(_progressInfo.getJsonValue().toStyledString()));
 }
 
 
 void ApplicationWindow::onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {
+    std::unique_lock<std::mutex> lock(lockLogOutput);
     call_function("InstallProgressPage.installationDone", sciter::value(_progressInfo.getJsonValue().toStyledString()));
 }
 
