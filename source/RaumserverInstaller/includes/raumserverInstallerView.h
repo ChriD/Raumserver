@@ -32,6 +32,8 @@
 #include <settings/settings.h>
 #include "sciter-x-window.hpp"
 
+#define w2u(S) ( std::string(aux::w2utf(S).c_str()) )
+
 static RECT wrc = { 100, 100, 700, 450 };
 
 class ApplicationWindow : public sciter::window
