@@ -71,16 +71,17 @@ void ApplicationWindow::checkForNewVersionThread()
 
 
 void ApplicationWindow::onCheckForNewVersionResult(VersionInfo::VersionInfo _versioninfo)
-{    
-    std::unique_lock<std::mutex> lock(lockLogOutput);
+{        
     if (_versioninfo.appVersionBuild == 0)
     {
         // no connect to update server...
+        std::unique_lock<std::mutex> lock(lockGuiUpdate);
         call_function("Application.newVersionCheckFailed");
     }
     else if (_versioninfo.appVersionBuild > versionInfoApp.appVersionBuild)
     {        
         // new version is ready for download
+        std::unique_lock<std::mutex> lock(lockGuiUpdate);
         call_function("Application.newVersionAvailable", sciter::value(currentVersionBinarySource));
     }
 }
@@ -187,36 +188,36 @@ sciter::value ApplicationWindow::startRemoveFromDevice(sciter::value _ip)
 
 
 void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
-{
-    std::unique_lock<std::mutex> lock(lockDeviceAction);
+{    
+    std::unique_lock<std::mutex> lock(lockGuiUpdate);
     call_function("DeviceSelection.addDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
 }
 
 
 void ApplicationWindow::onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
-{
-    std::unique_lock<std::mutex> lock(lockDeviceAction);
+{    
+    std::unique_lock<std::mutex> lock(lockGuiUpdate);
     call_function("DeviceSelection.removeDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
 }
 
 
 void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceInformation _deviceInfo)
-{
-    std::unique_lock<std::mutex> lock(lockDeviceAction);
+{    
+    std::unique_lock<std::mutex> lock(lockGuiUpdate);
     call_function("DeviceSelection.updateDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
 }
 
 
 void ApplicationWindow::onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
-{
-    std::unique_lock<std::mutex> lock(lockLogOutput);    
+{    
+    std::unique_lock<std::mutex> lock(lockGuiUpdate);
     call_function("InstallProgressPage.addProgressInfo", sciter::value(_progressInfo.getJsonValue().toStyledString()));
 }
 
 
 void ApplicationWindow::onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
-{
-    std::unique_lock<std::mutex> lock(lockLogOutput);
+{    
+    std::unique_lock<std::mutex> lock(lockGuiUpdate);    
     call_function("InstallProgressPage.installationDone", sciter::value(_progressInfo.getJsonValue().toStyledString()));
 }
 

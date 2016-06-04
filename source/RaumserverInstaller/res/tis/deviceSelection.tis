@@ -77,24 +77,28 @@ namespace DeviceSelection
         var serverVersion = deviceInfoArray.propertyAt("raumserverVersion"); 
 
         var displayName = friendlyName.toString() + " (" + name.toString() + ")";   
-                
-        var sshAccessIcon = "&fa-question-circle;"
+                      
+        var iconUnknown = "<img class='deviceStatusImage' src='svg/question.svg' />";
+        var iconError = "<img class='deviceStatusImage' src='svg/error.svg' />";
+        var iconSuccess = "<img class='deviceStatusImage' src='svg/success.svg' />";
+
+        var sshAccessIcon = iconUnknown;
         if(sshAccess == 0)
-            sshAccessIcon = "&fa-close;"
+            sshAccessIcon = iconError;
         if(sshAccess == 1)
-            sshAccessIcon = "&fa-check-circle;"
+            sshAccessIcon = iconSuccess;
 
-        var serverInstalledIcon = "&fa-question-circle;"
+        var serverInstalledIcon = iconUnknown;
         if(serverInstalled == 0)
-            serverInstalledIcon = "&fa-close;"
+            serverInstalledIcon = iconError;
         if(serverInstalled == 1)
-            serverInstalledIcon = "&fa-check-circle;"
+            serverInstalledIcon = iconSuccess;
 
-        var serverRunsIcon = "&fa-question-circle;"
+        var serverRunsIcon = iconUnknown;
         if(serverRuns == 0)
-            serverRunsIcon = "&fa-close;"
+            serverRunsIcon = iconError;
         if(serverRuns == 1)
-            serverRunsIcon = "&fa-check-circle;"
+            serverRunsIcon = iconSuccess;
             
 
         if(!_update)

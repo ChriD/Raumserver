@@ -193,6 +193,9 @@
     <None Include="res\page_welcome.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="res\svg\error.svg" />
+    <None Include="res\svg\question.svg" />
+    <None Include="res\svg\success.svg" />
     <None Include="res\tis\application.tis" />
     <None Include="res\tis\deviceSelection.tis" />
     <None Include="res\tis\deviceSelectionPage.tis" />
@@ -218,9 +221,6 @@
     <Image Include="res\images\donateWhite.png" />
     <Image Include="res\images\loading_16.png" />
     <Image Include="res\images\raumserverInstallerLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="res\css\fontawesome-webfont.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

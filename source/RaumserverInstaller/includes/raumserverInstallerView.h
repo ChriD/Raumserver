@@ -76,9 +76,8 @@ class ApplicationWindow : public sciter::window
         void onDeviceInformationChanged(RaumserverInstaller::DeviceInformation);
         void onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);
         void onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo);               
-
-        std::mutex  lockDeviceAction;   
-        std::mutex  lockLogOutput;
+    
+        std::mutex  lockGuiUpdate;
 
         std::string settingsFileName;
         std::string currentVersionInfoWebUrl;

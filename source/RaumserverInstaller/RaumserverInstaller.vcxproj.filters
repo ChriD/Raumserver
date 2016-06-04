@@ -84,6 +84,15 @@
     <None Include="res\font-awesome.inc.htm">
       <Filter>res</Filter>
     </None>
+    <None Include="res\svg\error.svg">
+      <Filter>res\svg</Filter>
+    </None>
+    <None Include="res\svg\question.svg">
+      <Filter>res\svg</Filter>
+    </None>
+    <None Include="res\svg\success.svg">
+      <Filter>res\svg</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="res">
@@ -109,6 +118,9 @@
     </Filter>
     <Filter Include="res\css">
       <UniqueIdentifier>{4bc0863d-c2c7-4a3f-b891-a1876a05e7a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\svg">
+      <UniqueIdentifier>{15000464-4658-4e3b-bf41-fc7016951d50}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +156,5 @@
     <Image Include="res\images\loading_16.png">
       <Filter>res\images</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="res\css\fontawesome-webfont.ttf">
-      <Filter>res\css</Filter>
-    </Font>
   </ItemGroup>
 </Project>

@@ -11,11 +11,6 @@ html {
 @import url(list.css);
 @import url(devicetable.css);
 
-@font-face {
-    font-family: MyAwesome;
-    src: url(fontawesome-webfont.ttf);
-}
-
 
 body {
     background: white;
@@ -155,10 +150,6 @@ div.page > div.navigation {
     color: red;
 }
 
-.fontAwesome {
-    font: 14dip MyAwesome;
-}
-
 
 .donate { 
     width: 50px;
@@ -180,6 +171,11 @@ div.page > div.navigation {
 .newInstallerVersionOnline:hover {
     color: red;
     cursor: pointer; 
+}
+
+
+.deviceStatusImage {
+    size: 15px;
 }
 
 
