@@ -12,4 +12,5 @@ make arch=X64
 #/bin/cp -rf libs/linux_x64/libsciter-gtk-64.so bin/linux_x64/libs/linux_x64/libsciter-gtk-64.so
 /bin/cp -rf libs/linux_x64/libsciter-gtk-64.so bin/linux_x64/libsciter-gtk-64.so
 /bin/cp -rf raumsrvInstaller bin/linux_x64/raumsrvInstaller
+/bin/cp -rf settings.xml bin/linux_x64/settings.xml
 make arch=X64 clean
