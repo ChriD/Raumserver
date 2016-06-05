@@ -30,7 +30,11 @@
 #include <json/json.h>
 #include <tools/converter.h>
 #include <settings/settings.h>
+
+#include "sciter-x.h"
 #include "sciter-x-window.hpp"
+#include "sciter-x-host-callback.h"
+#include "sciter-x-threads.h"
 
 #define w2u(S) ( std::string(aux::w2utf(S).c_str()) )
 

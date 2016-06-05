@@ -2,8 +2,6 @@
 #include "raumserverInstallerView.h"
 #include "resources.cpp" // packed /res/ folder
 
-//http://www.terrainformatica.com/2012/11/sciter-ui-application-architecture/
-
 
 int uimain(std::function<int()> run)
 {
