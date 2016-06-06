@@ -60,7 +60,7 @@ h3 {
 }
 
 .appLayoutGrid > div.header { 
-    height: 110px;
+    height: 130px;
     background: lightgrey;     
 }
 
@@ -72,7 +72,7 @@ h3 {
 .appLayoutGrid > div.header > div.left > div.logo {
     float: left;   
     height: 100%;
-    margin: 10px 20px 10px 20px;
+    margin: 20px 20px 20px 20px;
 }
 
 .appLayoutGrid > div.header > div.right {
@@ -85,6 +85,7 @@ h3 {
 .appLayoutGrid > div.leftsideboard { 
     width: 220px;
     background: lightgrey;     
+    padding-top: 25px;
 }
 
 .appLayoutGrid > div.leftsideboard> div.bottomInfo { 
@@ -177,6 +178,17 @@ div.page > div.navigation {
 .deviceStatusImage {
     size: 15px;
 }
+
+
+#newRaumserverVersionOnlineChecker { 
+    color: #808080;
+    border: 1px solid #d9d7d7;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
 
 
 
