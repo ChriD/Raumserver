@@ -35,8 +35,10 @@ void ApplicationWindow::init()
     #else
         std::runtime_error("");
     #endif    
+    currentServerVersionInfoWebUrl = settingsManager.getValue(".//RaumserverInstaller//currentServerVersion");        
 
-    versionInfoLib = raumserverInstallerObject->getVersionInfo();
+    versionInfoLib = raumserverInstallerObject->getVersionInfo();    
+    versionInfoServer.loadFromXMLFile("binaries/version.xml");
 
     connections.connect(raumserverInstallerObject->sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
     connections.connect(raumserverInstallerObject->sigDeviceRemovedForInstall, this, &ApplicationWindow::onDeviceRemovedForInstall);
@@ -45,6 +47,7 @@ void ApplicationWindow::init()
     connections.connect(raumserverInstallerObject->sigInstallCompleted, this, &ApplicationWindow::onInstallCompleted);
 
     checkForNewVersion();
+    checkForNewServerVersion();
 }
 
 
@@ -82,9 +85,57 @@ void ApplicationWindow::onCheckForNewVersionResult(VersionInfo::VersionInfo _ver
     {        
         // new version is ready for download
         std::unique_lock<std::mutex> lock(lockGuiUpdate);
-        call_function("Application.newVersionAvailable", sciter::value(currentVersionBinarySource));
+        call_function("Application.newVersionAvailable", sciter::value(currentVersionBinarySource), sciter::value(_versioninfo.appVersion), sciter::value(std::to_string(_versioninfo.appVersionBuild)));
+    }
+    else
+    {
+        call_function("Application.versionIsUpToDate", sciter::value(_versioninfo.appVersion), sciter::value(std::to_string(_versioninfo.appVersionBuild)));
     }
 }
+
+
+void ApplicationWindow::checkForNewServerVersion()
+{
+    checkForNewServerVersionThreadObject = std::thread(&ApplicationWindow::checkForNewServerVersionThread, this);
+}
+
+
+void ApplicationWindow::checkForNewServerVersionThread()
+{
+    VersionInfo::VersionInfo newestVersion, noVersion;
+    try
+    {
+        noVersion.clear();
+        newestVersion.loadFromUrl(currentServerVersionInfoWebUrl);
+        onCheckForNewServerVersionResult(newestVersion);
+    }
+    catch (...)
+    {
+        onCheckForNewServerVersionResult(noVersion);
+    }
+}
+
+
+void ApplicationWindow::onCheckForNewServerVersionResult(VersionInfo::VersionInfo _versioninfo)
+{
+    if (_versioninfo.appVersionBuild == 0)
+    {
+        // no connect to update server...
+        std::unique_lock<std::mutex> lock(lockGuiUpdate);
+        call_function("Application.newServerVersionCheckFailed");
+    }
+    else if (_versioninfo.appVersionBuild > versionInfoServer.appVersionBuild)
+    {
+        // new version is ready for download
+        std::unique_lock<std::mutex> lock(lockGuiUpdate);
+        call_function("Application.newServerVersionAvailable", sciter::value(_versioninfo.appVersion), sciter::value(std::to_string(_versioninfo.appVersionBuild)));;
+    }
+    else
+    {
+        call_function("Application.serverVersionIsUpToDate", sciter::value(_versioninfo.appVersion), sciter::value(std::to_string(_versioninfo.appVersionBuild)));;
+    }
+}
+
 
 sciter::value ApplicationWindow::appClosing()
 {

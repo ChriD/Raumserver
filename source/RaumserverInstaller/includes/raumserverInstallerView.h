@@ -38,7 +38,7 @@
 
 #define w2u(S) ( std::string(aux::w2utf(S).c_str()) )
 
-static RECT wrc = { 100, 100, 700, 450 };
+static RECT wrc = { 100, 100, 720, 470 };
 
 class ApplicationWindow : public sciter::window
 {
@@ -70,10 +70,15 @@ class ApplicationWindow : public sciter::window
 
         VersionInfo::VersionInfo versionInfoApp;     
         VersionInfo::VersionInfo versionInfoLib;
+        VersionInfo::VersionInfo versionInfoServer;
 
         void checkForNewVersion();
         void checkForNewVersionThread();
         void onCheckForNewVersionResult(VersionInfo::VersionInfo _versioninfo);
+
+        void checkForNewServerVersion();        
+        void checkForNewServerVersionThread();        
+        void onCheckForNewServerVersionResult(VersionInfo::VersionInfo _versioninfo);
 
         void onDeviceFoundForInstall(RaumserverInstaller::DeviceInformation);
         void onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation);
@@ -86,10 +91,12 @@ class ApplicationWindow : public sciter::window
         std::string settingsFileName;
         std::string currentVersionInfoWebUrl;
         std::string currentVersionBinarySource;
+        std::string currentServerVersionInfoWebUrl;        
 
         Settings::SettingsManager settingsManager;
 
         std::thread checkForNewVersionThreadObject;
+        std::thread checkForNewServerVersionThreadObject;
 
         sigs::connections connections;
 

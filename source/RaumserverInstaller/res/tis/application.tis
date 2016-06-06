@@ -87,7 +87,7 @@ namespace Application
     }
 
 
-    function newVersionAvailable(_binaryUrl)
+    function newVersionAvailable(_binaryUrl, _appVersion, _appVersionBuild)
     {                           
         $(#installerUpdateInfo).$content(New Installer Version available!);                
         $(#installerUpdateInfo).attributes.addClass("newInstallerVersionOnline");            
@@ -95,6 +95,35 @@ namespace Application
           Sciter.launch(_binaryUrl.toString()); 
           return true;
         });       
+    }
+
+
+    function versionIsUpToDate(_appVersion, _appVersionBuild)
+    {
+    }
+
+
+    function newServerVersionCheckFailed()
+    {        
+        $(#newServerOnlineCheckerProgress).hide();
+        $(#newServerOnlineCheckerText).$content(Check for new Raumserver daemon binaries failed!);          
+        $(#newServerOnlineCheckerText).attributes.addClass("errorText");      
+    }
+
+
+    function newServerVersionAvailable(_appVersion, _appVersionBuild)
+    {                           
+        $(#newServerOnlineCheckerProgress).hide();
+        $(#newServerOnlineCheckerText).$content(New Raumserver daemon binaries are available!);                
+        $(#newServerOnlineCheckerText).append(" (Version: "+ _appVersion + " Build: " + _appVersionBuild + ")");
+        $(#newServerOnlineCheckerText).attributes.addClass("succeedText");                   
+    }
+
+    function serverVersionIsUpToDate(_appVersion, _appVersionBuild)
+    {
+        $(#newServerOnlineCheckerProgress).hide();
+        $(#newServerOnlineCheckerText).$content(Raumserver Daemon binaries are up to date);    
+        $(#newServerOnlineCheckerText).append(" (Version: "+ _appVersion + " Build: " + _appVersionBuild + ")");
     }
 
 
