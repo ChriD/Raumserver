@@ -40,6 +40,22 @@ ifeq ($(arch),ARMV6)
   TARGET = raumsrvDaemon
 endif
 
+ifeq ($(arch),ARMV5TE)
+  ARCHITECTURE = -march=armv5te -mtune=xscale
+  CC = arm-linux-gnueabi-g++-4.9 
+  CXX = arm-linux-gnueabi-g++-4.9
+  LIBSPATH = libs/linux_ARMV5/
+  TARGET = raumsrvDaemon
+endif 
+
+ifeq ($(arch),AMDGEODE)
+  ARCHITECTURE = -m32 -march=geode -mtune=generic
+  CC = g++-4.9 
+  CXX = g++-4.9
+  LIBSPATH = libs/linux_AMDGEODE/
+  TARGET = raumsrvDaemon
+endif 
+
 LIBSDEF = $(LIBSPATH)raumkernel.so $(LIBSPATH)raumserver.so
 
 
