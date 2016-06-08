@@ -7,4 +7,5 @@ make arch=X86
 /bin/cp -rf raumsrvDaemon bin/linux_x86/raumsrvDaemon
 /bin/cp -rf raumserver bin/linux_x86/raumserver
 /bin/cp -rf raumserver.xml bin/linux_x86/raumserver.xml
+/bin/cp -rf S99raumserver bin/linux_x86/S99raumserver
 make arch=X86 clean
