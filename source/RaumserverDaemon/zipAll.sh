@@ -2,7 +2,7 @@
 cd bin/
 find . -name '*.zip' -delete
 
-zip -r binaries.zip linux_ARMV5/* linux_ARMV6/*
+zip -r binaries.zip linux_ARMV5/* linux_ARMV6/* version.xml
 
 cd linux_ARMV5
 zip -r ../raumserverDaemon_linux_ARMV5.zip * 

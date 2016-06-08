@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Daemon Name: raumsrvDaemon
 #  
@@ -18,50 +18,48 @@ start() {
 
     # wait until network gets available
     # there might be better ways to check this
-    printf $"Waiting for network to become available"    
+    echo "Waiting for network to become available"    
     while true
     do
         printf "."
-		
-	ONLINE=$( ifconfig -s | grep eth0 )
-	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\neth0 online\n"; break; fi
-	
-	ONLINE=$( ifconfig -s | grep wlan0 )
-	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\nwlan0 online\n"; break; fi
 
-	ONLINE=$( ifconfig -s | grep enp0s3 )
-	if [[ $ONLINE = *[!\ ]* ]]; then printf $"\nenp0s3 online\n"; break; fi
-        
+        ONLINE=`ifconfig | grep 'Link\|inet' | grep eth0`
+        if [[ ! -z "$ONLINE" ]]; then printf "\neth0 online\n"; break; fi
+
+        ONLINE=`ifconfig | grep 'Link\|inet' | grep wlan0`
+        if [[ ! -z "$ONLINE" ]]; then printf "\nwlan0 online\n"; break; fi
+
+        ONLINE=`ifconfig | grep 'Link\|inet' | grep enp0s3`
+        if [[ ! -z "$ONLINE" ]]; then printf "\nenp0s3 online\n"; break; fi
+
         sleep 1
     done
   
     # wait a little bit
-    printf $"Please be patient. Daemon will start in 3 seconds!"
+    echo "Please be patient. Daemon will start in 3 seconds!"
     sleep 3  
     
 
     # Check if the daemon is already running. If so write an info to the console and do nothing
     if [ "$(pidof $NAME)" ] 
     then
-        printf $"Raumserver Daemon is already running!\n"
-	RETVAL=-1
+        echo "Raumserver Daemon is already running!"
+        RETVAL=1
     else     
         # Start the raumserver daemon
-        printf $"Starting $prog: \n"
+        echo "Starting $prog:"
         $DAEMON
-        RETVAL=$?
-        printf $"\n"
+        RETVAL=$? 
     fi     
 
     return $RETVAL
 }
 
 stop() {
-    printf $"Shutting down $NAME: "
-    pkill $NAME
+    echo "Shutting down $NAME: "
+    killall $NAME
     RETVAL=$?
-    printf "$RETVAL \n"
-
+    echo "$RETVAL"
     return $RETVAL
 }
 
@@ -81,7 +79,8 @@ case "$1" in
         start
         ;;
    *)
-        printf $"Usage: $0 {start|stop|status|restart}\n"
+        echo "Usage: $0 {start|stop|status|restart}"
         exit 2
 esac
+
 
