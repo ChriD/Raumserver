@@ -6,4 +6,5 @@ make arch=ARMV7HF dbg=1
 /bin/cp -rf libs/linux_ARMV7/raumkernel.so bin/linux_ARMV7/libs/linux_ARMV7/raumkernel.so
 /bin/cp -rf raumsrvDaemon bin/linux_ARMV7/raumsrvDaemon
 /bin/cp -rf raumserver.xml bin/linux_ARMV7/raumserver.xml
+/bin/cp -rf S99raumserver bin/linux_ARMV7/S99raumserver
 make arch=ARMV7HF dbg=1 clean

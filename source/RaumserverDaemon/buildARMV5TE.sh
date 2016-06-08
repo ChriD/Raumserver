@@ -6,4 +6,5 @@ make arch=ARMV5TE dbg=1
 /bin/cp -rf libs/linux_ARMV5/raumkernel.so bin/linux_ARMV5/libs/linux_ARMV5/raumkernel.so
 /bin/cp -rf raumsrvDaemon bin/linux_ARMV5/raumsrvDaemon
 /bin/cp -rf raumserver.xml bin/linux_ARMV5/raumserver.xml
+/bin/cp -rf S99raumserver bin/linux_ARMV5/S99raumserver
 make arch=ARMV5TE dbg=1 clean
