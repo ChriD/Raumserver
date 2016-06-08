@@ -2,8 +2,8 @@
 
 ifeq ($(arch),X64) 
   ARCHITECTURE = -m64 -D_GLIBCXX_USE_CXX11_ABI=0
-  CC = g++-5
-  CXX = g++-5 
+  CC = g++-4.9
+  CXX = g++-4.9
   LIBSPATH = libs/linux_x64/
   LIBSDEFADD = $(LIBSPATH)libsciter-gtk-64.so
   TARGET = raumsrvInstaller
