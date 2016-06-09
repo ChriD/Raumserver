@@ -29,7 +29,7 @@ void ApplicationWindow::init()
     
     currentVersionInfoWebUrl = settingsManager.getValue(".//RaumserverInstaller//currentVersion");
     #ifdef __linux__ 
-        currentVersionBinarySource = settingsManager.getValue("/RaumserverInstaller/binarySource[@type='linux']");
+        currentVersionBinarySource = settingsManager.getValue(".//RaumserverInstaller//binarySource[@type='linux']");
     #elif _WIN32
         currentVersionBinarySource = settingsManager.getValue(".//RaumserverInstaller//binarySource[@type='windows']");
     #else
