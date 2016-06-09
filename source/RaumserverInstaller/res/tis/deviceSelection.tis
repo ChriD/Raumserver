@@ -134,6 +134,7 @@ namespace DeviceSelection
                 recordObject.sshAccessIcon = sshAccessIcon;            
                 recordObject.serverInstalledIcon = serverInstalledIcon;
                 recordObject.serverRunsIcon = serverRunsIcon;
+                recordObject.serverVersion = serverVersion.toString()
             }
         }     
         

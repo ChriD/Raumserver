@@ -248,36 +248,28 @@ void ApplicationWindow::onDeviceFoundForInstall(RaumserverInstaller::DeviceInfor
 void ApplicationWindow::onDeviceRemovedForInstall(RaumserverInstaller::DeviceInformation _deviceInfo)
 {    
     std::unique_lock<std::mutex> lock(lockGuiUpdate);
-    //GUI_CODE_START
     call_function("DeviceSelection.removeDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
-    //GUI_CODE_END
 }
 
 
 void ApplicationWindow::onDeviceInformationChanged(RaumserverInstaller::DeviceInformation _deviceInfo)
 {    
     std::unique_lock<std::mutex> lock(lockGuiUpdate);
-    //GUI_CODE_START
     call_function("DeviceSelection.updateDeviceInfo", sciter::value(_deviceInfo.ip), sciter::value(_deviceInfo.getJsonValue().toStyledString()));
-    //GUI_CODE_END
 }
 
 
 void ApplicationWindow::onInstallProgressInformation(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {    
     std::unique_lock<std::mutex> lock(lockGuiUpdate);    
-    //GUI_CODE_START
     call_function("InstallProgressPage.addProgressInfo", sciter::value(_progressInfo.getJsonValue().toStyledString()));
-    //GUI_CODE_END
 }
 
 
 void ApplicationWindow::onInstallCompleted(RaumserverInstaller::DeviceInstaller::DeviceInstallerProgressInfo _progressInfo)
 {    
     std::unique_lock<std::mutex> lock(lockGuiUpdate);   
-    //GUI_CODE_START
     call_function("InstallProgressPage.installationDone", sciter::value(_progressInfo.getJsonValue().toStyledString()));
-    //GUI_CODE_END
 }
 
 
