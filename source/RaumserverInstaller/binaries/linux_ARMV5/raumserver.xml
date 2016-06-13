@@ -9,7 +9,8 @@
     
     <!-- the kernel uses the first available networkadapter found in the system. This may not be the one you like to use! -->
     <!-- so you can type in the network adapter name the application should use!-->
-    <NetworkAdapterName></NetworkAdapterName>
+    <NetworkAdapterName>wlan0</NetworkAdapterName>
+    <NetworkAdapterNameFallback>eth0</NetworkAdapterNameFallback>
 	
     <!-- the time step in ms on which the kernel does refresh the device list to get abruplty removed UPNP devices (without announcing its removal) -->
     <UPNPRefreshTimeActive>1</UPNPRefreshTimeActive>
