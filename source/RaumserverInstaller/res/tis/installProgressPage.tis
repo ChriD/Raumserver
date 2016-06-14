@@ -5,6 +5,7 @@
 namespace InstallProgressPage
 {       
 
+    var isInstallingNow = false;
     var progressSpanArray; 
   
     function init() 
@@ -12,9 +13,16 @@ namespace InstallProgressPage
     }
 
 
+    function isInstalling()
+    {
+        return isInstallingNow;
+    }
+
+
     function pageActivated(_parmObject)
     {            
-        progressSpanArray = []; 
+        isInstallingNow = true;
+        progressSpanArray = [];         
         
         $(button#page4_next).state.disabled = 1;
         $(button#page4_back).state.disabled = 1;
@@ -135,6 +143,6 @@ namespace InstallProgressPage
                 $(#installationResult).content("There were errors on installation!");  
         }
         
-              
+        isInstallingNow = false;              
     }  
  }

@@ -22,7 +22,7 @@ include "pageNavigation.tis"
 *
 */
 namespace Application
-{       
+{           
     const body = $(body); 
 
     function init() 
@@ -135,6 +135,10 @@ namespace Application
 
     function close()
     {
+        if(InstallProgressPage.isInstalling())
+        {            
+            return false;
+        }
         view.appClosing();
     }
 
@@ -151,8 +155,8 @@ self.ready = function()
 
 // when we close the document then close the app
 self.closing = function()
-{
-    Application.close();
+{    
+    return Application.close();
 }
 
        
