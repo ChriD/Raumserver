@@ -136,7 +136,7 @@
     <ClInclude Include="includes\tools\converter.h">
       <Filter>includes\tools</Filter>
     </ClInclude>
-    <ClInclude Include="includes\versionNumber.h">
+    <ClInclude Include="includes\versionNumberInstaller.h">
       <Filter>includes</Filter>
     </ClInclude>
   </ItemGroup>

@@ -213,7 +213,7 @@
     <ClInclude Include="includes\json\json.h" />
     <ClInclude Include="includes\raumserverInstallerView.h" />
     <ClInclude Include="includes\tools\converter.h" />
-    <ClInclude Include="includes\versionNumber.h" />
+    <ClInclude Include="includes\versionNumberInstaller.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\images\donateBlue.png" />
