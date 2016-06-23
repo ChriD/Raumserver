@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     adapters.push_back(logAdapterFile);
 
     // create raumserver object and do init init
-    raumserverObject.setSettingsFile(workingDirectory + "raumserver.xml");
+    raumserverObject.setSettingsFile(workingDirectory + "settings.xml");
     raumserverObject.initLogObject(Raumkernel::Log::LogType::LOGTYPE_ERROR, workingDirectory + "logs/", adapters);
     raumserverObject.init();
 
