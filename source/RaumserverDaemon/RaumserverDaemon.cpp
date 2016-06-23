@@ -16,21 +16,29 @@
 std::string getWorkingDirectory()
 {
     std::string path = "";
+	syslog (LOG_NOTICE, "Getting PID");
     pid_t pid2 = getpid();
     char buf[20] = {0};
+	syslog (LOG_NOTICE, "1");
     sprintf(buf,"%d",pid2);
     std::string _link = "/proc/";
+	syslog (LOG_NOTICE, "2");
     _link.append( buf );
     _link.append( "/exe");
+	syslog (LOG_NOTICE, "3");
     char proc[512];
+	syslog (LOG_NOTICE, "readlink");
     int ch = readlink(_link.c_str(),proc,512);
+	syslog (LOG_NOTICE, "4");
     if (ch != -1)
     {
         proc[ch] = 0;
         path = proc;
+		syslog (LOG_NOTICE, "5");
         std::string::size_type t = path.find_last_of("/");
         path = path.substr(0,t);
     }
+	syslog (LOG_NOTICE, "6");
     return path + std::string("/");
 }
 
