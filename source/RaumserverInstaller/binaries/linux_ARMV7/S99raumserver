@@ -35,9 +35,9 @@ start() {
         sleep 1
     done
   
-    # wait a little bit
-    echo "Please be patient. Daemon will start in 3 seconds!"
-    sleep 3  
+    # wait a little bit to let the system get the time from the timeserver and to get the network up
+    echo "Please be patient. Daemon will start in 20 seconds!"
+    sleep 20
     
 
     # Check if the daemon is already running. If so write an info to the console and do nothing
@@ -84,5 +84,6 @@ case "$1" in
         echo "Usage: $0 {start|stop|status|restart}"
         exit 2
 esac
+
 
 
