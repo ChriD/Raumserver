@@ -34,12 +34,12 @@ void ApplicationWindow::init()
 
     raumserverInstallerObject->init();
     raumserverInstallerObject->initLogObject(Log::LogType::LOGTYPE_INFO);    
-    raumserverInstallerObject->initDiscover();
+    //raumserverInstallerObject->initDiscover();
 
     settingsManager.setFileName(settingsFileName);
     settingsManager.setLogObject(raumserverInstallerObject->getLogObject());       
     settingsManager.initSettings();
-    
+        
     currentVersionInfoWebUrl = settingsManager.getValue(".//RaumserverInstaller//currentVersion");
     #ifdef __linux__ 
         currentVersionBinarySource = settingsManager.getValue(".//RaumserverInstaller//binarySource[@type='linux']");
@@ -53,14 +53,15 @@ void ApplicationWindow::init()
     versionInfoLib = raumserverInstallerObject->getVersionInfo();    
     versionInfoServer.loadFromXMLFile("binaries/version.xml");
 
+    
     connections.connect(raumserverInstallerObject->sigDeviceFoundForInstall, this, &ApplicationWindow::onDeviceFoundForInstall);
     connections.connect(raumserverInstallerObject->sigDeviceRemovedForInstall, this, &ApplicationWindow::onDeviceRemovedForInstall);
     connections.connect(raumserverInstallerObject->sigDeviceInformationChanged, this, &ApplicationWindow::onDeviceInformationChanged);
     connections.connect(raumserverInstallerObject->sigInstallProgressInformation, this, &ApplicationWindow::onInstallProgressInformation);
     connections.connect(raumserverInstallerObject->sigInstallCompleted, this, &ApplicationWindow::onInstallCompleted);
-
-    checkForNewVersion();
-    checkForNewServerVersion();
+    
+    checkForNewVersion();    
+    checkForNewServerVersion();   
 }
 
 
@@ -152,8 +153,19 @@ void ApplicationWindow::onCheckForNewServerVersionResult(VersionInfo::VersionInf
 
 sciter::value ApplicationWindow::appClosing()
 {
+    // wait till the version checkers are done
+    if (checkForNewVersionThreadObject.joinable())
+        checkForNewVersionThreadObject.join();
+    if (checkForNewServerVersionThreadObject.joinable())
+        checkForNewServerVersionThreadObject.join();
+
+    // disconnect all signals
+    connections.disconnect_all(true);
+
+    // destroy the installer object
     if (raumserverInstallerObject)
         delete raumserverInstallerObject;
+
     return true;
 }
 
