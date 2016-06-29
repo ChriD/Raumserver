@@ -11,7 +11,20 @@ ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | 
     versionInfoApp.appName = AppNameInstaller;
     versionInfoApp.appVersion = AppVersionNumberInstaller;
     versionInfoApp.appVersionBuild = AppVersionBuildInstaller;
-    versionInfoApp.appVersionName = AppVersionNameInstaller;    
+    versionInfoApp.appVersionName = AppVersionNameInstaller;      
+
+
+    LPCWSTR icon = L"icon.ico";
+
+    #ifdef _WIN32
+    HICON hIcon = (HICON)LoadImage(NULL, icon, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+    SendMessage(get_hwnd(), WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+    #endif
+
+    #ifdef __linux__ 
+    // linux does not have a window icon. It uses a .desktop file instead to show a icon in a menu or on desktop    
+    #endif
+
 }
 
 
