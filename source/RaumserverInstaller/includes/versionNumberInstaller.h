@@ -29,8 +29,8 @@
 #include <cstdint>
 
 const std::string AppNameInstaller = "Raumserver Installer";
-const std::string AppVersionNumberInstaller = "0.9.0";
+const std::string AppVersionNumberInstaller = "1.0.0";
 const std::string AppVersionNameInstaller = "";
-const std::uint32_t AppVersionBuildInstaller = 900;
+const std::uint32_t AppVersionBuildInstaller = 1000;
 
 #endif

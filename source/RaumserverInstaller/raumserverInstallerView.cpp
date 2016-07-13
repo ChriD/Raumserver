@@ -34,7 +34,7 @@ void ApplicationWindow::init()
 
     raumserverInstallerObject->init();
     raumserverInstallerObject->initLogObject(Log::LogType::LOGTYPE_INFO);    
-    //raumserverInstallerObject->initDiscover();
+    raumserverInstallerObject->initDiscover();
 
     settingsManager.setFileName(settingsFileName);
     settingsManager.setLogObject(raumserverInstallerObject->getLogObject());       
