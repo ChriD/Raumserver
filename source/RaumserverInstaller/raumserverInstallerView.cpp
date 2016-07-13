@@ -14,9 +14,8 @@ ApplicationWindow::ApplicationWindow() : window(SW_MAIN | SW_ALPHA | SW_POPUP | 
     versionInfoApp.appVersionName = AppVersionNameInstaller;      
 
 
-    LPCWSTR icon = L"icon.ico";
-
     #ifdef _WIN32
+    LPCWSTR icon = L"icon.ico";    
     HICON hIcon = (HICON)LoadImage(NULL, icon, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
     SendMessage(get_hwnd(), WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
     #endif
