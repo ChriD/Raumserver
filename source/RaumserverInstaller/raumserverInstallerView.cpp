@@ -32,12 +32,18 @@ void ApplicationWindow::init()
     raumserverInstallerObject = new RaumserverInstaller::RaumserverInstaller();
 
     raumserverInstallerObject->init();
-    raumserverInstallerObject->initLogObject(Log::LogType::LOGTYPE_INFO);    
-    raumserverInstallerObject->initDiscover();
+    raumserverInstallerObject->initLogObject(Log::LogType::LOGTYPE_INFO);        
 
     settingsManager.setFileName(settingsFileName);
     settingsManager.setLogObject(raumserverInstallerObject->getLogObject());       
     settingsManager.initSettings();
+   
+    auto sshUser = settingsManager.getValue(".//RaumserverInstaller//sshUser", "root");
+    auto sshPass = settingsManager.getValue(".//RaumserverInstaller//sshPassword", "");
+    raumserverInstallerObject->setSSHAuth(sshUser, sshPass);
+
+    raumserverInstallerObject->initDiscover();
+
         
     currentVersionInfoWebUrl = settingsManager.getValue(".//RaumserverInstaller//currentVersion");
     #ifdef __linux__ 
