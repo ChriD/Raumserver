@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <build>
     <appName>Raumserver Daemon</appName>
-    <appVersionNumber>0.9.1</appVersionNumber>   
+    <appVersionNumber>1.0.0</appVersionNumber>   
     <appVersionName></appVersionName>
-    <appVersionBuild>910</appVersionBuild>
+    <appVersionBuild>1000</appVersionBuild>
 </build>
