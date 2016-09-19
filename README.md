@@ -6,7 +6,12 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
   
   
 # Changelog
+
   
+#### Version 1.0.1 - (Under development)
+* Added ability to set ssh user and passwort in the application settings file for the installer
+* The file transfer mode of the installer was changed to scp (instead of sftp) because RF-devices with firmware higher than 1.56 do not support sftp anymore
+ 
 #### Version 1.0.0 - Initial version  
-This is the initial version
+* This is the initial version
 
