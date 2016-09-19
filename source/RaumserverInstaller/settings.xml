@@ -10,7 +10,7 @@
     
     <!-- SSH Settings -->
     <sshUser>root</sshUser>
-    <sshPassword>root</sshPassword>
+    <sshPassword></sshPassword>
     
   </RaumserverInstaller> 
 </Application>
