@@ -6,7 +6,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
   
 # Changelog Raumserver
 
-#### Upcoming Version
+#### Versionb 1.0.1 (Under development)
 * Add ability to save and load system states
 
 #### Version 1.0.0 - Initial version  
