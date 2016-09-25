@@ -7,6 +7,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 # Changelog Raumserver
 
 #### Version 1.0.1 (Under development)
+* Added "Access-Control-Allow-Origin" header to the server json response
 * Fixing source parameter "upper lower case" problem on load shuffle request
 * Add ability to save and load system states (eg. for doorbell ring) - (under development)
 
