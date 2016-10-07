@@ -11,7 +11,8 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 
 #### Version 1.0.1 (Under development)
 * Added "Access-Control-Allow-Origin" header to the server json response
-* Added  support for 3rd party web clients (fully operation webserver)
+* Added  support for 3rd party web clients (fully operation webserver / use docroot folder)
+* Added 3 new Request for handling the Standby state for the Gen.2 devices
 * Fixing source parameter "upper lower case" problem on load shuffle request
 
 #### Version 1.0.0 - Initial version  
