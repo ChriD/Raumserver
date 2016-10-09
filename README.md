@@ -1,4 +1,4 @@
-# Raumserver
+. Raumserver.
 
 A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests  
   
@@ -9,7 +9,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 #### Version 1.0.2 (Under development)
 * Add ability to save and load system states (eg. for doorbell ring) - (under development)
 
-#### Version 1.0.1 (Under development)
+#### Version 1.0.1 - 09.10.2016
 * Added "Access-Control-Allow-Origin" header to the server json response
 * Added  support for 3rd party web clients (fully operation webserver / use docroot folder)
 * Added 3 new Request for handling the Standby state for the Gen.2 devices
