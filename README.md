@@ -8,6 +8,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 
 #### Version 1.0.2 (Under development)
 * Add ability to save and load system states (eg. for doorbell ring) - (under development)
+* Add SIGSEV Handler to find crashing bugs - (under development)
 
 #### Version 1.0.1 - 09.10.2016
 * Added "Access-Control-Allow-Origin" header to the server json response
