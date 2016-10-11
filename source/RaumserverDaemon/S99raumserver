@@ -40,8 +40,8 @@ start() {
     done
   
     # wait a little bit
-    echo "Please be patient. Daemon will start in 3 seconds!"
-    sleep 3  
+    echo "Please be patient. Daemon will start in 20 seconds!"
+    sleep 20 
     
 
     # Check if the daemon is already running. If so write an info to the console and do nothing

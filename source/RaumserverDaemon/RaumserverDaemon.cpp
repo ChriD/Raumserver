@@ -9,6 +9,8 @@
 #include <string.h>
 
 #include <raumserver/raumserver.h>
+#include "backtrace.hpp"
+
 
 #define DAEMON_NAME "raumsrvDaemon"
 
@@ -83,6 +85,9 @@ int main(int argc, char *argv[])
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
+    
+    // Add some system signal handlers for crash reporting
+    raumserverObject.addSystemSignalHandlers();
 
     // set the log adapters we want to use (because we do not want to use the standard ones which includes console output)
     std::vector<std::shared_ptr<Raumkernel::Log::LogAdapter>> adapters;
