@@ -131,6 +131,7 @@
 		std::cerr.flush();
 		std::cerr.rdbuf(cerrbuf);
 
+        gLog->error(cerrbuf.str(), CURRENT_POSITION);
         gLog->critical("SIGNAL FAULT! Check files in fault directory", CURRENT_POSITION);
 		std::cout << "SIGNAL FAULT! Check files in fault directory";
 		exit(EXIT_FAILURE);
