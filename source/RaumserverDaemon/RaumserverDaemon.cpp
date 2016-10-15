@@ -9,7 +9,6 @@
 #include <string.h>
 
 #include <raumserver/raumserver.h>
-#include "backtrace.hpp"
 
 
 #define DAEMON_NAME "raumsrvDaemon"
