@@ -131,6 +131,7 @@
 		std::cerr.flush();
 		std::cerr.rdbuf(cerrbuf);
 
+        gLog->critical("SIGNAL FAULT! Check files in fault directory", CURRENT_POSITION);
 		std::cout << "SIGNAL FAULT! Check files in fault directory";
 		exit(EXIT_FAILURE);
 	}
@@ -229,6 +230,7 @@ int main(int argc, char *argv[])
     
     // Add some system signal handlers for crash reporting
     //raumserverObject.addSystemSignalHandlers();
+    AddSignalHandlers();
 
     // set the log adapters we want to use (because we do not want to use the standard ones which includes console output)
     std::vector<std::shared_ptr<Raumkernel::Log::LogAdapter>> adapters;
