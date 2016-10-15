@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     close(STDERR_FILENO);
     
     // Add some system signal handlers for crash reporting
-    raumserverObject.addSystemSignalHandlers();
+    //raumserverObject.addSystemSignalHandlers();
 
     // set the log adapters we want to use (because we do not want to use the standard ones which includes console output)
     std::vector<std::shared_ptr<Raumkernel::Log::LogAdapter>> adapters;
