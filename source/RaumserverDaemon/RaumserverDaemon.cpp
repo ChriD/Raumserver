@@ -48,9 +48,15 @@
 
 		file += buffer;
 		file += ".log";
-		std::ofstream trace_log(file);
-		std::streambuf *cerrbuf = std::cerr.rdbuf();
-		std::cerr.rdbuf(trace_log.rdbuf());
+
+		std::stringstream errorBuffer;
+		//std::ofstream trace_log(file);
+		//std::ofstream trace_log(errorBuffer);
+
+
+
+		//std::streambuf *cerrbuf = std::cerr.rdbuf();
+		//std::cerr.rdbuf(trace_log.rdbuf());
 
 		uc = (sig_ucontext_t *)ucontext;
 
@@ -65,7 +71,7 @@
 		#error Unsupported architecture. 
 		#endif
 
-		std::cerr << "signal " << sig_num
+		errorBuffer << "signal " << sig_num
 			<< " (" << strsignal(sig_num) << "), address is "
 			<< info->si_addr << " from " << caller_address
 			<< std::endl << std::endl;
@@ -106,14 +112,14 @@
 				// if demangling is successful, output the demangled function name
 				if (status == 0)
 				{
-					std::cerr << "[bt]: (" << i << ") " << messages[i] << " : "
+					errorBuffer << "[bt]: (" << i << ") " << messages[i] << " : "
 						<< real_name << "+" << offset_begin << offset_end
 						<< std::endl;
 				}
 				// otherwise, output the mangled function name
 				else
 				{
-					std::cerr << "[bt]: (" << i << ") " << messages[i] << " : "
+					errorBuffer << "[bt]: (" << i << ") " << messages[i] << " : "
 						<< mangled_name << "+" << offset_begin << offset_end
 						<< std::endl;
 				}
@@ -122,18 +128,19 @@
 			// otherwise, print the whole line
 			else
 			{
-				std::cerr << "[bt]: (" << i << ") " << messages[i] << std::endl;
+				errorBuffer << "[bt]: (" << i << ") " << messages[i] << std::endl;
 			}
 		}
-		std::cerr << std::endl;
+		errorBuffer << std::endl;
 		free(messages);
 
-		std::cerr.flush();
-		std::cerr.rdbuf(cerrbuf);
+		gLog->error(errorBuffer.str(), CURRENT_POSITION);
 
-        gLog->error(cerrbuf.str(), CURRENT_POSITION);
-        gLog->critical("SIGNAL FAULT! Check files in fault directory", CURRENT_POSITION);
-		std::cout << "SIGNAL FAULT! Check files in fault directory";
+		//std::cerr.flush();
+		//std::cerr.rdbuf(cerrbuf);
+
+       
+        	gLog->critical("SIGNAL FAULT! Check files in fault directory", CURRENT_POSITION);
 		exit(EXIT_FAILURE);
 	}
 
