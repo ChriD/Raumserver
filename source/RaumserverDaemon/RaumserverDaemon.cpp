@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
     raumserverObject.init();
     
     gLog = raumserverObject.getLogObject();
-    gLog->logDebug("Deamon test log", CURRENT_POSITION);
+    gLog->debug("Deamon test log", CURRENT_POSITION);
 
     // go into an endless loop and wait until daemon is killed by the syste,
     while(true)
