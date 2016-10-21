@@ -6,7 +6,7 @@
     <binarySource type="windows">http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/raumserverInstaller_windows.zip</binarySource>
     <binarySource type="linux">http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/raumserverInstaller_linuxX64.zip</binarySource>
     <currentVersion>http://bassmaniacs.com/data/appBinaries/raumserverInstaller/currentVersion/version.xml</currentVersion>
-    <currentServerVersion>http://bassmaniacs.com/data/appBinaries/raumserver/currentVersion/version.xml</currentServerVersion>
+    <currentServerVersion>http://bassmaniacs.com/data/appBinaries/raumserver/betaVersion/version.xml</currentServerVersion>
     
     <!-- SSH Settings -->
     <sshUser>root</sshUser>

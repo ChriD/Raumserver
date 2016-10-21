@@ -50,13 +50,6 @@
 		file += ".log";
 
 		std::stringstream errorBuffer;
-		//std::ofstream trace_log(file);
-		//std::ofstream trace_log(errorBuffer);
-
-
-
-		//std::streambuf *cerrbuf = std::cerr.rdbuf();
-		//std::cerr.rdbuf(trace_log.rdbuf());
 
 		uc = (sig_ucontext_t *)ucontext;
 
@@ -136,11 +129,7 @@
 
 		gLog->error(errorBuffer.str(), CURRENT_POSITION);
 
-		//std::cerr.flush();
-		//std::cerr.rdbuf(cerrbuf);
-
-       
-        	gLog->critical("SIGNAL FAULT! Check files in fault directory", CURRENT_POSITION);
+        gLog->critical("SIGNAL FAULT! Check files in fault directory", CURRENT_POSITION);
 		exit(EXIT_FAILURE);
 	}
 

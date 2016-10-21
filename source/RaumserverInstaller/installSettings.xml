@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <build>
-    <binariesSource>http://bassmaniacs.com/data/appBinaries/raumserver/currentVersion/binaries.zip</binariesSource>
-    <currentVersion>http://bassmaniacs.com/data/appBinaries/raumserver/currentVersion/version.xml</currentVersion>
+    <binariesSource>http://bassmaniacs.com/data/appBinaries/raumserver/betaVersion/binaries.zip</binariesSource>
+    <currentVersion>http://bassmaniacs.com/data/appBinaries/raumserver/betaVersion/version.xml</currentVersion>
     <installSource>
         <!-- Devices which are not known (eg. future devices) will get the ARMv7 binary -->
         <device hardwareType="0">binaries/linux_ARMV7/</device>
