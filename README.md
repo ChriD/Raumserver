@@ -10,7 +10,8 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 * Add ability to save and load system states (eg. for doorbell ring) - (under development)
 * Add SIGSEV Handler to find crashing bugs - (under development)
 * Add stresstest local webpage - (under development)
-* Added json return data for RADIOTIME Media Items
+* Added JSON return data for RADIOTIME Media Items
+* Inactive zones now return name in 'getRendererState' (new json key 'name')
 
 #### Version 1.0.1 - 09.10.2016
 * Added "Access-Control-Allow-Origin" header to the server json response
