@@ -66,10 +66,10 @@ endif
 
 INCPATH = -I includes/ -I ../../../RaumkernelLib/source/includes/ -I ../../../RaumserverLib/source/includes/
 
-CFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wunused-value -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH)
-CXXFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wunused-value -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH)
+CFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wunused-value -mapcs-frame -funwind-tables -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH)
+CXXFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wunused-value -mapcs-frame -funwind-tables -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH)
 #LDFLAGS = $(ARCHITECTURE) -Wl,-rpath,libs/ -Wl,--no-as-needed -pthread -static-libgcc -static-libstdc++ -ldl
-LDFLAGS = $(ARCHITECTURE) -Wl,--no-as-needed -pthread -static-libgcc -static-libstdc++ -ldl
+LDFLAGS = $(ARCHITECTURE) -Wl,--no-as-needed -pthread -static-libgcc -static-libstdc++ -ldl -rdynamic
 
 
 RM = rm -f 
