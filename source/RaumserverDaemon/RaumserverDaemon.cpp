@@ -17,6 +17,15 @@
 #include <cxxabi.h>
 #include <ctime>
 
+#ifdef __arm__
+  #include <libunwind.h>
+  #include <libunwind-arm.h>
+#else
+  #include <libunwind.h>
+  #include <libunwind-x86_64.h>
+#endif
+#include <cxxabi.h>
+
 #include <raumserver/raumserver.h>
 
 
@@ -33,125 +42,127 @@
 		sigset_t          uc_sigmask;
 	} sig_ucontext_t;
 
-	void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext)
+
+void backtrace(void * reserved)
+{
+
+/*
+unw_context_t uc;
+//platform specific voodoo to build a context for libunwind
+#if defined(__arm__)
+//cast/extract the necessary structures
+ucontext_t* context = (ucontext_t*)reserved;
+unw_tdep_context_t *unw_ctx = (unw_tdep_context_t*)&uc;
+sigcontext* sig_ctx = &context->uc_mcontext;
+//we need to store all the general purpose registers so that libunwind can resolve
+//    the stack correctly, so we read them from the sigcontext into the unw_context
+unw_ctx->regs[UNW_ARM_R0] = sig_ctx->arm_r0;
+unw_ctx->regs[UNW_ARM_R1] = sig_ctx->arm_r1;
+unw_ctx->regs[UNW_ARM_R2] = sig_ctx->arm_r2;
+unw_ctx->regs[UNW_ARM_R3] = sig_ctx->arm_r3;
+unw_ctx->regs[UNW_ARM_R4] = sig_ctx->arm_r4;
+unw_ctx->regs[UNW_ARM_R5] = sig_ctx->arm_r5;
+unw_ctx->regs[UNW_ARM_R6] = sig_ctx->arm_r6;
+unw_ctx->regs[UNW_ARM_R7] = sig_ctx->arm_r7;
+unw_ctx->regs[UNW_ARM_R8] = sig_ctx->arm_r8;
+unw_ctx->regs[UNW_ARM_R9] = sig_ctx->arm_r9;
+unw_ctx->regs[UNW_ARM_R10] = sig_ctx->arm_r10;
+unw_ctx->regs[UNW_ARM_R11] = sig_ctx->arm_fp;
+unw_ctx->regs[UNW_ARM_R12] = sig_ctx->arm_ip;
+unw_ctx->regs[UNW_ARM_R13] = sig_ctx->arm_sp;
+unw_ctx->regs[UNW_ARM_R14] = sig_ctx->arm_lr;
+unw_ctx->regs[UNW_ARM_R15] = sig_ctx->arm_pc;
+//s << "base pc: 0x" << std::hex << sig_ctx->arm_pc << std::endl;
+#elif defined(__i386__)
+ucontext_t* context = (ucontext_t*)reserved;
+//on x86 libunwind just uses the ucontext_t directly
+uc = *((unw_context_t*)context);
+#else
+//We don't have platform specific voodoo for whatever we were built for
+//    just call libunwind and hope it can jump out of the signal stack on it's own
+unw_getcontext(&uc);
+#endif
+*/
+
+  unw_cursor_t cursor;
+  unw_context_t context;
+
+  unw_getcontext(&context);
+
+  unw_init_local(&cursor, &context);
+
+  
+  std::string bigbuf;
+
+  int n=0;
+  int err= unw_step(&cursor);
+  while ( err ) {
+    unw_word_t ip, sp, off;
+
+    unw_get_reg(&cursor, UNW_REG_IP, &ip);
+    unw_get_reg(&cursor, UNW_REG_SP, &sp);
+
+    char symbol[256] = {"<unknown>"};
+    char buffer[256];
+    char *name = symbol;
+
+    if ( !unw_get_proc_name(&cursor, symbol, sizeof(symbol), &off) ) {
+      int status;
+      if ( (name = abi::__cxa_demangle(symbol, NULL, NULL, &status)) == 0 )
+        name = symbol;
+    }
+
+    sprintf(buffer, "#%-2d 0x%016" PRIxPTR " sp=0x%016" PRIxPTR " %s + 0x%" PRIxPTR "\n",
+        ++n,
+        static_cast<uintptr_t>(ip),
+        static_cast<uintptr_t>(sp),
+        name,
+        static_cast<uintptr_t>(off));
+
+    std::string sbuf(buffer);
+    bigbuf += sbuf;
+   
+
+    if ( name != symbol )
+      free(name);
+
+    err= unw_step(&cursor);
+  }
+
+  bigbuf = "BAD SIGERROR! Step Return: " + std::to_string(err) + "\n" + bigbuf;
+  gLog->critical(bigbuf, CURRENT_POSITION);
+
+}
+
+
+
+void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext)
+{
+	
+	backtrace(ucontext);	
+        gLog->critical("SIGNAL FAULT! Program can not continue!", CURRENT_POSITION);
+	exit(EXIT_FAILURE);
+}
+
+
+inline void AddSignalHandlers()
+{
+	struct sigaction sigact;
+	sigact.sa_sigaction = crit_err_hdlr;
+	sigact.sa_flags = SA_RESTART | SA_SIGINFO;
+	if (sigaction(SIGSEGV, &sigact, (struct sigaction *)NULL) != 0)
 	{
-		void *				caller_address;
-		sig_ucontext_t *	uc;
-		std::tm*			timeinfo;
-		char				buffer [80];
-		// cerr out to file!
-		time_t t = time(0);   
-		std::string file = "fault/fault_";
-
-		timeinfo = std::localtime(&t);
-		std::strftime(buffer,80,"%Y%m%d_%H%M%S", timeinfo);
-
-		file += buffer;
-		file += ".log";
-
-		std::stringstream errorBuffer;
-
-		uc = (sig_ucontext_t *)ucontext;
-
-		/* Get the address at the time the signal was raised */
-		#if defined(__i386__) // gcc specific
-				caller_address = (void *)uc->uc_mcontext.eip; // EIP: x86 specific
-		#elif defined(__x86_64__) // gcc specific
-				caller_address = (void *)uc->uc_mcontext.rip; // RIP: x86_64 specific
-		#elif defined(__arm__) // gcc specific
-				caller_address = (void *)uc->uc_mcontext.arm_pc;
-		#else
-		#error Unsupported architecture. 
-		#endif
-
-		errorBuffer << "signal " << sig_num
-			<< " (" << strsignal(sig_num) << "), address is "
-			<< info->si_addr << " from " << caller_address
-			<< std::endl << std::endl;
-		void * array[50];
-		int size = backtrace(array, 50);
-		array[1] = caller_address;
-		char ** messages = backtrace_symbols(array, size);
-		// skip first stack frame (points here)
-		for (int i = 1; i < size && messages != NULL; ++i)
-		{
-			char *mangled_name = 0, *offset_begin = 0, *offset_end = 0;
-			// find parantheses and +address offset surrounding mangled name
-			for (char *p = messages[i]; *p; ++p)
-			{
-				if (*p == '(')
-				{
-					mangled_name = p;
-				}
-				else if (*p == '+')
-				{
-					offset_begin = p;
-				}
-				else if (*p == ')')
-				{
-					offset_end = p;
-					break;
-				}
-			}
-			// if the line could be processed, attempt to demangle the symbol
-			if (mangled_name && offset_begin && offset_end &&
-				mangled_name < offset_begin)
-			{
-				*mangled_name++ = '\0';
-				*offset_begin++ = '\0';
-				*offset_end++ = '\0';
-				int status;
-				char * real_name = abi::__cxa_demangle(mangled_name, 0, 0, &status);
-				// if demangling is successful, output the demangled function name
-				if (status == 0)
-				{
-					errorBuffer << "[bt]: (" << i << ") " << messages[i] << " : "
-						<< real_name << "+" << offset_begin << offset_end
-						<< std::endl;
-				}
-				// otherwise, output the mangled function name
-				else
-				{
-					errorBuffer << "[bt]: (" << i << ") " << messages[i] << " : "
-						<< mangled_name << "+" << offset_begin << offset_end
-						<< std::endl;
-				}
-				free(real_name);
-			}
-			// otherwise, print the whole line
-			else
-			{
-				errorBuffer << "[bt]: (" << i << ") " << messages[i] << std::endl;
-			}
-		}
-		errorBuffer << std::endl;
-		free(messages);
-
-		gLog->error(errorBuffer.str(), CURRENT_POSITION);
-
-        gLog->critical("SIGNAL FAULT! Check files in fault directory", CURRENT_POSITION);
+		fprintf(stderr, "error setting signal handler for %d (%s)\n",
+			SIGSEGV, strsignal(SIGSEGV));
 		exit(EXIT_FAILURE);
 	}
-
-
-	inline void AddSignalHandlers()
+	if (sigaction(SIGABRT, &sigact, (struct sigaction *)NULL) != 0)
 	{
-		struct sigaction sigact;
-		sigact.sa_sigaction = crit_err_hdlr;
-		sigact.sa_flags = SA_RESTART | SA_SIGINFO;
-		if (sigaction(SIGSEGV, &sigact, (struct sigaction *)NULL) != 0)
-		{
-			fprintf(stderr, "error setting signal handler for %d (%s)\n",
-				SIGSEGV, strsignal(SIGSEGV));
-			exit(EXIT_FAILURE);
-		}
-		if (sigaction(SIGABRT, &sigact, (struct sigaction *)NULL) != 0)
-		{
-			fprintf(stderr, "error setting signal handler for %d (%s)\n",
-				SIGABRT, strsignal(SIGABRT));
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "error setting signal handler for %d (%s)\n",
+			SIGABRT, strsignal(SIGABRT));
+		exit(EXIT_FAILURE);
 	}
+}
 
 
 std::string getWorkingDirectory()
