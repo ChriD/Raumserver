@@ -28,6 +28,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 #### Version 1.0.2 - (Under development)
 * Updated instalSettings.xml for One M1 (use ARMv5 instead of ARMv7)
 * Fixed the problem of permissions on starting script and execution files - (under development)
+* Update sciter GUI dependencies to newest version
   
 #### Version 1.0.1 - 19.09.2016
 * Added ability to set ssh user and passwort in the application settings file for the installer
