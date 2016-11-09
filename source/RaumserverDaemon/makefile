@@ -1,62 +1,57 @@
-# Makefile template for shared library
+# Makefile
+DTARGET := build/raumsrvDaemonDyn
+STARGET := build/raumsrvDaemonStat
+
+# defining the source files for the project
+SRCFILES := $(wildcard *.cpp)
+
+INCPATH = -I includes/ -I ../../../RaumkernelLib/source/includes/ -I ../../../RaumserverLib/source/includes/ -I includes/libunwind/
+#LIBSPATH    := build/linux_$(arch)/libs/
+LIBSPATH    := libs/linux_$(arch)/
+LIBSPATHEXE := libs
+DLIBSDEF    :=  -Bdynamic -lraumserver -lraumkernel -lunwind
+SLIBSDEF    :=  -Bstatic libs/linux_$(arch)/libraumserver.a libs/linux_$(arch)/libraumkernel.a libs/linux_$(arch)/libohNetCore.a libs/linux_$(arch)/libohNetDevices.a libs/linux_$(arch)/libohNetProxies.a -Bdynamic -lunwind
+
+
+ifeq ($(arch),) 
+  COMPILER          := g++
+  ARCHITECTURE      := 
+  ARCHCOMPILERFLAGS :=
+  ARCHDLIBSDEF	    :=
+  ARCHSLIBSDEF	    :=
+endif
 
 ifeq ($(arch),X64) 
-  ARCHITECTURE = -m64
-  CC = g++-4.9
-  CXX = g++-4.9
-  LIBSPATH = libs/linux_x64/
-  TARGET = raumsrvDaemon
-endif
-	
-ifeq ($(arch),X86) 
-  ARCHITECTURE = -m32 
-  CC = g++-4.9
-  CXX = g++-4.9
-  LIBSPATH = libs/linux_x86/
-  TARGET = raumsrvDaemon
-endif
-
-ifeq ($(arch),ARMA53)
-  ARCHITECTURE = -march=armv8-a
-  CC = arm-linux-gnueabihf-g++-4.9 
-  CXX = arm-linux-gnueabihf-g++-4.9
-  LIBSPATH = libs/linux_ARMA53/
-  TARGET = raumsrvDaemon
+  COMPILER          := g++-4.9
+  ARCHITECTURE      := -m64
+  ARCHCOMPILERFLAGS :=
+  ARCHDLIBSDEF	    := -lunwind-x86_64
+  ARCHSLIBSDEF	    := -lunwind-x86_64
 endif
 
 ifeq ($(arch),ARMV7HF)
-  ARCHITECTURE = -march=armv7-a
-  CC = arm-linux-gnueabihf-g++-4.9 
-  CXX = arm-linux-gnueabihf-g++-4.9
-  LIBSPATH = libs/linux_ARMV7/
-  TARGET = raumsrvDaemon
-endif
-
-ifeq ($(arch),ARMV6)
-  ARCHITECTURE = -march=armv6
-  CC = arm-linux-gnueabi-g++-4.9 
-  CXX = arm-linux-gnueabi-g++-4.9
-  LIBSPATH = libs/linux_ARMV6/
-  TARGET = raumsrvDaemon
+  COMPILER          := arm-linux-gnueabihf-g++-4.9 
+  ARCHITECTURE      := -march=armv7-a
+  ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame
+  ARCHDLIBSDEF	    := -lunwind-arm -llzma
+  ARCHSLIBSDEF	    := -lunwind-arm -llzma
 endif
 
 ifeq ($(arch),ARMV5TE)
-  ARCHITECTURE = -march=armv5te -mtune=xscale
-  CC = arm-linux-gnueabi-g++-4.9 
-  CXX = arm-linux-gnueabi-g++-4.9
-  LIBSPATH = libs/linux_ARMV5/
-  TARGET = raumsrvDaemon
+  COMPILER          := arm-linux-gnueabi-g++-4.9 
+  ARCHITECTURE      := -march=armv5te -mtune=xscale
+  ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame
+  ARCHDLIBSDEF	    := -lunwind-arm -llzma
+  ARCHSLIBSDEF	    := -lunwind-arm -llzma
 endif 
 
-ifeq ($(arch),AMDGEODE)
-  ARCHITECTURE = -m32 -march=geode -mtune=generic
-  CC = g++-4.9 
-  CXX = g++-4.9
-  LIBSPATH = libs/linux_AMDGEODE/
-  TARGET = raumsrvDaemon
-endif 
 
-LIBSDEF = $(LIBSPATH)raumkernel.so $(LIBSPATH)raumserver.so
+DLIBSDEF := $(DLIBSDEF) $(ARCHDLIBSDEF)
+SLIBSDEF := $(SLIBSDEF) $(ARCHSLIBSDEF)
+
+
+COMPILERFLAGS :=  -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -funwind-tables -Wextra -O2 -c -pthread 
+LINKERFLAGS   :=  -pthread -static-libgcc -static-libstdc++ -rdynamic -Wl,--no-as-needed -ldl -L$(LIBSPATH) -Wl,-rpath,$(LIBSPATHEXE) 
 
 
 DEBUG = 
@@ -64,36 +59,52 @@ ifeq ($(dbg),1)
   DEBUG = -g
 endif
 
-INCPATH = -I includes/ -I ../../../RaumkernelLib/source/includes/ -I ../../../RaumserverLib/source/includes/
+DLINKERFLAGS  	 := $(ARCHITECTURE) $(LINKERFLAGS)
+SLINKERFLAGS  	 := $(ARCHITECTURE) $(LINKERFLAGS)
+DCOMPILERFLAGS   := $(ARCHITECTURE) $(COMPILERFLAGS) $(DEBUG) $(ARCHCOMPILERFLAGS) $(INCPATH)
+SCOMPILERFLAGS   := $(ARCHITECTURE) $(COMPILERFLAGS) $(DEBUG) $(ARCHCOMPILERFLAGS) $(INCPATH)
 
-CFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wunused-value -mapcs-frame -funwind-tables -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH)
-CXXFLAGS = $(ARCHITECTURE) -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -Wunused-value -mapcs-frame -funwind-tables -Wextra -O2 $(DEBUG) -c -pthread $(INCPATH)
-#LDFLAGS = $(ARCHITECTURE) -Wl,-rpath,libs/ -Wl,--no-as-needed -pthread -static-libgcc -static-libstdc++ -ldl
-LDFLAGS = $(ARCHITECTURE) -Wl,--no-as-needed -pthread -static-libgcc -static-libstdc++ -ldl -rdynamic
+RM  := rm -f 
+RMR := rm -rf
 
+DOBJDIR := build/obj-dyn/
+SOBJDIR := build/obj-stat/
 
-RM = rm -f 
-
-SRCS = $(wildcard *.cpp)
-
-OBJS = $(SRCS:.cpp=.o)
+DOBJFILES := $(addprefix $(DOBJDIR), $(SRCFILES:.cpp=.o))
+SOBJFILES := $(addprefix $(SOBJDIR), $(SRCFILES:.cpp=.o))
 
 
 .PHONY: all
-all: ${TARGET}
-
-$(TARGET): $(OBJS)
-	$(CC) ${LDFLAGS} -o $@ $^ $(LIBSDEF)
- 
-$(SRCS:.cpp=.d):%.d:%.cpp
-	$(CC) $(CFLAGS) -MM $< >$@
-
-include $(SRCS:.cpp=.d)
 
 
-#.PHONY: clean
-#clean:
-#	-${RM} ${TARGET} ${OBJS} $(SRCS:.cpp=.d) 
+### when calling make then build static and dynamic target
+all: ${DTARGET} ${STARGET}
+	
+### create dynamic library
+$(DTARGET): $(DOBJFILES)	
+	$(COMPILER) ${DLINKERFLAGS} -o $@ $^ $(DLIBSDEF) 
+
+$(DOBJDIR)%.o: %.cpp
+	@ mkdir -p $(basename $@)
+	$(COMPILER) $(DCOMPILERFLAGS) -MMD -c -o $@ $<
+
+-include $(DOBJFILES:.o=.d)
+
+
+### create static library
+$(STARGET): $(SOBJFILES)	
+	$(COMPILER) ${SLINKERFLAGS} -o $@ $^ $(SLIBSDEF) 
+
+$(SOBJDIR)%.o: %.cpp
+	@ mkdir -p $(basename $@)
+	$(COMPILER) $(SCOMPILERFLAGS) -MMD -c -o $@ $<
+
+-include $(SOBJFILES:.o=.d)
+
+
+
+### clear all build relevant files 
 .PHONY: clean
 clean:
-	-${RM} ${TARGET} ${OBJS} $(SRCS:.cpp=.d) 
+	-${RM} ${DTARGET} ${STARGET} ${DOBJFILES} ${SOBJFILES} $(DOBJFILES:.o=.d) 
+	-${RMR} ${DOBJDIR} ${SOBJDIR}

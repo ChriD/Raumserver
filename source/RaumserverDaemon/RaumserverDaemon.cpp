@@ -17,6 +17,7 @@
 #include <cxxabi.h>
 #include <ctime>
 
+
 #ifdef __arm__
   #include <libunwind.h>
   #include <libunwind-arm.h>
@@ -24,6 +25,11 @@
   #include <libunwind.h>
   #include <libunwind-x86_64.h>
 #endif
+
+
+
+//#include "client/linux/handler/exception_handler.h"
+
 #include <cxxabi.h>
 
 #include <raumserver/raumserver.h>
@@ -45,44 +51,6 @@
 
 void backtrace(void * reserved)
 {
-
-/*
-unw_context_t uc;
-//platform specific voodoo to build a context for libunwind
-#if defined(__arm__)
-//cast/extract the necessary structures
-ucontext_t* context = (ucontext_t*)reserved;
-unw_tdep_context_t *unw_ctx = (unw_tdep_context_t*)&uc;
-sigcontext* sig_ctx = &context->uc_mcontext;
-//we need to store all the general purpose registers so that libunwind can resolve
-//    the stack correctly, so we read them from the sigcontext into the unw_context
-unw_ctx->regs[UNW_ARM_R0] = sig_ctx->arm_r0;
-unw_ctx->regs[UNW_ARM_R1] = sig_ctx->arm_r1;
-unw_ctx->regs[UNW_ARM_R2] = sig_ctx->arm_r2;
-unw_ctx->regs[UNW_ARM_R3] = sig_ctx->arm_r3;
-unw_ctx->regs[UNW_ARM_R4] = sig_ctx->arm_r4;
-unw_ctx->regs[UNW_ARM_R5] = sig_ctx->arm_r5;
-unw_ctx->regs[UNW_ARM_R6] = sig_ctx->arm_r6;
-unw_ctx->regs[UNW_ARM_R7] = sig_ctx->arm_r7;
-unw_ctx->regs[UNW_ARM_R8] = sig_ctx->arm_r8;
-unw_ctx->regs[UNW_ARM_R9] = sig_ctx->arm_r9;
-unw_ctx->regs[UNW_ARM_R10] = sig_ctx->arm_r10;
-unw_ctx->regs[UNW_ARM_R11] = sig_ctx->arm_fp;
-unw_ctx->regs[UNW_ARM_R12] = sig_ctx->arm_ip;
-unw_ctx->regs[UNW_ARM_R13] = sig_ctx->arm_sp;
-unw_ctx->regs[UNW_ARM_R14] = sig_ctx->arm_lr;
-unw_ctx->regs[UNW_ARM_R15] = sig_ctx->arm_pc;
-//s << "base pc: 0x" << std::hex << sig_ctx->arm_pc << std::endl;
-#elif defined(__i386__)
-ucontext_t* context = (ucontext_t*)reserved;
-//on x86 libunwind just uses the ucontext_t directly
-uc = *((unw_context_t*)context);
-#else
-//We don't have platform specific voodoo for whatever we were built for
-//    just call libunwind and hope it can jump out of the signal stack on it's own
-unw_getcontext(&uc);
-#endif
-*/
 
   unw_cursor_t cursor;
   unw_context_t context;
@@ -132,6 +100,7 @@ unw_getcontext(&uc);
   bigbuf = "BAD SIGERROR! Step Return: " + std::to_string(err) + "\n" + bigbuf;
   gLog->critical(bigbuf, CURRENT_POSITION);
 
+
 }
 
 
@@ -146,7 +115,7 @@ void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext)
 
 
 inline void AddSignalHandlers()
-{
+{	
 	struct sigaction sigact;
 	sigact.sa_sigaction = crit_err_hdlr;
 	sigact.sa_flags = SA_RESTART | SA_SIGINFO;
@@ -162,6 +131,7 @@ inline void AddSignalHandlers()
 			SIGABRT, strsignal(SIGABRT));
 		exit(EXIT_FAILURE);
 	}
+
 }
 
 
@@ -193,6 +163,16 @@ std::string getWorkingDirectory()
 	syslog (LOG_NOTICE, "6");
     return path + std::string("/");
 }
+
+/*
+static bool dumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
+void* context, bool succeeded) {
+  //printf("Dump path: %s\n", );
+  std::string s(descriptor.path());
+  gLog->critical("Dump stored: " + s, CURRENT_POSITION);
+  gLog->critical("SIGNAL FAULT! Program can not continue!", CURRENT_POSITION);
+  return succeeded;
+}*/
 
 
 int main(int argc, char *argv[])
@@ -239,6 +219,9 @@ int main(int argc, char *argv[])
     // Add some system signal handlers for crash reporting
     //raumserverObject.addSystemSignalHandlers();
     AddSignalHandlers();
+
+    //google_breakpad::MinidumpDescriptor descriptor(workingDirectory + "logs/fault");
+    //google_breakpad::ExceptionHandler eh(descriptor, NULL, dumpCallback, NULL, true, -1);
 
     // set the log adapters we want to use (because we do not want to use the standard ones which includes console output)
     std::vector<std::shared_ptr<Raumkernel::Log::LogAdapter>> adapters;

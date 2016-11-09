@@ -1,25 +1,17 @@
 #!/bin/bash
+
+mkdir -p bin
+/bin/cp -rf version.xml bin/version.xml
+
 cd bin/
 find . -name '*.zip' -delete
-
-zip -r binaries.zip linux_ARMV5/* linux_ARMV7/* version.xml
-
-cd linux_ARMV5
-zip -r ../raumserverDaemon_linux_ARMV5.zip * 
 cd ..
 
-cd linux_ARMV6
-zip -r ../raumserverDaemon_linux_ARMV6.zip *
-cd ..
+./zip.sh X64
+./zip.sh ARMV7HF
+./zip.sh ARMV5TE
 
-cd linux_ARMV7
-zip -r ../raumserverDaemon_linux_ARMV7.zip *
-cd ..
+cd bin/
+zip -r binaries.zip linux_ARMV5TE/* linux_ARMV7HF/* version.xml
 
-cd linux_x86
-zip -r ../raumserverDaemon_linux_x86.zip *
-cd ..
 
-cd linux_x64
-zip -r ../raumserverDaemon_linux_x64.zip *
-cd ..
