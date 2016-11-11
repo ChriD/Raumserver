@@ -14,7 +14,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 * Add stresstest local webpage - (under development)
 * Added JSON return data for RADIOTIME Media Items
 * Inactive zones now return name in 'getRendererState' (new json key 'name')
-* update UPNP Stack dependencies to the newest version - (under development)
+* update UPNP Stack dependencies to the newest version
 
 #### Version 1.0.1 - 09.10.2016
 * Added "Access-Control-Allow-Origin" header to the server json response
