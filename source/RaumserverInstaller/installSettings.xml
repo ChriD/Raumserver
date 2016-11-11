@@ -4,24 +4,24 @@
     <currentVersion>http://bassmaniacs.com/data/appBinaries/raumserver/betaVersion/version.xml</currentVersion>
     <installSource>
         <!-- Devices which are not known (eg. future devices) will get the ARMv7 binary -->
-        <device hardwareType="0">binaries/linux_ARMV7/</device>
+        <device hardwareType="0">binaries/linux_ARMV7HF/</device>
         <!-- The old base has an AMD Geode and therefore needs the AMDGEODE binaries-->
         <device hardwareType="5">binaries/linux_AMDGEODE/</device>  <!-- Expand 1 (old Base) -->    
         <!-- Raumfeld devices for ARMv5TE -->
-        <device hardwareType="3">binaries/linux_ARMV5/</device> <!-- Connector 1 -->
-        <device hardwareType="4">binaries/linux_ARMV5/</device> <!-- Stereo S 1 -->
-        <device hardwareType="6">binaries/linux_ARMV5/</device> <!-- Stereo M 1 -->
-        <device hardwareType="7">binaries/linux_ARMV5/</device> <!-- Stereo L 1 -->
-        <device hardwareType="8">binaries/linux_ARMV5/</device> <!-- One M 1 -->
+        <device hardwareType="3">binaries/linux_ARMV5TE/</device> <!-- Connector 1 -->
+        <device hardwareType="4">binaries/linux_ARMV5TE/</device> <!-- Stereo S 1 -->
+        <device hardwareType="6">binaries/linux_ARMV5TE/</device> <!-- Stereo M 1 -->
+        <device hardwareType="7">binaries/linux_ARMV5TE/</device> <!-- Stereo L 1 -->
+        <device hardwareType="8">binaries/linux_ARMV5TE/</device> <!-- One M 1 -->
         <!-- Raumfeld devices for ARMv7 -->       
-        <device hardwareType="9">binaries/linux_ARMV7/</device>  <!-- Connector 2 -->
-        <device hardwareType="10">binaries/linux_ARMV7/</device> <!-- Stereo Cubes 1 -->
-        <device hardwareType="11">binaries/linux_ARMV7/</device> <!-- One M 2 --> 
-        <device hardwareType="12">binaries/linux_ARMV7/</device> <!-- Stereo L 2 -->
-        <device hardwareType="13">binaries/linux_ARMV7/</device> <!-- One S 1 -->
-        <device hardwareType="14">binaries/linux_ARMV7/</device> <!-- Stereo M 2 -->
-        <device hardwareType="15">binaries/linux_ARMV7/</device> <!-- Expand 2 --> 
-        <device hardwareType="16">binaries/linux_ARMV7/</device> <!-- Soundbar 1 --> 
-        <device hardwareType="17">binaries/linux_ARMV7/</device> <!-- Sounddeck 1 -->
+        <device hardwareType="9">binaries/linux_ARMV7HF/</device>  <!-- Connector 2 -->
+        <device hardwareType="10">binaries/linux_ARMV7HF/</device> <!-- Stereo Cubes 1 -->
+        <device hardwareType="11">binaries/linux_ARMV7HF/</device> <!-- One M 2 --> 
+        <device hardwareType="12">binaries/linux_ARMV7HF/</device> <!-- Stereo L 2 -->
+        <device hardwareType="13">binaries/linux_ARMV7HF/</device> <!-- One S 1 -->
+        <device hardwareType="14">binaries/linux_ARMV7HF/</device> <!-- Stereo M 2 -->
+        <device hardwareType="15">binaries/linux_ARMV7HF/</device> <!-- Expand 2 --> 
+        <device hardwareType="16">binaries/linux_ARMV7HF/</device> <!-- Soundbar 1 --> 
+        <device hardwareType="17">binaries/linux_ARMV7HF/</device> <!-- Sounddeck 1 -->
     </installSource>
 </build>

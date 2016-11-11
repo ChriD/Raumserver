@@ -1,10 +1,8 @@
 
+
 #include <vector>
 
 #include "sciter-x-window.hpp"
-#include "sciter-x.h"
-#include "sciter-x-host-callback.h"
-#include "sciter-x-threads.h"
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
@@ -19,12 +17,8 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 {
   ghInstance = hInstance;
 	UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+	UNREFERENCED_PARAMETER(lpCmdLine);
   UNREFERENCED_PARAMETER(nCmdShow);
-
-  sciter::sync::gui_thread_ctx _; // instance of gui_thread_ctx
-  // it should be created as a variable inside WinMain 
-  // gui_thread_ctx is critical for GUI_CODE_START/END to work
 
   OleInitialize(0); // for system drag-n-drop
 

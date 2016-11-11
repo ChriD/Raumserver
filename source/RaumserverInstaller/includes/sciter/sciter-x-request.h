@@ -19,12 +19,15 @@
 
 #include "sciter-x-types.h"
 
-namespace html
-{
-  struct request;
-}
-
-typedef html::request* HREQUEST;
+#if defined(__cplusplus) 
+  namespace html
+  {
+    struct request;
+  }
+  typedef html::request* HREQUEST;
+#else
+  typedef void*  HREQUEST;
+#endif
 
 enum REQUEST_RESULT
 {
