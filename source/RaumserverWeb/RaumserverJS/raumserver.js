@@ -1,6 +1,7 @@
 
 var G_VERSION = "1.0.0";
-var G_RS_HOST = "http://10.0.0.47";
+//var G_RS_HOST = "http://10.0.0.47";
+var G_RS_HOST = "http://10.0.0.2";
 var G_RS_PORT = "8080";
 var G_REQUEST = G_RS_HOST + ":" + G_RS_PORT + "/raumserver/controller/";
 var G_DATAREQUEST = G_RS_HOST + ":" + G_RS_PORT + "/raumserver/data/";
@@ -25,9 +26,7 @@ var raumserver
             this.logDebug('Initializing RaumserverJS ' + G_VERSION + ' on host: ' + G_RS_HOST + ':' + G_RS_PORT);  
             this.setupAjaxRequestPool();
             // we have to start a polling to check whether the raumserver is online or not, we do this by using the get version request
-            this.setupOnlineCheckerRequest(); 
-            // 
-            this.setupZoneConfigPollingRequest("");
+            this.setupOnlineCheckerRequest();                            
         },
                
         close: function () 
@@ -53,7 +52,13 @@ var raumserver
             {
                 raumserver.raumserverOnline = isOnline;   
                 if (raumserver.raumserverOnline)
+                {
                     raumserver.logDebug("Raumserver is now online"); 
+                    // restart the polling requests due they were stopped when system was offline
+                    setTimeout(function(){ raumserver.setupZoneConfigPollingRequest(""); }, 100); 
+                    setTimeout(function(){ raumserver.setupGetRendererStatePollingRequest(""); }, 100); 
+                    setTimeout(function(){ raumserver.setupZoneMediaListPollingRequest(""); }, 100);                                         
+                }
                 else 
                     raumserver.logDebug("Raumserver is now offline");
                 // raise event
@@ -66,11 +71,11 @@ var raumserver
         {
             this.logDebug("Setting up ajax request pool");  
             $(document).ajaxSend(function(e, jqXHR, options) { 
-                raumserver.logDebug("Pushing ajax request to pool");
+                //raumserver.logDebug("Pushing ajax request to pool");
                 raumserver.xhrPool.push(jqXHR); } 
             );	  	  
             $(document).ajaxComplete(function(e, jqXHR, options) { 
-                raumserver.logDebug("Removing ajax request from pool");
+                //raumserver.logDebug("Removing ajax request from pool");
                 raumserver.xhrPool = $.grep(raumserver.xhrPool, function(x){return x!=jqXHR}); }
             );                       
         },
@@ -85,7 +90,7 @@ var raumserver
         // Polling stuff //////////////////////
         setupOnlineCheckerRequest: function()
         {
-            this.logDebug("Initializing server online checker request");  
+            this.logDebug("Do request for checking system availability");  
             $.ajax({
                 url: G_DATAREQUEST + "getVersion",
                 cache: false,             
@@ -117,33 +122,114 @@ var raumserver
         
         setupZoneConfigPollingRequest: function(_updateId)
         {         
-            this.logDebug("Initializing zone polling request with update id: " + this.updateIdZoneConfigPolling);  
+            // when the raumserver is not online, then skip the request. 
+            // It will be triggered again when the raumfeld system gets online
+            if (!raumserver.raumserverOnline)
+                return;
+        
+            this.logDebug("Do zone polling request with update id: " + _updateId);                          
             $.ajax({
-                url: G_DATAREQUEST + "getZoneConfig",
+                url: G_DATAREQUEST + "getZoneConfig?updateId="+_updateId,                
                 cache: false,
                 beforeSend: function (request)
                 {
-                    request.setRequestHeader("updateID", _updateId);
-                    request.setRequestHeader("sessionID", this.sessionId);
+                    //request.setRequestHeader("updateID", _updateId);
+                    request.setRequestHeader("sessionId", this.sessionId);
                 },
                 success: function(res, status, xhr) 
                 {		
                     try
                     {       
-                        this.logDebug("Zone config changed");                        
-                        zoneConfigObject = $.parseJSON(res);
-                        // TODO: @@@
-                        raumserver.setupZonePollingRequest(xhr.getResponseHeader("updateID"))
+                        raumserver.logDebug("Zone configuration changed");                        
+                        zoneConfigObject = $.parseJSON(res);    
+                        // TODO: @@@                        
+                        setTimeout(function(){ raumserver.setupZoneConfigPollingRequest(xhr.getResponseHeader("updateId")); }, 1);                        
                     }
                     catch (exception)
                     {
                         raumserver.logException(exception);
-                    }
-                    raumserver.setupZoneConfigPollingRequest("");
+                        setTimeout(function(){raumserver.setupZoneConfigPollingRequest(""); }, 5000);	
+                    }                    
                 },
                 error: function(xhr, textStatus, errorThrown)
                 {                                                                    
                     setTimeout(function(){raumserver.setupZoneConfigPollingRequest(""); }, 3000);	                 				                    
+                }
+            });	
+        },
+        
+                
+        setupGetRendererStatePollingRequest: function(_updateId)
+        {         
+            // when the raumserver is not online, then skip the request. 
+            // It will be triggered again when the raumfeld system gets online
+            if (!raumserver.raumserverOnline)
+                return;
+        
+            this.logDebug("Do renderer state polling request with update id: " + _updateId);                          
+            $.ajax({
+                url: G_DATAREQUEST + "getRendererState?listAll=true&updateId="+_updateId,                
+                cache: false,
+                beforeSend: function (request)
+                {                    
+                    request.setRequestHeader("sessionId", this.sessionId);
+                },
+                success: function(res, status, xhr) 
+                {		
+                    try
+                    {       
+                        raumserver.logDebug("Renderer state changed");                        
+                        zoneConfigObject = $.parseJSON(res);    
+                        // TODO: @@@                        
+                        setTimeout(function(){ raumserver.setupGetRendererStatePollingRequest(xhr.getResponseHeader("updateId")); }, 1);                        
+                    }
+                    catch (exception)
+                    {
+                        raumserver.logException(exception);
+                        setTimeout(function(){raumserver.setupGetRendererStatePollingRequest(""); }, 5000);	
+                    }                    
+                },
+                error: function(xhr, textStatus, errorThrown)
+                {                                                                    
+                    setTimeout(function(){raumserver.setupGetRendererStatePollingRequest(""); }, 3000);	                 				                    
+                }
+            });	
+        },
+        
+        
+        setupZoneMediaListPollingRequest: function(_updateId)
+        {         
+            // when the raumserver is not online, then skip the request. 
+            // It will be triggered again when the raumfeld system gets online
+            if (!raumserver.raumserverOnline)
+                return;
+        
+            this.logDebug("Do zone media list polling request with update id: " + _updateId);                          
+            $.ajax({
+                url: G_DATAREQUEST + "getZoneMediaList?updateId="+_updateId,                
+                cache: false,
+                beforeSend: function (request)
+                {                    
+                    request.setRequestHeader("sessionId", this.sessionId);
+                },
+                success: function(res, status, xhr) 
+                {		
+                    try
+                    {       
+                        raumserver.logDebug("Media list on zone changed");                        
+                        zoneConfigObject = $.parseJSON(res);    
+                        // TODO: @@@                        
+                        setTimeout(function(){ raumserver.setupZoneMediaListPollingRequest(xhr.getResponseHeader("updateId")); }, 1);                        
+                    }
+                    catch (exception)
+                    {
+                        raumserver.logException(exception);
+                        setTimeout(function(){raumserver.setupZoneMediaListPollingRequest(""); }, 5000);	
+                    }                    
+                },
+                error: function(xhr, textStatus, errorThrown)
+                {                                                                    
+                    setTimeout(function(){raumserver.setupZoneMediaListPollingRequest(""); }, 3000);	                 				                    
                 }
             });	
         },
@@ -152,28 +238,36 @@ var raumserver
         // Log stuff ////////////////////////// 
         logDebug: function (logText) 
         {      
-            console.log("RaumserverJS: " + logText);  
+            console.log(this.getReadableDate() + " RaumserverJS: " + logText);  
             this.logToViewer(logText);
         },
         
         logError: function (logText) 
         { 
-            console.log("RaumserverJS: " + logText);    
+            console.log(this.getReadableDate() + " RaumserverJS: " + logText);    
             this.logToViewer(logText);            
         },
         
         logException: function (exception) 
-        { 
-            console.log("RaumserverJS: " + "EXCEPTION: " + exception.message + "\n\n" + exception.stack);    
+        {         
+            console.log(this.getReadableDate() + "RaumserverJS: " + "EXCEPTION: " + exception.message + "\n\n" + exception.stack);    
             this.logToViewer("EXCEPTION: " + exception.message + "\n\n" + exception.stack);            
         },
         
         logToViewer: function (logText) 
         {
             var logViewerDOM = $('#logViewerContainer')[0];            
-            logViewerDOM.appendChild(document.createTextNode(logText));
+            logViewerDOM.appendChild(document.createTextNode(this.getReadableDate() + " " + logText));
             logViewerDOM.appendChild(document.createElement('br'));            
             logViewerDOM.scrollTop = logViewerDOM.scrollHeight;
+        },
+        
+        getReadableDate: function()
+        {
+            var newDate = new Date();
+            //newDate.setTime(unixtime*1000);
+            dateString = newDate.toUTCString();
+            return dateString;
         }
     };
  
