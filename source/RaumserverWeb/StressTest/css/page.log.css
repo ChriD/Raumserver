@@ -1,0 +1,7 @@
+div.logContainer {
+  border: 1px solid grey; 
+  height: 200px; 
+  overflow:auto;
+  font-family: "Courier New";
+  font-size: 0.8em;
+}

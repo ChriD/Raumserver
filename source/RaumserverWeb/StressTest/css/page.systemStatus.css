@@ -1,0 +1,28 @@
+div#systemStatusContainer {
+  min-height: 2em;
+}
+
+div#systemStatusContainer div.line{
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+div#systemStatusContainer  span.small{
+  font-weight: normal;
+  font-size: 0.8em;
+}
+
+div#systemStatusContainer  span.versionInfo{
+   padding-left: 25px;
+}
+
+div#systemStatusContainer div.online {
+  background-color: green;
+}
+
+div#systemStatusContainer div.offline {
+  background-color: red;
+}
