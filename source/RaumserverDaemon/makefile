@@ -22,7 +22,7 @@ ifeq ($(arch),)
 endif
 
 ifeq ($(arch),X64) 
-  COMPILER          := g++-4.9
+  COMPILER          := g++-5
   ARCHITECTURE      := -m64
   ARCHCOMPILERFLAGS :=
   ARCHDLIBSDEF	    := -lunwind-x86_64
@@ -30,17 +30,17 @@ ifeq ($(arch),X64)
 endif
 
 ifeq ($(arch),ARMV7HF)
-  COMPILER          := arm-linux-gnueabihf-g++-4.9 
+  COMPILER          := arm-linux-gnueabihf-g++-5
   ARCHITECTURE      := -march=armv7-a
-  ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame
+  ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame -mthumb -mtpcs-frame -mtpcs-leaf-frame
   ARCHDLIBSDEF	    := -lunwind-arm -llzma
   ARCHSLIBSDEF	    := -lunwind-arm -llzma
 endif
 
 ifeq ($(arch),ARMV5TE)
-  COMPILER          := arm-linux-gnueabi-g++-4.9 
+  COMPILER          := arm-linux-gnueabi-g++-5 
   ARCHITECTURE      := -march=armv5te -mtune=xscale
-  ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame
+  ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame -mthumb -mtpcs-frame -mtpcs-leaf-frame
   ARCHDLIBSDEF	    := -lunwind-arm -llzma
   ARCHSLIBSDEF	    := -lunwind-arm -llzma
 endif 
@@ -50,7 +50,7 @@ DLIBSDEF := $(DLIBSDEF) $(ARCHDLIBSDEF)
 SLIBSDEF := $(SLIBSDEF) $(ARCHSLIBSDEF)
 
 
-COMPILERFLAGS :=  -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -funwind-tables -Wextra -O2 -c -pthread 
+COMPILERFLAGS :=  -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -funwind-tables -Wextra -O0 -c -pthread -fno-omit-frame-pointer 
 LINKERFLAGS   :=  -pthread -static-libgcc -static-libstdc++ -rdynamic -Wl,--no-as-needed -ldl -L$(LIBSPATH) -Wl,-rpath,$(LIBSPATHEXE) 
 
 
