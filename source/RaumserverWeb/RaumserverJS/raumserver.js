@@ -141,8 +141,8 @@ var raumserver
                     try
                     {       
                         raumserver.logDebug("Zone configuration changed");                        
-                        zoneConfigObject = $.parseJSON(res);    
-                        // TODO: @@@                        
+                        zoneConfigObject = $.parseJSON(res);                            
+                        $.event.trigger({type: "RS.ZoneConfigurationChanged", object: zoneConfigObject});                        
                         setTimeout(function(){ raumserver.setupZoneConfigPollingRequest(xhr.getResponseHeader("updateId")); }, 1);                        
                     }
                     catch (exception)
@@ -179,8 +179,8 @@ var raumserver
                     try
                     {       
                         raumserver.logDebug("Renderer state changed");                        
-                        zoneConfigObject = $.parseJSON(res);    
-                        // TODO: @@@                        
+                        rendererStateObject = $.parseJSON(res);                                       
+                        $.event.trigger({type: "RS.RendererStateChanged", object: rendererStateObject});                        
                         setTimeout(function(){ raumserver.setupGetRendererStatePollingRequest(xhr.getResponseHeader("updateId")); }, 1);                        
                     }
                     catch (exception)
@@ -217,8 +217,8 @@ var raumserver
                     try
                     {       
                         raumserver.logDebug("Media list on zone changed");                        
-                        zoneConfigObject = $.parseJSON(res);    
-                        // TODO: @@@                        
+                        zoneMediaListObject = $.parseJSON(res);                                
+                        $.event.trigger({type: "RS.ZoneMediaListChanged", object: zoneMediaListObject});
                         setTimeout(function(){ raumserver.setupZoneMediaListPollingRequest(xhr.getResponseHeader("updateId")); }, 1);                        
                     }
                     catch (exception)
@@ -264,8 +264,7 @@ var raumserver
         
         getReadableDate: function()
         {
-            var newDate = new Date();
-            //newDate.setTime(unixtime*1000);
+            var newDate = new Date();            
             dateString = newDate.toUTCString();
             return dateString;
         }
@@ -275,6 +274,7 @@ var raumserver
 }(jQuery));
 
 
+/*
 $( document ).ready(function() {
     raumserver = new $.Raumserver();
     raumserver.init();
@@ -284,6 +284,7 @@ window.onbeforeunload = function()
 {  
     raumserver.close();
 }
+*/
             
 
 

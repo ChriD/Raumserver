@@ -4,21 +4,79 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>"Raumserver - Stress Test Application</title>
-    <script type="text/javascript" src="../RaumserverJS/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="../RaumserverJS/raumserver.js"></script>
-    <script type="text/javascript" src="stressTests.js"></script>
+    
+    <link rel="stylesheet" href="css/kube.min.css">
+    
+    <script type="text/javascript" src="../RaumserverJS/jquery-3.1.1.min.js"></script>       
+    <script type="text/javascript" src="../RaumserverJS/raumserver.js"></script>    
+    <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
+    <script type="text/javascript" src="js/kube.min.js"></script>
+    <script type="text/javascript" src="js/stressTests.js"></script>
+    
+  
+    <script id="rendererInfoTemplate" type="text/x-handlebars-template">
+       {{name}}<br>
+       Volume: {{volume}}<br>
+       {{currentTrack}} / {{numberOfTracks}}<br>
+       Mute: {{muteState}}<br>
+       PlayMode: {{playMode}}<br>
+       TransportState: {{transportState}}<br>     
+       Media Item: {{mediaItem.type}}<br>    
+       Track Info: {{mediaItem.artist}} - {{mediaItem.title}}<br>   
+       <!--{{#if mediaItem.albumArtUri}}
+        <img src ="{{mediaItem.albumArtUri}}" height="100" width="100" style="display: inline-block;">
+       {{else}}
+        <img src ="{{mediaItem.artistArtUri}}" height="100" width="100" style="display: inline-block;">
+       {{/if}}-->       
+    </script>
+    
+    <script id="mediaListTemplate" type="text/x-handlebars-template">
+        {{artist}} - {{title}}<br>
+    </script>
+    
+    
   </head>
   <body>
-  
-    <div id="systemStatus">
-        <div>Raumserver status: <span id="rsStatus"></span></div>
-        <div>Raumserver version: <span id="rsVersion"></span></div>
-        <div>Raumkernel version: <span id="rkVersion"></span></div>
+    
+    <div class="row">
+        <div class="col col-4">
+            <div id="systemStatus">
+                <div>Raumserver status: <span id="rsStatus"></span></div>
+                <div>Raumserver version: <span id="rsVersion"></span></div>
+                <div>Raumkernel version: <span id="rkVersion"></span></div>
+            </div>
+        </div>
+        <div class="col col-8">
+            <div id="zoneConfig">        
+            </div> 
+        </div>
     </div>
-  
-
-  
-    <div id="logViewerContainer" style="border: 1px solid grey; height: 200px; overflow:auto;">
+    
+    
+    <div class="row">
+        <div class="col col-3">     
+            <div id="zone1"></div>
+            <div id="zoneMediaList1" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+        </div>
+        <div class="col col-3">     
+            <div id="zone2"></div>
+            <div id="zoneMediaList2" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+        </div>
+        <div class="col col-3">     
+            <div id="zone3"></div>
+            <div id="zoneMediaList3" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+        </div>
+        <div class="col col-3">     
+            <div id="zone4"></div>
+            <div id="zoneMediaList4" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+        </div>
+    </div>   
+    
+    
+    <div class="row">
+        <div class="col col-12">     
+            <div id="logViewerContainer" style="border: 1px solid grey; height: 200px; overflow:auto;"></div>
+        </div>
     </div>
    
   </body>
