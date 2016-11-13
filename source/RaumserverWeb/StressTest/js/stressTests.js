@@ -5,6 +5,7 @@ $(document).on("RS.OnlineStateChanged", onlineStateChanged);
 $(document).on("RS.ZoneMediaListChanged", zoneMediaListChanged);
 $(document).on("RS.RendererStateChanged", rendererStateChanged);
 $(document).on("RS.ZoneConfigurationChanged", zoneConfigurationStateChanged);
+$(document).on("RS.Log", log);
 
 
 $( document ).ready(function() {
@@ -24,14 +25,23 @@ function compileTemplates()
 {    
     compiledTemplates['rendererInfoTemplate'] = Handlebars.compile($("#rendererInfoTemplate").html());   
     compiledTemplates['mediaListTemplate'] = Handlebars.compile($("#mediaListTemplate").html());   
+    compiledTemplates['logItemTemplate'] = Handlebars.compile($("#logItemTemplate").html());  
+    compiledTemplates['systemStatusTemplate'] = Handlebars.compile($("#systemStatusTemplate").html());  
 };
 
 
+function log(e)
+{   
+    var logViewerDOM = $('#logViewerContainer');                       
+    logViewerDOM.append(compiledTemplates['logItemTemplate'](e));
+    logViewerDOM = $('#logViewerContainer')[0]; 
+    logViewerDOM.scrollTop = logViewerDOM.scrollHeight; 
+};
+
 function onlineStateChanged(e) 
 { 
-	$('#rsStatus').html(e.online.toString());
-    $('#rsVersion').html(e.versionServer.toString());
-    $('#rkVersion').html(e.versionKernel.toString());
+    var systemStatusDOM = $('#systemStatusContainer');                       
+    systemStatusDOM.html(compiledTemplates['systemStatusTemplate'](e));
 }
 
 function zoneConfigurationStateChanged(e) 

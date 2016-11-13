@@ -6,6 +6,9 @@
     <title>"Raumserver - Stress Test Application</title>
     
     <link rel="stylesheet" href="css/kube.min.css">
+    <link rel="stylesheet" href="css/page.css">
+    <link rel="stylesheet" href="css/page.log.css">
+    <link rel="stylesheet" href="css/page.systemStatus.css">
     
     <script type="text/javascript" src="../RaumserverJS/jquery-3.1.1.min.js"></script>       
     <script type="text/javascript" src="../RaumserverJS/raumserver.js"></script>    
@@ -33,20 +36,28 @@
     <script id="mediaListTemplate" type="text/x-handlebars-template">
         {{artist}} - {{title}}<br>
     </script>
+        
+    <script id="logItemTemplate" type="text/x-handlebars-template">
+        <div>{{logTime}}: {{logText}}</div>
+    </script>    
+    
+    <script id="systemStatusTemplate" type="text/x-handlebars-template">        
+        <div class="line {{#if online}}online{{else}}offline{{/if}}">Raumserver {{#if online}}online{{else}}offline{{/if}} <span class="small versionInfo">Raumserver version: {{versionServer}} / Raumkernel version: {{versionKernel}}</span></div>  
+    </script>
     
     
   </head>
   <body>
-    
+  
     <div class="row">
-        <div class="col col-4">
-            <div id="systemStatus">
-                <div>Raumserver status: <span id="rsStatus"></span></div>
-                <div>Raumserver version: <span id="rsVersion"></span></div>
-                <div>Raumkernel version: <span id="rkVersion"></span></div>
+        <div class="col col-12">
+            <div id="systemStatusContainer">               
             </div>
-        </div>
-        <div class="col col-8">
+        </div>        
+    </div>
+    
+    <div class="row">       
+        <div class="col col-12">
             <div id="zoneConfig">        
             </div> 
         </div>
@@ -75,7 +86,7 @@
     
     <div class="row">
         <div class="col col-12">     
-            <div id="logViewerContainer" style="border: 1px solid grey; height: 200px; overflow:auto;"></div>
+            <div id="logViewerContainer" class="logContainer"></div>
         </div>
     </div>
    

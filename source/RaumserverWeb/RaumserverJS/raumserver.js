@@ -32,7 +32,27 @@ var raumserver
         close: function () 
         {  
             this.logDebug("Closing RaumserverJS");  
-            this.abortAjaxRequestPool();            
+            this.abortAjaxRequestPool();   
+            this.abortSession();
+        },
+        
+        
+        abortSession: function () 
+        {             
+            this.logDebug("Aborting session: " + this.sessionId );                          
+            $.ajax({
+                url: G_REQUEST + "killSession?sessionId=" + this.sessionId,                
+                cache: false,
+                async: false ,            
+                success: function(res, status, xhr) 
+                {		
+                    this.logDebug("Aborting session successfully stacked: " + this.sessionId );   
+                },
+                error: function(xhr, textStatus, errorThrown)
+                {                                                                    
+                    this.logDebug("Error when aborting session: " + this.sessionId ); 	                 				                    
+                }
+            });	
         },
         
         
@@ -62,7 +82,7 @@ var raumserver
                 else 
                     raumserver.logDebug("Raumserver is now offline");
                 // raise event
-                $.event.trigger({type: "RS.OnlineStateChanged", online: raumserver.raumserverOnline, versionServer: raumserver.raumserverVersion ,versionKernel: raumserver.raumkernelVersion});
+                $.event.trigger({type: "RS.OnlineStateChanged", online: raumserver.raumserverOnline, versionServer: raumserver.raumserverVersion, versionKernel: raumserver.raumkernelVersion});
             }
         },
         
@@ -129,7 +149,7 @@ var raumserver
         
             this.logDebug("Do zone polling request with update id: " + _updateId);                          
             $.ajax({
-                url: G_DATAREQUEST + "getZoneConfig?updateId="+_updateId,                
+                url: G_DATAREQUEST + "getZoneConfig?updateId=" + _updateId + "&sessionId="+this.sessionId,                
                 cache: false,
                 beforeSend: function (request)
                 {
@@ -168,7 +188,7 @@ var raumserver
         
             this.logDebug("Do renderer state polling request with update id: " + _updateId);                          
             $.ajax({
-                url: G_DATAREQUEST + "getRendererState?listAll=true&updateId="+_updateId,                
+                url: G_DATAREQUEST + "getRendererState?listAll=true&updateId=" + _updateId + "&sessionId="+this.sessionId,                
                 cache: false,
                 beforeSend: function (request)
                 {                    
@@ -206,7 +226,7 @@ var raumserver
         
             this.logDebug("Do zone media list polling request with update id: " + _updateId);                          
             $.ajax({
-                url: G_DATAREQUEST + "getZoneMediaList?updateId="+_updateId,                
+                url: G_DATAREQUEST + "getZoneMediaList?updateId="+_updateId  + "&sessionId="+this.sessionId,                
                 cache: false,
                 beforeSend: function (request)
                 {                    
@@ -239,27 +259,37 @@ var raumserver
         logDebug: function (logText) 
         {      
             console.log(this.getReadableDate() + " RaumserverJS: " + logText);  
-            this.logToViewer(logText);
+            this.logToViewer(0, logText, "");
+        },
+        
+        
+        logInfo: function (logText) 
+        { 
+            console.log(this.getReadableDate() + " RaumserverJS: " + logText);    
+            this.logToViewer(1,logText, "");            
+        },
+        
+        logWarning: function (logText) 
+        { 
+            console.log(this.getReadableDate() + " RaumserverJS: " + logText);    
+            this.logToViewer(2,logText, "");            
         },
         
         logError: function (logText) 
         { 
             console.log(this.getReadableDate() + " RaumserverJS: " + logText);    
-            this.logToViewer(logText);            
+            this.logToViewer(3,logText, "");            
         },
         
         logException: function (exception) 
         {         
             console.log(this.getReadableDate() + "RaumserverJS: " + "EXCEPTION: " + exception.message + "\n\n" + exception.stack);    
-            this.logToViewer("EXCEPTION: " + exception.message + "\n\n" + exception.stack);            
+            this.logToViewer(4,exception.message,exception.stack);            
         },
         
-        logToViewer: function (logText) 
+        logToViewer: function (logType, logText, logStack) 
         {
-            var logViewerDOM = $('#logViewerContainer')[0];            
-            logViewerDOM.appendChild(document.createTextNode(this.getReadableDate() + " " + logText));
-            logViewerDOM.appendChild(document.createElement('br'));            
-            logViewerDOM.scrollTop = logViewerDOM.scrollHeight;
+            $.event.trigger({type: "RS.Log", logtype: logType, logText: logText, logStack: logStack, logTime: this.getReadableDate()});                 
         },
         
         getReadableDate: function()
