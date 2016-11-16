@@ -11,17 +11,18 @@
     
     <!-- the kernel uses the first available networkadapter found in the system. This may not be the one you like to use! -->
     <!-- so you can type in the network adapter name the application should use!-->
-    <NetworkAdapterName priority="1" waitForAppearance="2500">eth0</NetworkAdapterName>
-    <NetworkAdapterName priority="2" waitForAppearance="2500">wlan0</NetworkAdapterName> 
-	
-    <!-- the time step in ms on which the kernel does refresh the device list to get abruplty removed UPNP devices (without announcing its removal) -->
+    <NetworkAdapterName priority="1" waitForAppearance="250">eth0</NetworkAdapterName>
+    <NetworkAdapterName priority="2" waitForAppearance="250">wlan0</NetworkAdapterName>
+    <NetworkAdapterName priority="3" waitForAppearance="0">Killer Wireless-N 1202 Network Adapter</NetworkAdapterName>
+
+      <!-- the time step in ms on which the kernel does refresh the device list to get abruplty removed UPNP devices (without announcing its removal) -->
     <UPNPRefreshTimeActive>1</UPNPRefreshTimeActive>
     <UPNPRefreshTime>30000</UPNPRefreshTime>
-	
-	<!-- Some internal sleeping values -->
-	<HTTPRequestPumpSleep>20</HTTPRequestPumpSleep>
-	<HTTPRequestHandlerSleep>20</HTTPRequestHandlerSleep>
-              
+
+    <!-- Some internal sleeping values -->
+    <HTTPRequestPumpSleep>20</HTTPRequestPumpSleep>
+    <HTTPRequestHandlerSleep>20</HTTPRequestHandlerSleep>
+
     <!-- Some basic kernel setting for recognizing the RaumfeldUPNP devices and for requesting the host when using RAUMFELD system -->
     <Raumfeld>
       <HostConfigDeviceName>Raumfeld ConfigDevice</HostConfigDeviceName>
@@ -36,9 +37,9 @@
   </Raumkernel>
   
   <Raumserver>
-    <!-- port wheer the server listens to requests -->
+    <!-- port where the server listens to requests -->
     <Port>8080</Port>
-    <Docroot>/etc/raumfeld/raumserverDaemon/docroot</Docroot>
+    <Docroot>docroot</Docroot>
   </Raumserver>
   
 </Application>
