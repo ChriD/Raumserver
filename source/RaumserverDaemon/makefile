@@ -19,6 +19,7 @@ ifeq ($(arch),)
   ARCHCOMPILERFLAGS :=
   ARCHDLIBSDEF	    :=
   ARCHSLIBSDEF	    :=
+  ARCHLINKERFLAGS   :=
 endif
 
 ifeq ($(arch),X64) 
@@ -27,6 +28,7 @@ ifeq ($(arch),X64)
   ARCHCOMPILERFLAGS :=
   ARCHDLIBSDEF	    := -lunwind-x86_64
   ARCHSLIBSDEF	    := -lunwind-x86_64
+  ARCHLINKERFLAGS   :=
 endif
 
 ifeq ($(arch),ARMV7HF)
@@ -35,6 +37,7 @@ ifeq ($(arch),ARMV7HF)
   ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame -mthumb -mtpcs-frame -mtpcs-leaf-frame
   ARCHDLIBSDEF	    := -lunwind-arm -llzma
   ARCHSLIBSDEF	    := -lunwind-arm -llzma
+  ARCHLINKERFLAGS   :=
 endif
 
 ifeq ($(arch),ARMV5TE)
@@ -43,6 +46,7 @@ ifeq ($(arch),ARMV5TE)
   ARCHCOMPILERFLAGS := -fasynchronous-unwind-tables -mapcs-frame -mthumb -mtpcs-frame -mtpcs-leaf-frame
   ARCHDLIBSDEF	    := -lunwind-arm -llzma
   ARCHSLIBSDEF	    := -lunwind-arm -llzma
+  ARCHLINKERFLAGS   :=
 endif 
 
 
@@ -51,7 +55,8 @@ SLIBSDEF := $(SLIBSDEF) $(ARCHSLIBSDEF)
 
 
 COMPILERFLAGS :=  -std=c++11 -fPIC -Wall -Wno-unknown-pragmas -Wno-unused-parameter -funwind-tables -Wextra -O0 -c -pthread -fno-omit-frame-pointer 
-LINKERFLAGS   :=  -pthread -static-libgcc -static-libstdc++ -rdynamic -Wl,--no-as-needed -ldl -L$(LIBSPATH) -Wl,-rpath,$(LIBSPATHEXE) 
+#LINKERFLAGS   :=  -pthread -static-libgcc -static-libstdc++ -rdynamic -Wl,--no-as-needed -ldl -L$(LIBSPATH) -Wl,-rpath,$(LIBSPATHEXE)
+LINKERFLAGS   :=  -pthread -rdynamic -static-libstdc++ -Wl,--no-as-needed -ldl -L$(LIBSPATH) -Wl,-rpath,$(LIBSPATHEXE)  
 
 
 DEBUG = 
@@ -59,8 +64,8 @@ ifeq ($(dbg),1)
   DEBUG = -g
 endif
 
-DLINKERFLAGS  	 := $(ARCHITECTURE) $(LINKERFLAGS)
-SLINKERFLAGS  	 := $(ARCHITECTURE) $(LINKERFLAGS)
+DLINKERFLAGS  	 := $(ARCHITECTURE) $(LINKERFLAGS) $(ARCHLINKERFLAGS)
+SLINKERFLAGS  	 := $(ARCHITECTURE) $(LINKERFLAGS) $(ARCHLINKERFLAGS)
 DCOMPILERFLAGS   := $(ARCHITECTURE) $(COMPILERFLAGS) $(DEBUG) $(ARCHCOMPILERFLAGS) $(INCPATH)
 SCOMPILERFLAGS   := $(ARCHITECTURE) $(COMPILERFLAGS) $(DEBUG) $(ARCHCOMPILERFLAGS) $(INCPATH)
 
