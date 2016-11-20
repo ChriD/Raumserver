@@ -1,5 +1,6 @@
 div#systemStatusContainer {
   min-height: 2em;
+  margin-bottom: 10px;
 }
 
 div#systemStatusContainer div.line{
@@ -20,9 +21,9 @@ div#systemStatusContainer  span.versionInfo{
 }
 
 div#systemStatusContainer div.online {
-  background-color: green;
+  background-color: #adf442;
 }
 
 div#systemStatusContainer div.offline {
-  background-color: red;
+  background-color: #f44259;
 }

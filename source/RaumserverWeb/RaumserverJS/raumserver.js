@@ -1,21 +1,18 @@
 
 var G_VERSION = "1.0.0";
-//var G_RS_HOST = "http://10.0.0.47";
-var G_RS_HOST = "http://10.0.0.2";
-var G_RS_PORT = "8080";
-var G_REQUEST = G_RS_HOST + ":" + G_RS_PORT + "/raumserver/controller/";
-var G_DATAREQUEST = G_RS_HOST + ":" + G_RS_PORT + "/raumserver/data/";
 
 var raumserver 
 
-
 (function ($) { //an IIFE so safely alias jQuery to $
-    $.Raumserver = function () { 
+    $.Raumserver = function (_host) { 
         this.xhrPool = [];
         this.raumserverOnline = false;
         this.raumserverVersion = "";
         this.raumkernelVersion = "";
-        this.sessionId = this.generateGUID();              
+        this.sessionId = this.generateGUID();   
+        this.host = _host;
+        this.requestUrl = this.host + "/raumserver/controller/";
+        this.requestUrlData = this.host + "/raumserver/data/";
     };
 
 
@@ -23,7 +20,8 @@ var raumserver
     
         init: function () 
         {  
-            this.logDebug('Initializing RaumserverJS ' + G_VERSION + ' on host: ' + G_RS_HOST + ':' + G_RS_PORT);  
+            this.logDebug('Initializing RaumserverJS ' + G_VERSION + ' on host: ' + this.host);  
+            this.setRaumserverOnline(false, true); 
             this.setupAjaxRequestPool();
             // we have to start a polling to check whether the raumserver is online or not, we do this by using the get version request
             this.setupOnlineCheckerRequest();                            
@@ -41,7 +39,7 @@ var raumserver
         {             
             this.logDebug("Aborting session: " + this.sessionId );                          
             $.ajax({
-                url: G_REQUEST + "killSession?sessionId=" + this.sessionId,                
+                url: this.requestUrl + "killSession?sessionId=" + this.sessionId,                
                 cache: false,
                 async: false ,            
                 success: function(res, status, xhr) 
@@ -66,11 +64,11 @@ var raumserver
         },
         
         
-        setRaumserverOnline: function(isOnline) 
+        setRaumserverOnline: function(_isOnline, _force) 
         {
-            if( this.raumserverOnline != isOnline)
+            if( this.raumserverOnline != _isOnline || _force)
             {
-                raumserver.raumserverOnline = isOnline;   
+                raumserver.raumserverOnline = _isOnline;   
                 if (raumserver.raumserverOnline)
                 {
                     raumserver.logDebug("Raumserver is now online"); 
@@ -112,7 +110,7 @@ var raumserver
         {
             this.logDebug("Do request for checking system availability");  
             $.ajax({
-                url: G_DATAREQUEST + "getVersion",
+                url: this.requestUrlData + "getVersion",
                 cache: false,             
                 success: function(res, status, xhr) 
                 {		
@@ -121,7 +119,7 @@ var raumserver
                         versionObject = $.parseJSON(res);
                         raumserver.raumserverVersion = versionObject.raumserverLib;
                         raumserver.raumkernelVersion = versionObject.raumkernelLib;
-                        raumserver.setRaumserverOnline(true);
+                        raumserver.setRaumserverOnline(true, false);
                     }
                     catch (exception)
                     {
@@ -133,7 +131,7 @@ var raumserver
                 {                    
                     raumserver.raumserverVersion = "";
                     raumserver.raumkernelVersion = "";
-                    raumserver.setRaumserverOnline(false);                
+                    raumserver.setRaumserverOnline(false, false);                
                     setTimeout(function(){raumserver.setupOnlineCheckerRequest(); }, 5000);	                 				                    
                 }
             });	
@@ -149,7 +147,7 @@ var raumserver
         
             this.logDebug("Do zone polling request with update id: " + _updateId);                          
             $.ajax({
-                url: G_DATAREQUEST + "getZoneConfig?updateId=" + _updateId + "&sessionId="+this.sessionId,                
+                url: this.requestUrlData + "getZoneConfig?updateId=" + _updateId + "&sessionId="+this.sessionId,                
                 cache: false,
                 beforeSend: function (request)
                 {
@@ -188,7 +186,7 @@ var raumserver
         
             this.logDebug("Do renderer state polling request with update id: " + _updateId);                          
             $.ajax({
-                url: G_DATAREQUEST + "getRendererState?listAll=true&updateId=" + _updateId + "&sessionId="+this.sessionId,                
+                url: this.requestUrlData + "getRendererState?listAll=true&updateId=" + _updateId + "&sessionId="+this.sessionId,                
                 cache: false,
                 beforeSend: function (request)
                 {                    
@@ -226,7 +224,7 @@ var raumserver
         
             this.logDebug("Do zone media list polling request with update id: " + _updateId);                          
             $.ajax({
-                url: G_DATAREQUEST + "getZoneMediaList?updateId="+_updateId  + "&sessionId="+this.sessionId,                
+                url: this.requestUrlData + "getZoneMediaList?updateId="+_updateId  + "&sessionId="+this.sessionId,                
                 cache: false,
                 beforeSend: function (request)
                 {                    

@@ -2,3 +2,14 @@ body {
   font-family: "Tahoma";
   font-size: 1em;
 }
+
+.marginLeftRight15 {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.overflowHidden {
+  overflow: hidden;
+  white-space: nowrap;
+  white-space: pre ;
+}

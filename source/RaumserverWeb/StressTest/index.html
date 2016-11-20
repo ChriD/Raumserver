@@ -9,32 +9,77 @@
     <link rel="stylesheet" href="css/page.css">
     <link rel="stylesheet" href="css/page.log.css">
     <link rel="stylesheet" href="css/page.systemStatus.css">
+    <link rel="stylesheet" href="css/page.zoneConfig.css">
+    <link rel="stylesheet" href="css/page.rendererInfo.css">
+    <link rel="stylesheet" href="css/page.mediaList.css">
     
     <script type="text/javascript" src="../RaumserverJS/jquery-3.1.1.min.js"></script>       
     <script type="text/javascript" src="../RaumserverJS/raumserver.js"></script>    
     <script type="text/javascript" src="js/handlebars-v4.0.5.js"></script>
     <script type="text/javascript" src="js/kube.min.js"></script>
+    <script type="text/javascript" src="js/jquery.knob.min.js"></script>
     <script type="text/javascript" src="js/stressTests.js"></script>
     
   
     <script id="rendererInfoTemplate" type="text/x-handlebars-template">
-       {{name}}<br>
-       Volume: {{volume}}<br>
-       {{currentTrack}} / {{numberOfTracks}}<br>
-       Mute: {{muteState}}<br>
-       PlayMode: {{playMode}}<br>
-       TransportState: {{transportState}}<br>     
-       Media Item: {{mediaItem.type}}<br>    
-       Track Info: {{mediaItem.artist}} - {{mediaItem.title}}<br>   
-       <!--{{#if mediaItem.albumArtUri}}
-        <img src ="{{mediaItem.albumArtUri}}" height="100" width="100" style="display: inline-block;">
-       {{else}}
-        <img src ="{{mediaItem.artistArtUri}}" height="100" width="100" style="display: inline-block;">
-       {{/if}}-->       
-    </script>
+        <div class="rendererInfoContainer">
+            <div class="rendererName">{{name}}</div>
+            <div class="infobox">
+                <div class="row">
+                    <div class="col col-4 ">Transport State</div><div class="col col-8">{{transportState}}</div>     
+                </div>
+            </div>
+            <div class="infobox">
+                <div class="row">
+                    <div class="col col-4 ">Play Mode</div><div class="col col-8">{{playMode}}</div>     
+                </div>
+            </div>
+            <div class="infobox">
+                <div class="row">
+                    <div class="col col-4 ">Mute State</div><div class="col col-8">{{muteState}}</div>     
+                </div>
+            </div>
+            <div class="infobox">
+                <div class="row">
+                    <div class="col col-4 ">Volume</div><div class="col col-8">{{volume}}</div>     
+                </div>
+            </div>
+            <div class="infobox">
+                <div class="row">
+                    <div class="col col-4 ">Media Pos/Count</div><div class="col col-8">{{currentTrack}} / {{numberOfTracks}}</div>     
+                </div>
+            </div>
+            <div class="infobox">
+                <div class="row">
+                    <div class="col col-4 ">Media Type</div><div class="col col-8">{{mediaItem.type}}</div>     
+                </div>
+            </div>                       
+            <div class="infobox">
+                <div class="row">
+                    <div class="col col-4 ">Media Id</div><div class="col col-8 overflowHidden">{{mediaItem.id}}</div>     
+                </div>
+            </div>                        
+            <div class="infobox infoboximage">
+                <div class="row">
+                    <div class="col col-4">
+                    {{#if mediaItem.albumArtUri}}
+                        <img src ="{{mediaItem.albumArtUri}}">
+                    {{else}}
+                        <img src ="{{mediaItem.artistArtUri}}">
+                    {{/if}}
+                    </div> 
+                    <div class="col col-8">                               
+                        <div>{{mediaItem.artist}}</div>
+                        <div>{{mediaItem.title}}</div>
+                        <div>{{mediaItem.album}}</div>
+                    </div>
+                </div>
+            </div>             
+        </div>                                       
+    </script>   
     
-    <script id="mediaListTemplate" type="text/x-handlebars-template">
-        {{artist}} - {{title}}<br>
+    <script id="mediaListTemplate" type="text/x-handlebars-template">        
+            {{artist}} - {{title}}<br>        
     </script>
         
     <script id="logItemTemplate" type="text/x-handlebars-template">
@@ -43,6 +88,10 @@
     
     <script id="systemStatusTemplate" type="text/x-handlebars-template">        
         <div class="line {{#if online}}online{{else}}offline{{/if}}">Raumserver {{#if online}}online{{else}}offline{{/if}} <span class="small versionInfo">Raumserver version: {{versionServer}} / Raumkernel version: {{versionKernel}}</span></div>  
+    </script>
+    
+     <script id="zoneConfigInfoTemplate" type="text/x-handlebars-template">        
+        <span class="zoneContainer"><span class="zone">{{name}}</span> {{#each rooms}}<span class="room">{{name}}</span>{{/each}}</span>
     </script>
     
     
@@ -58,7 +107,7 @@
     
     <div class="row">       
         <div class="col col-12">
-            <div id="zoneConfig">        
+            <div id="zoneConfigContainer">        
             </div> 
         </div>
     </div>
@@ -66,20 +115,20 @@
     
     <div class="row">
         <div class="col col-3">     
-            <div id="zone1"></div>
-            <div id="zoneMediaList1" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+            <div id="zoneInfoContainer1"></div>
+            <div id="zoneMediaListContainer1" class="mediaListContainer"></div>
         </div>
         <div class="col col-3">     
-            <div id="zone2"></div>
-            <div id="zoneMediaList2" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+            <div id="zoneInfoContainer2"></div>
+            <div id="zoneMediaListContainer2" class="mediaListContainer"></div>
         </div>
         <div class="col col-3">     
-            <div id="zone3"></div>
-            <div id="zoneMediaList3" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+            <div id="zoneInfoContainer3"></div>
+            <div id="zoneMediaListContainer3" class="mediaListContainer"></div>
         </div>
         <div class="col col-3">     
-            <div id="zone4"></div>
-            <div id="zoneMediaList4" style="border: 1px solid grey; height: 300px; overflow:auto;"></div>
+            <div id="zoneInfoContainer4"></div>
+            <div id="zoneMediaListContainer4" class="mediaListContainer"></div>
         </div>
     </div>   
     
