@@ -13,6 +13,9 @@
     <!-- so you can type in the network adapter name the application should use!-->
     <NetworkAdapterName priority="1" waitForAppearance="2500">eth0</NetworkAdapterName>
     <NetworkAdapterName priority="2" waitForAppearance="2500">wlan0</NetworkAdapterName> 
+    
+    <!-- Enable/disable discovery of non raumfeld renderers -->
+    <AddNonRaumfeldDevices>0<AddNonRaumfeldDevices>
 	
     <!-- the time step in ms on which the kernel does refresh the device list to get abruplty removed UPNP devices (without announcing its removal) -->
     <UPNPRefreshTimeActive>1</UPNPRefreshTimeActive>
