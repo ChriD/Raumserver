@@ -1,4 +1,4 @@
-. Raumserver.
+.Raumserver.
 
 A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests  
   
@@ -16,6 +16,8 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 * Inactive zones now return name in 'getRendererState' (new json key 'name')
 * update UPNP Stack dependencies to the newest version
 * added "updateId" and "sessionId" to expose and allow headers
+* responses to requests are now always in json format
+* some major changes in the kernel (switching from shared pointers to std pointers for device objects) and therfore rearrangeing the lock/unlock logic
 
 #### Version 1.0.1 - 09.10.2016
 * Added "Access-Control-Allow-Origin" header to the server json response
