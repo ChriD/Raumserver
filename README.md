@@ -18,6 +18,8 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 * added "updateId" and "sessionId" to expose and allow headers
 * responses to requests are now always in json format
 * some major changes in the kernel (switching from shared pointers to std pointers for device objects) and therfore rearrangeing the lock/unlock logic
+* fixed LongProlling problem for renderer state request
+* fixed problem that transport state did not change
 
 #### Version 1.0.1 - 09.10.2016
 * Added "Access-Control-Allow-Origin" header to the server json response
