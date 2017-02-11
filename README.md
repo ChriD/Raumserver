@@ -8,8 +8,9 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
 
 #### Version 1.0.3 (Under development)
 * Add ability to save and load system states (eg. for doorbell ring) - (under development)
+* All returns hsould be in json formate! Even exceptions aso...
 
-#### Version 1.0.2 (Under development - Release about mid February 2017)
+#### Version 1.0.2 - 11.02.2017
 * Add SIGSEV Handler to find crashing bugs - (under development)
 * Add stresstest local webpage - (under development)
 * Added JSON return data for RADIOTIME Media Items
