@@ -15,7 +15,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
   
 # Changelog Raumserver
 
-#### Version 1.0.3 (Under development)
+#### Version 1.0.3 (DISCONTINUED!!!)
 * Add ability to save and load system states (eg. for doorbell ring) - (under development)
 * All returns should be in json formate! Even exceptions aso... - (under development)
 * Add SIGSEV Handler for ARM devices - (under development)
@@ -44,7 +44,7 @@ A app/service/deamon to control the Raumfeld Multiroomsystem via HTTP-Requests
   
 # Changelog Raumserver Installer
 
-#### Version 1.0.2 - (Under development)
+#### Version 1.0.2 - (DISCONTINUED!!!)
 * Updated instalSettings.xml for One M1 (use ARMv5 instead of ARMv7)
 * Fixed the problem of permissions on starting script and execution files
 * Update sciter GUI dependencies to newest version
