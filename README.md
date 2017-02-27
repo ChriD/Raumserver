@@ -2,7 +2,7 @@
 ## ATTENTION!! ##
 The C++ raumserver will be discontinued!  
 Instead there will be a NodeJs raumserver!  
-That means everywhere where  nodeJs may run you can run the raumserver and in fact NodeJs can be run on the armv7 raumfeld devices. So please have a look at the new repo which is also available on npm and stay tuned!
+That means everywhere where  nodeJs may run you can run the raumserver and in fact NodeJs can be run on the armv7 raumfeld devices. So please have a look at the new repo which is also available on npm and stay tuned!  
 https://github.com/ChriD/node-raumserver
   
   
